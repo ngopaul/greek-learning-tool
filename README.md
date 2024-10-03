@@ -1,10 +1,46 @@
-# Getting Started with Create React App
+# Greek Testing Tool
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Learn Greek by following along with the Greek Textbook, 
+"A Reader's Grammar of the Greek New Testament"! This tool 
+provides access to the open-source OpenGNT Bible in Greek, 
+and helps to learn Greek in a bite-sized way by focusing on the 
+words from specific chapters in the textbook.
+
+This site is available at [greek-learning-tool.vercel.app](https://greek-learning-tool.vercel.app).
+
+## Contributing
+Run `npm start` and make modifications and verify that they work by manually testing - unit tests TODO.
+
+## Resources
+We use OpenGNT for our greek source text: https://github.com/eliranwong/OpenGNT
+
+### `OpenGNT_keyedFeatures.csv`
+Οne important key here is "〔OGNTsort｜TANTTsort｜OpenTextWord_KEY〕, for example "〔000001｜000001｜40.1.1.w1〕". 
+The OpenTextWord_KEY gives us the book, the chapter, the verse, and the word (Matthew is the 40th book). 
+"〔TANTT〕" has keys like "〔BIMNRSTWH=Βίβλος=G0976=N-NSF;〕". 
+We get the greek word and morphology from here.
+Sometimes there are multiple possibilities like
+"〔IMNW=Χριστοῦ=G5547=N-GSM-T; BRSTH=χριστοῦ=G5547=N-GSM-T;〕", 
+in which case we choose the first one.
+The key  "〔TBESG｜IT｜LT｜ST｜Español〕" contains the meaning - we use the IT meaning. 
+Example values include: "〔book｜[The] book｜[The] book｜[This is the] record｜Libro〕"
+
+### `OpenGNT_DictRMAC_English.tsv`
+This file maps TANTT codes, like "V-IAI-3P", to their meanings, 
+like "Verb, Imperfect, Active, Indicative, third, Plural"
+
+### `study_chunks.csv`
+This is a csv with headers "unit", "name", "morphologies", and "endings"
+Unit might be something like "Chapter 2". 
+Name is something like "ω verbs Active 1st Person Singular"
+Morphologies will be a list of morphologies, like "N-NSM|N-NPM|N-NSN|N-NPN".
+endings is a list of greek endings, like "οῦ|ὸν|οὺς".
+
+## File Structure
+This react app stores data in the `public/` directory, where as most of the site is stored in React Components in the `src/` directory.
+We use a React Context in order to modify the state of the app, which includes variables such as the reading mode, the words that need to be displayed (along with metadata about the words such as morphology and meaning), the states of checkboxes, etc.
 
 ## Available Scripts
-
-In the project directory, you can run:
 
 ### `npm start`
 
@@ -28,43 +64,3 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

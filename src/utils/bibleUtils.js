@@ -575,7 +575,7 @@ export const bibleBookNameToChapterCounts = {
   "revelation": 22,
 };
 
-const bibleBookVerseCounts = {
+export const bibleBookVerseCounts = {
   "1 chronicles": [54, 55, 24, 43, 26, 81, 40, 40, 44, 14, 47, 40, 14, 17, 29,
     43, 27, 17, 19, 8, 30, 19, 32, 31, 31, 32, 34, 21, 30],
   "1 corinthians": [31, 16, 23, 21, 13, 20, 40, 13, 27, 33, 34, 31, 13, 40, 58,
