@@ -255,8 +255,12 @@ export const AppProvider = ({children}) => {
     // Get the displayWords from the chunksToTest, popping the first word off the relevant chunk in studyChunkLists
     const temporaryDisplayWords = [];
     for (const chunkName of chunksToTest) {
-      const word = studyChunkLists[chunkName].shift();
-      temporaryDisplayWords.push(word);
+      if (studyChunkLists[chunkName].length === 0) {
+        console.log("No words left for: ", chunkName);
+      } else {
+        const word = studyChunkLists[chunkName].shift();
+        temporaryDisplayWords.push(word);
+      }
     }
     temporaryDisplayWords.push({
       Greek: null,

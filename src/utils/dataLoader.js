@@ -202,7 +202,7 @@ const parseStudyChunkID = (studyChunks, greek, morphology) => {
         const morphologyMatches = morphologies.includes(morphology);
 
         // Check if the word's Greek ending matches any ending in the chunk
-        const endingMatches = endings.some(ending => greek.endsWith(ending));
+        const endingMatches = endings.some(ending => greekWordEndsWithEnding(greek, ending));
 
         // If both conditions are met, add the word's index to the set
         if (morphologyMatches && endingMatches) {
@@ -213,4 +213,47 @@ const parseStudyChunkID = (studyChunks, greek, morphology) => {
   }
 
   return studyChunkIDtoReturn;
+}
+
+/*
+ * Generate many possible endings and check if the greek words ends with any of them
+ */
+const greekWordEndsWithEnding = (greek, ending) => {
+  const vowels_to_possibilities = {
+    "α": ["ὰ", "ά", "ᾶ"],
+    "ᾳ": ["ᾷ", "ᾲ", "ᾴ"],
+    "ε": ["έ", "ὲ"],
+    "ι": ["ί", "ὶ", "ϊ", "ῖ"],
+    "ο": ["ό", "ὸ"],
+    "υ": ["ῦ", "ὺ", "ύ", "ϋ"],
+    "η": ["ὴ", "ή", "ῆ"],
+    "ῃ": ["ῇ", "ῄ", "ῂ"],
+    "ῳ": ["ῷ", "ῲ", "ῴ"],
+    "ω": ["ῶ", "ὼ", "ώ"]
+  }
+  // Find the last vowel in the ending based on the keys in vowels_to_possibilities
+  let vowelIndices = []
+
+  for (let i = ending.length - 1; i >= 0; i--) {
+    if (vowels_to_possibilities[ending[i]]) {
+      vowelIndices.push(i)
+    }
+  }
+
+  // Initialize possible endings with the original ending
+  let possibleEndings = [ending];
+
+  // If there is a vowel in the ending (lastVowelIndex is not -1)
+  for (const vowelIndex in vowelIndices) {
+    const possibilities = vowels_to_possibilities[vowelIndex];
+
+    // Generate multiple endings by replacing the last vowel with each possibility
+    possibilities.forEach(vowel => {
+      let newEnding = ending.substring(0, vowelIndex) + vowel + ending.substring(vowelIndex + 1);
+      possibleEndings.push(newEnding);
+    });
+  }
+
+  // Check if the Greek word ends with any of the possible endings
+  return possibleEndings.some(possibleEnding => greek.endsWith(possibleEnding));
 }
