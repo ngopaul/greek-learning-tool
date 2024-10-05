@@ -36,8 +36,10 @@ export const AppProvider = ({children}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [chunks] = await Promise.all([loadStudyChunks()]);
-        const [gntData, rmacDescriptions] = await Promise.all([loadOpenGNTData(chunks), loadRMACDescriptions()]);
+        const [sameHashAndChunks] = await Promise.all([loadStudyChunks()]);
+        const sameHash = sameHashAndChunks[0];
+        const chunks = sameHashAndChunks[1];
+        const [gntData, rmacDescriptions] = await Promise.all([loadOpenGNTData(chunks, sameHash), loadRMACDescriptions()]);
         setOpenGNTData(gntData);
         setRMACDescriptions(rmacDescriptions);
         setStudyChunks(chunks);
@@ -134,26 +136,43 @@ export const AppProvider = ({children}) => {
         markWord(currentIndex, true);
       } else if (e.key === 'ArrowDown') {
         markWord(currentIndex, false);
+      } else if (e.key === ';') {
+        printDebug();
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [displayWords.length, defaultShowAnswer, currentIndex, testWordIndices]);
+  }, [displayWords.length, defaultShowAnswer, currentIndex, testWordIndices, correctLog]);
 
   useEffect(() => {
     if (currentChapter && currentChapter.data) {
       setDisplayWords(currentChapter.data);
       setCurrentIndex(0);
-      determineTestWords(currentChapter.data);
     }
   }, [currentBook, currentChapter]);
 
   useEffect(() => {
     if (currentChapter && currentChapter.data) {
-      determineTestWords(currentChapter.data);
+      setCorrectLog(new Array(currentChapter.data.length).fill(null));
+      determineTestWords(displayWords);
     }
-  }, [selectedTesters]);
+  }, [selectedTesters, displayWords]);
+
+  const printDebug = () => {
+    console.log('currentIndex:', currentIndex);
+    console.log('displayWords:', displayWords);
+    console.log('testWordIndices:', testWordIndices);
+    console.log('selectedTesters:', selectedTesters);
+    console.log('selectedBook:', selectedBook);
+    console.log('selectedChapter:', selectedChapter);
+    console.log('selectedVerse:', selectedVerse);
+    console.log('selectedTesters:', selectedTesters);
+    console.log('currentWord', displayWords[currentIndex]);
+    console.log('correctLog:', correctLog);
+    console.log('correctLog at currentIndex:', correctLog[currentIndex]);
+    console.log('showAnswer:', showAnswer);
+  }
 
   // Function to determine which words to test
   const determineTestWords = (words) => {
@@ -165,34 +184,15 @@ export const AppProvider = ({children}) => {
 
     // Create a set to store the indices of words that should be tested
     const testIndices = new Set();
-    const studyChunkIDs = {};
 
     // Iterate over each word in the words array
     words.forEach((word, index) => {
-      const wordMorphology = word.Morphology;
-      const greekWord = word.Greek;
+      const studyChunkID = word.StudyChunkID;
 
       // Check each selected tester/unit
       selectedTesters.forEach(tester => {
-        const studyChunksForTester = studyChunks[tester.value]; // Get the chunks for the selected tester/unit
-
-        if (studyChunksForTester) {
-          // Check each study chunk under this tester
-          studyChunksForTester.forEach(chunk => {
-            const {studyChunkID, morphologies, endings} = chunk;
-
-            // Check if the word's morphology is in the list of morphologies
-            const morphologyMatches = morphologies.includes(wordMorphology);
-
-            // Check if the word's Greek ending matches any ending in the chunk
-            const endingMatches = endings.some(ending => greekWord.endsWith(ending));
-
-            // If both conditions are met, add the word's index to the set
-            if (morphologyMatches && endingMatches) {
-              testIndices.add(index);
-              studyChunkIDs[index] = studyChunkID;
-            }
-          });
+        if (studyChunkID && studyChunkID.includes(" | ") && studyChunkID.split(" | ")[0] === tester.value) {
+          testIndices.add(index);
         }
       });
     });
@@ -278,11 +278,15 @@ export const AppProvider = ({children}) => {
     setShowAnswer(false);
     // correctLog is a list of booleans the length of displayWords, initialized to null
     // it is used to keep track of whether the user got each word correct or not
-    setCorrectLog(new Array(displayWords.length).fill(null));
+    setCorrectLog(new Array(temporaryDisplayWords.length).fill(null));
   };
 
   const markWord = (index, isCorrect) => {
-    if (readingMode === "chapter" || displayWords.length === 0 || currentIndex === displayWords.length - 1) {
+    if (
+      displayWords.length === 0
+      || (readingMode === "unit" && currentIndex === displayWords.length - 1)
+      || !testWordIndices.has(currentIndex)
+    ) {
       return;
     }
     const newCorrectLog = [...correctLog];

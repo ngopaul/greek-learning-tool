@@ -1,4 +1,23 @@
 import Papa from 'papaparse';
+import { createHash } from 'crypto-browserify';
+import Dexie from 'dexie';
+
+// Initialize Dexie database
+const db = new Dexie('OpenGNTDataDB');
+db.version(1).stores({
+  words: '++id, BookChapterVerseWord, Greek, Morphology, English, StudyChunkID', // Define schema
+});
+
+// Function to save data to IndexedDB
+const saveToIndexedDB = async (data) => {
+  await db.words.clear(); // Clear old data
+  await db.words.bulkAdd(data); // Add new data
+};
+
+// Function to load data from IndexedDB
+const loadFromIndexedDB = async () => {
+  return await db.words.toArray(); // Retrieve all stored data
+};
 
 /* Function to parse OpenGNT_keyedFeatures.csv
  * Returns a very large list of objects. Each object has the following fields:
@@ -7,12 +26,22 @@ import Papa from 'papaparse';
  *  English: the english meaning of the word
  *  BookChapterVerseWord: returns that object (with those fields, all of them being integers)
  */
-export const loadOpenGNTData = async (studyChunks) => {
+export const loadOpenGNTData = async (studyChunks, sameHash) => {
+  // if sameHash is true, then load the data from IndexedDB
+  if (sameHash) {
+    const storedData = await loadFromIndexedDB();
+    if (storedData && storedData.length > 0) {
+      console.log("Loading OpenGNT data from IndexedDB");
+      return storedData;
+    }
+  }
+  console.log("Loading OpenGNT data from server");
+  // otherwise, load the data from the server
   const response = await fetch('/data/OpenGNT_keyedFeatures.csv');
   const csvData = await response.text();
   return new Promise((resolve, reject) => {
     Papa.parse(csvData, {
-      header: true, complete: (results) => {
+      header: true, complete: async (results) => {
         // Map the necessary fields
         const mappedData = results.data.filter((item) => {
           return (item["〔TANTT〕"] && item["〔TBESG｜IT｜LT｜ST｜Español〕"] && item["〔OGNTsort｜TANTTsort｜OpenTextWord_KEY〕"])
@@ -24,13 +53,15 @@ export const loadOpenGNTData = async (studyChunks) => {
           const bookChapterVerseWord = parseBookChapterVerseWord(item["〔OGNTsort｜TANTTsort｜OpenTextWord_KEY〕"]);
           const studyChunkID = parseStudyChunkID(studyChunks, greek, morphology);
           return {
+            BookChapterVerseWord: bookChapterVerseWord,
             Greek: greek,
             Morphology: morphology,
             English: english,
-            BookChapterVerseWord: bookChapterVerseWord,
             StudyChunkID: studyChunkID
           };
         });
+        // Save the processed data to IndexedDB
+        await saveToIndexedDB(mappedData);
         resolve(mappedData);
       }, error: (err) => {
         reject(err);
@@ -47,10 +78,19 @@ export const loadOpenGNTData = async (studyChunks) => {
  *  morphologies: the list of morphologies that should be tested in this study chunk
  *  endings: what the word must end with in order to be tested by this study chunk
  */
+
 export const loadStudyChunks = async () => {
+  // Get the hash of /data/study_chunks.csv
   const response = await fetch('/data/study_chunks.csv');
   const csvData = await response.text();
-
+  const hash = createHash('sha256').update(csvData).digest('hex');
+  // compare hash to hash in localStorage
+  const hashIsInLocalStorage = localStorage.getItem('study_chunks_hash') === hash;
+  if (hashIsInLocalStorage) {
+    console.log("Loading study_chunks.csv from localStorage");
+    return [hashIsInLocalStorage, JSON.parse(localStorage.getItem('study_chunks'))];
+  }
+  console.log("Loading study_chunks.csv from system");
   return new Promise((resolve, reject) => {
     Papa.parse(csvData, {
       header: true, complete: (results) => {
@@ -85,7 +125,10 @@ export const loadStudyChunks = async () => {
           unitDict[unit].push(entry);
         });
 
-        resolve(unitDict);
+        resolve([hashIsInLocalStorage, unitDict]);
+        // Store the hash in localStorage
+        localStorage.setItem('study_chunks_hash', hash);
+        localStorage.setItem('study_chunks', JSON.stringify(unitDict));
       }, error: (err) => {
         reject(err);
       },
@@ -217,6 +260,10 @@ const parseStudyChunkID = (studyChunks, greek, morphology) => {
 
 /*
  * Generate many possible endings and check if the greek words ends with any of them
+ * Endings are a string that may contain vowels, and also may contain a special character !
+ * which means that the following letter should not be in the ending
+ * greekWordEndsWithEnding("κοινωνίαν", "![ιερ]αν") => false
+ * greekWordEndsWithEnding("κοινωνίαν", "ιαν") => true
  */
 const greekWordEndsWithEnding = (greek, ending) => {
   const vowels_to_possibilities = {
@@ -244,8 +291,8 @@ const greekWordEndsWithEnding = (greek, ending) => {
   let possibleEndings = [ending];
 
   // If there is a vowel in the ending (lastVowelIndex is not -1)
-  for (const vowelIndex in vowelIndices) {
-    const possibilities = vowels_to_possibilities[vowelIndex];
+  for (let vowelIndex of vowelIndices) {
+    let possibilities = vowels_to_possibilities[ending[vowelIndex]];
 
     // Generate multiple endings by replacing the last vowel with each possibility
     possibilities.forEach(vowel => {
@@ -254,6 +301,59 @@ const greekWordEndsWithEnding = (greek, ending) => {
     });
   }
 
-  // Check if the Greek word ends with any of the possible endings
-  return possibleEndings.some(possibleEnding => greek.endsWith(possibleEnding));
+  // generate possible endings again with the ability to negate
+  let includesNegation = false;
+  let smartEndings = [];
+  for (let pei = 0; pei < possibleEndings.length; ++pei) {
+    let possibleEnding = possibleEndings[pei];
+    smartEndings.push([]);
+    for (let i = 0; i < possibleEnding.length; i++) {
+      if (possibleEnding[i] === '!') {
+        includesNegation = true;
+        const nextChars = [];
+        for (let j = i+2; possibleEnding[j] !== "]"; j++) {
+          nextChars.push(possibleEnding[j]);
+          ++i;
+        }
+        smartEndings[pei].push([false, nextChars]);
+        i = i + 2;
+      } else {
+        const currentChar = possibleEnding[i];
+        smartEndings[pei].push([true, currentChar]);
+      }
+    }
+  }
+
+  let failedNegationCheck = false;
+  for (let smartEnding of smartEndings) {
+    if (greek.length >= smartEnding.length) {
+      let endingCorrect = true;
+      for (let i = greek.length - 1; i > greek.length - 1 - smartEnding.length; --i) {
+        const isPositiveMatch = smartEnding[i - greek.length + smartEnding.length][0];
+        const charToMatch = smartEnding[i - greek.length + smartEnding.length][1];
+        if (isPositiveMatch) {
+          if (greek[i] !== charToMatch) {
+            endingCorrect = false;
+            break;
+          }
+        } else {
+          if (charToMatch.includes(greek[i])) {
+            failedNegationCheck = true;
+            endingCorrect = false;
+            break;
+          }
+        }
+      }
+      if (endingCorrect && !includesNegation) {
+        return true;
+      }
+    }
+  }
+  if (includesNegation && failedNegationCheck) {
+    return false;
+  } else if (includesNegation && !failedNegationCheck) {
+    return true;
+  }
+  // does not include a negation and did not find a match
+  return false;
 }

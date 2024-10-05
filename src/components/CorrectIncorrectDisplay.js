@@ -8,14 +8,18 @@ import {useContext} from "react";
 import {AppContext} from "../contexts/AppContext";
 
 const CorrectIncorrectDisplay = () => {
-  const { displayWords, currentIndex,
-    readingMode, markWord, correctLog } = useContext(AppContext);
+  const { displayWords, currentIndex, readingMode, markWord, correctLog, testWordIndices} = useContext(AppContext);
 
-  if (readingMode === "chapter" || displayWords.length === 0) {
+  if (displayWords.length === 0) {
     return null;
   }
 
-  if (currentIndex === displayWords.length - 1) {
+  if (readingMode === "unit" && currentIndex === displayWords.length - 1) {
+    // The last word is just the restart button
+    return null;
+  }
+
+  if (readingMode === "chapter" && !testWordIndices.has(currentIndex)) {
     // The last word is just the restart button
     return null;
   }

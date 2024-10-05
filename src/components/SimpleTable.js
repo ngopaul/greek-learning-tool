@@ -12,8 +12,8 @@ import {
 
 const SimpleTable = ({ data }) => {
   return (
-    <TableContainer component={Paper} sx={{ maxWidth: '100%', margin: 'auto', mt: 4 }}>
-      <Typography variant="h6" component="div" sx={{ p: 0, textAlign: 'center' }}>
+    <TableContainer component={Paper} sx={{ maxWidth: '100%', margin: 'auto', mt: 1 }}>
+      <Typography variant="h8" component="div" sx={{ p: 0, textAlign: 'center' }}>
         {data[0].title}
       </Typography>
       <Table size="small">

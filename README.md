@@ -11,6 +11,16 @@ This site is available at [greek-learning-tool.vercel.app](https://greek-learnin
 ## Contributing
 Run `npm start` and make modifications and verify that they work by manually testing - unit tests TODO.
 
+### Things To Do
+
+- [ ] Add unit tests
+- [ ] Add chapters 5 to 21 from "A Reader's Grammar of the Greek New Testament" to `study_chunks.csv` and 
+`ChapterTables.js`
+- [ ] Improve UI, especially at the end of a unit test
+- [ ] Make a smarter version of SimpleTable that formats a table with an arbitrary number of columns, so that
+we can put in arbitrary ChapterTables
+
+
 ## Resources
 We use OpenGNT for our greek source text: https://github.com/eliranwong/OpenGNT
 

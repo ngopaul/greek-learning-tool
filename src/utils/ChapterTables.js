@@ -1,7 +1,7 @@
 import SimpleTable from "../components/SimpleTable";
 
 const chapter2_1 = [
-  {title: 'Present Indicative Endings of -ω verbs: Active Voice'},
+  {title: 'Present Indicative -ω verbs: Active Voice'},
   {col1: 'Person', col2: 'Singular', col3: '', col4: 'Plural'},
   {col1: '1st', col2: '-ω', col3: '', col4: '-ομεν'},
   {col1: '2nd', col2: '-εις', col3: '', col4: '-ετε'},
@@ -10,7 +10,7 @@ const chapter2_1 = [
 ];
 
 const chapter2_2 = [
-  {title: 'Present Indicative Endings of -ω verbs: Middle/Passive Voice'},
+  {title: 'Present Indicative -ω verbs: Middle/Passive Voice'},
   {col1: 'Person', col2: 'Singular', col3: '', col4: 'Plural'},
   {col1: '1st', col2: '-ομαι', col3: '', col4: '-όμεθα'},
   {col1: '2nd', col2: '-ει/-ῃ', col3: '', col4: '-εσθε'},
@@ -47,6 +47,36 @@ const chapter3_2 = [
   {col1: 'Vocative', col2: '...ον', col3: '...α', col4: ''}
 ]
 
+const chapter4_1 = [
+  {title: '1st Declension Feminine Nouns (Sing.)'},
+  {col1: '', col2: 'Normal Base', col3: 'ε, ι, ρ base', col4: 'Mixed Base'},
+  {col1: 'Nominative', col2: 'ἡ ...η', col3: 'ἡ ...α', col4: 'ἡ ...α'},
+  {col1: 'Genitive', col2: 'τῆς ...ης', col3: 'τῆς ...ας', col4: 'τῆς ...ης'},
+  {col1: 'Dative', col2: 'τῇ ...ῃ', col3: 'τῇ ...ᾳ', col4: 'τῇ ...ῃ'},
+  {col1: 'Accusative', col2: 'τὴν ...ην', col3: 'τὴν ...αν', col4: 'τὴν ...αν'},
+  {col1: 'Vocative', col2: '...η', col3: '...α', col4: '...α'},
+]
+
+const chapter4_2 = [
+  {title: '1st Declension Feminine Nouns (Plur.)'},
+  {col1: '', col2: 'Normal Base', col3: 'ε, ι, ρ base', col4: 'Mixed Base'},
+  {col1: 'Nominative', col2: 'ἡ ...αι', col3: 'ἡ ...αι', col4: 'ἡ ...αι'},
+  {col1: 'Genitive', col2: 'τῶν ...ων', col3: 'τῶν ...ων', col4: 'τῶν ...ων'},
+  {col1: 'Dative', col2: 'ταῖς ...αις', col3: 'ταῖς ...αις', col4: 'ταῖς ...αις'},
+  {col1: 'Accusative', col2: 'τὰς ...ας', col3: 'τὰς ...ας', col4: 'τὰς ...ας'},
+  {col1: 'Vocative', col2: '...αι', col3: '...αι', col4: '...αι'}
+]
+
+const chapter4_3 = [
+  {title: '1st Declension Masculine Nouns'},
+  {col1: '', col2: 'Normal Base (Sing.)', col3: 'ε, ι, ρ base (Sing.)', col4: 'All Plurals'},
+  {col1: 'Nominative', col2: 'ὁ ...ης', col3: 'ὁ ...ας', col4: 'οἱ ...αι'},
+  {col1: 'Genitive', col2: 'τοῦ ...ου', col3: 'τοῦ ...ου', col4: 'τῶν ...ων'},
+  {col1: 'Dative', col2: 'τῷ ...ῃ', col3: 'τῷ ...ᾳ', col4: 'τοῖς ...αις'},
+  {col1: 'Accusative', col2: 'τὸν ...ῃν', col3: 'τὸν ...αν', col4: 'τοὺς ...ας'},
+  {col1: 'Vocative', col2: '...α', col3: '...α', col4: '...αι'}
+]
+
 export const unitNameToTables = {
   "Chapter 2": (
     <div>
@@ -61,6 +91,13 @@ export const unitNameToTables = {
     <div>
       <SimpleTable data={chapter3_1}/>
       <SimpleTable data={chapter3_2}/>
+    </div>
+  ),
+  "Chapter 4": (
+    <div>
+      <SimpleTable data={chapter4_1}/>
+      <SimpleTable data={chapter4_2}/>
+      <SimpleTable data={chapter4_3}/>
     </div>
   )
 };

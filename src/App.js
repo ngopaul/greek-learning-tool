@@ -5,6 +5,7 @@ import MorphologyBanner from './components/MorphologyBanner';
 import {Container, CircularProgress, Typography} from '@mui/material';
 import {AppContext} from "./contexts/AppContext";
 import CorrectIncorrectDisplay from "./components/CorrectIncorrectDisplay";
+import WordContext from "./components/WordContext";
 
 function App() {
   const { loading } = useContext(AppContext);
@@ -32,6 +33,7 @@ function App() {
       }}>
         <WordDisplay/>
         <CorrectIncorrectDisplay/>
+        <WordContext/>
       </Container>
       <div>
         <MorphologyBanner/>

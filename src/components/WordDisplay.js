@@ -3,6 +3,8 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import {useContext} from "react";
 import {AppContext} from "../contexts/AppContext";
+import {listOfBooks} from "../utils/constants";
+import {bibleBookAbbreviations} from "../utils/bibleUtils";
 
 const WordDisplay = () => {
   const { displayWords, currentIndex, showAnswer, goLeft, goRight, flipCard,
@@ -62,7 +64,8 @@ const WordDisplay = () => {
     <Box sx={{ textAlign: 'center', marginTop: '50px' }}>
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Typography variant="h5" color="grey" sx={{ mx: 2 }}>
-          Verse {currentWord.BookChapterVerseWord.verse} Word {currentWord.BookChapterVerseWord.word}
+          {bibleBookAbbreviations[listOfBooks[currentWord.BookChapterVerseWord.book - 1]]} {currentWord.BookChapterVerseWord.chapter}:
+          {currentWord.BookChapterVerseWord.verse} Word {currentWord.BookChapterVerseWord.word}
         </Typography>
       </Box>
       <Box sx={{
