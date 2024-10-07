@@ -1,6 +1,7 @@
 import React, {useContext} from 'react';
 import {AppBar, Box, IconButton, Toolbar } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { ContentCopy, BugReport } from '@mui/icons-material';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
@@ -58,6 +59,9 @@ const Header = () => {
     handleHelpClick,
     readingMode
   } = useContext(AppContext);
+
+  // Currently the 'selectedVerse' state is not reactive. Use this as temporary measure until 'selectedVerse' is reactive.
+  const [curSelectedVerse, setCurSelectedVerse] = React.useState();
 
   // Function to generate studyChunkOptions
   const createStudyChunkOptions = (studyChunks) => {
@@ -137,6 +141,7 @@ const Header = () => {
                     options={verseOptions}
                     onChange={(selected) => {
                       setSelectedVerse(selected);
+                      setCurSelectedVerse(selected);
                       onVerseSelect(selected);
                     }}
                     placeholder="Verse (optional)"
@@ -144,17 +149,18 @@ const Header = () => {
                     isClearable
                   />
                 </Box>
-                {/* Copy click */}
+                {curSelectedVerse ? (
+                  <>
+                  {/* Copy click */}
                 <IconButton edge="start" color="inherit" aria-label="home" onClick={handleCopyClick}>
-                  
-              <SettingsIcon/>
-              
-            </IconButton>
-            {/* print debug */}
-            <IconButton edge="start" color="inherit" aria-label="home" onClick={printDebug}>
-            <SettingsIcon/>
-              
+                  <ContentCopy/>
+                </IconButton>
+                {/* print debug */}
+              <IconButton edge="start" color="inherit" aria-label="home" onClick={printDebug}>
+                <BugReport/>
               </IconButton>
+              </>): null}
+                
               </>) : null}
 
             {/* Tester/Unit Dropdown */}
