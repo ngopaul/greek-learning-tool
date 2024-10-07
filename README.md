@@ -55,6 +55,8 @@ the code.
   for the TANTT keys to use, and Ctrl+F for the TANTT keys through `public/data/OpenGNT_keyedFeatures.csv` 
   to copy and paste the appropriate word endings.
 - [ ] Add unit tests
+- [ ] Include information about the difference between OpenGNT and TANTT
+(see [comparison files](https://github.com/eliranwong/OpenGNT/tree/master/mapping_BGB/compare_OGNT_NA28))
 
 ## Resources
 We use OpenGNT for our greek source text:
