@@ -53,6 +53,7 @@ const Header = () => {
     setSelectedTesters,
     handleSettingsClick,
     handleCopyClick,
+    printDebug,
     selectedVerse,
     handleHelpClick,
     readingMode
@@ -146,9 +147,17 @@ const Header = () => {
                     isClearable
                   />
                 </Box>
+                {/* Copy click */}
                 <IconButton edge="start" color="inherit" aria-label="home" onClick={handleCopyClick}>
+                  
               <SettingsIcon/>
+              
             </IconButton>
+            {/* print debug */}
+            <IconButton edge="start" color="inherit" aria-label="home" onClick={printDebug}>
+            <SettingsIcon/>
+              
+              </IconButton>
               </>) : (<></>)}
 
             {/* Tester/Unit Dropdown */}

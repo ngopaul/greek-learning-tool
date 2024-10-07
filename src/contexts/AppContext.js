@@ -494,6 +494,7 @@ export const AppProvider = ({children}) => {
         onSetDefaultShowAnswer,
         handleSettingsClick,
         handleCopyClick,
+        printDebug,
         handleHelpClick,
         goRight,
         goLeft,
