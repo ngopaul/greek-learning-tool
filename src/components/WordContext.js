@@ -33,14 +33,13 @@ const WordContext = () => {
   });
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2, flexWrap: 'wrap'}}>
+    <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1, flexWrap: 'wrap', marginTop: "20px" }}>
       {wordsInChapter.map((word, index) => (
         <Box
           key={index}
           sx={{
-            padding: 1,
+            padding: 0,
             color: word === currentWord ? 'red' : 'inherit',
-            borderRadius: 1,
           }}
         >
           {/* Greek and English word display */}

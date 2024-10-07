@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {AppBar, Box, IconButton, Toolbar, useMediaQuery, useTheme} from '@mui/material';
+import {AppBar, Box, IconButton, Toolbar } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import Select from 'react-select';
@@ -57,9 +57,6 @@ const Header = () => {
     readingMode
   } = useContext(AppContext);
 
-  const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm')); // Change 'sm' to any breakpoint
-
   // Function to generate studyChunkOptions
   const createStudyChunkOptions = (studyChunks) => {
     let studyChunkOptions = [];
@@ -76,18 +73,18 @@ const Header = () => {
   return (<>
       <AppBar position="static">
         <Toolbar>
+          {/* Home Button */}
+          <IconButton edge="start" color="inherit" aria-label="home" onClick={handleSettingsClick}>
+            <SettingsIcon/>
+          </IconButton>
           <Box sx={{
-            display: 'flex', flexDirection: isSmallScreen ? 'column' : 'row', // Change layout based on screen size
-            width: '100%', justifyContent: isSmallScreen ? 'center' : 'space-between', alignItems: 'center',
+            display: 'flex', flexDirection: 'row', // Change layout based on screen size
+            width: '100%', justifyContent: 'space-between', alignItems: 'center',
+            flexWrap: 'wrap', gap: 1, py: 1
           }}>
-            {/* Home Button */}
-            <IconButton edge="start" color="inherit" aria-label="home" onClick={handleSettingsClick}>
-              <SettingsIcon/>
-            </IconButton>
-
             {readingMode === 'chapter' ? (<>
                 {/* Book Dropdown */}
-                <Box sx={{flexGrow: 5, mx: 2}}>
+                <Box sx={{flexGrow: 5, mx: 1}}>
                   <Select
                     options={bookOptions}
                     onChange={(selected) => {
@@ -101,13 +98,13 @@ const Header = () => {
                       }
                       setChapterOptions(temporaryChapterOptions);
                     }}
-                    placeholder="Select Book"
+                    placeholder="Book"
                     styles={customStyles}
                   />
                 </Box>
 
                 {/* Chapter Dropdown */}
-                <Box sx={{flexGrow: 1, mx: 2}}>
+                <Box sx={{flexGrow: 1, mx: 1}}>
                   <Select
                     value={selectedChapter}
                     options={chapterOptions}
@@ -125,14 +122,14 @@ const Header = () => {
                         setVerseOptions(temporaryVerseOptions);
                       }
                     }}
-                    placeholder="Select Chapter"
+                    placeholder="Chapter"
                     styles={customStyles}
                     isClearable
                   />
                 </Box>
 
                 {/* Verse Dropdown */}
-                <Box sx={{flexGrow: 1, mx: 2}}>
+                <Box sx={{flexGrow: 1, mx: 1}}>
                   <Select
                     value={selectedVerse}
                     options={verseOptions}
@@ -140,12 +137,12 @@ const Header = () => {
                       setSelectedVerse(selected);
                       onVerseSelect(selected);
                     }}
-                    placeholder="Select Verse (optional)"
+                    placeholder="Verse (optional)"
                     styles={customStyles}
                     isClearable
                   />
                 </Box>
-              </>) : (<></>)}
+              </>) : null}
 
             {/* Tester/Unit Dropdown */}
             <Box sx={{flexGrow: 7, mx: 2}}>
@@ -157,16 +154,15 @@ const Header = () => {
                   setSelectedTesters(selected);
                   onTesterSelect(selected);
                 }}
-                placeholder="Select Tester"
+                placeholder="Tester (optional)"
                 styles={customStyles}
               />
             </Box>
-
-            {/* Info Button */}
-            <IconButton edge="end" color="inherit" aria-label="info" onClick={handleHelpClick}>
-              <QuestionMarkIcon/>
-            </IconButton>
           </Box>
+          {/* Info Button */}
+          <IconButton edge="end" color="inherit" aria-label="info" onClick={handleHelpClick}>
+            <QuestionMarkIcon/>
+          </IconButton>
         </Toolbar>
       </AppBar>
 

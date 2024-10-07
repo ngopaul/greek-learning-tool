@@ -1,4 +1,4 @@
-import {Box, Paper, Typography} from "@mui/material";
+import {Box, Paper, Typography, useMediaQuery, useTheme} from "@mui/material";
 import {unitNameToTables} from "../../utils/ChapterTables";
 import Popup from "../Popup";
 import React, {useContext} from "react";
@@ -7,6 +7,8 @@ import {AppContext} from "../../contexts/AppContext";
 const InfoPopup = () => {
   const { helpOpen, setHelpOpen, testWordIndices, currentIndex, displayWords,
     selectedTesters } = useContext(AppContext);
+  const theme = useTheme();
+  const probablyNoKeyboard = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <Popup open={helpOpen} onClose={() => setHelpOpen(false)} title="Help">
@@ -19,42 +21,46 @@ const InfoPopup = () => {
          ? = open or close this menu (showing a helpful chart when testing a unit)
          */}
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-        <Box sx={{ flexGrow: 1, flexBasis: 0, mx: 2 }}>
-          <Paper elevation={3} sx={{ padding: 3, maxWidth: 400, margin: 'auto', backgroundColor: '#f5f5f5' }}>
-            <Typography variant="h6" align="center" gutterBottom>
-              <b>Keyboard Shortcuts</b>
-            </Typography>
-            <Box component="ul" sx={{ listStyleType: 'none', paddingLeft: 0, fontSize: '0.8rem' }}>
-              <li>
-                <pre>← previous word</pre>
-              </li>
-              <li>
-                <pre>→ next word</pre>
-              </li>
-              <li>
-                <pre>↑ mark correct</pre>
-              </li>
-              <li>
-                <pre>↓ mark incorrect</pre>
-              </li>
-              <li>
-                <pre>space flip card</pre>
-              </li>
-              <li>
-                <pre>&lt; previous tested word</pre>
-              </li>
-              <li>
-                <pre>&gt; next tested word</pre>
-              </li>
-              <li>
-                <pre>? open this menu (info)</pre>
-              </li>
-              <li>
-                <pre>/ open settings</pre>
-              </li>
-            </Box>
-          </Paper>
-        </Box>
+        {/* Keyboard Shortcuts Box */}
+        { probablyNoKeyboard ? null : (
+          <Box sx={{ flexGrow: 1, flexBasis: 0, mx: 2 }}>
+            <Paper elevation={3} sx={{ padding: 3, maxWidth: 400, margin: 'auto', backgroundColor: '#f5f5f5' }}>
+              <Typography variant="h6" align="center" gutterBottom>
+                <b>Keyboard Shortcuts</b>
+              </Typography>
+              <Box component="ul" sx={{ listStyleType: 'none', paddingLeft: 0, fontSize: '0.8rem' }}>
+                <li>
+                  <pre>← previous word</pre>
+                </li>
+                <li>
+                  <pre>→ next word</pre>
+                </li>
+                <li>
+                  <pre>↑ mark correct</pre>
+                </li>
+                <li>
+                  <pre>↓ mark incorrect</pre>
+                </li>
+                <li>
+                  <pre>space flip card</pre>
+                </li>
+                <li>
+                  <pre>&lt; previous tested word</pre>
+                </li>
+                <li>
+                  <pre>&gt; next tested word</pre>
+                </li>
+                <li>
+                  <pre>? open this menu (info)</pre>
+                </li>
+                <li>
+                  <pre>/ open settings</pre>
+                </li>
+              </Box>
+            </Paper>
+          </Box>
+        )}
+        {/* Grammar Tables Box */}
         <Box sx={{ flexGrow: 5, flexBasis: 0, mx: 2 }}>
           {
             (
