@@ -160,6 +160,16 @@ export const AppProvider = ({children}) => {
   }, [selectedTesters, displayWords]);
 
   const printDebug = () => {
+    const currentWord = displayWords[currentIndex];
+    const { book, chapter, verse } = currentWord.BookChapterVerseWord;
+    const wordsInChapter = openGNTData.filter(word =>
+      word.BookChapterVerseWord.book === book &&
+      word.BookChapterVerseWord.chapter === chapter &&
+      word.BookChapterVerseWord.verse === verse
+    );
+    const currentVerse = wordsInChapter.map(wordData => wordData.Greek).join(" ");
+    console.log('currentVerse:', currentVerse);
+    console.log('wordsInChapter:', wordsInChapter);
     console.log('currentIndex:', currentIndex);
     console.log('displayWords:', displayWords);
     console.log('testWordIndices:', testWordIndices);
@@ -381,6 +391,18 @@ export const AppProvider = ({children}) => {
     setSettingsOpen((value) => (!value));
   };
 
+  const handleCopyClick = () => {
+    const currentWord = displayWords[currentIndex];
+    const { book, chapter, verse } = currentWord.BookChapterVerseWord;
+    const wordsInChapter = openGNTData.filter(word =>
+      word.BookChapterVerseWord.book === book &&
+      word.BookChapterVerseWord.chapter === chapter &&
+      word.BookChapterVerseWord.verse === verse
+    );
+    const currentVerse = wordsInChapter.map(wordData => wordData.Greek).join(" ");
+    navigator.clipboard.writeText(currentVerse);
+  }
+
   const handleHelpClick = () => {
     setSettingsOpen(false);
     setHelpOpen((value) => (!value));
@@ -471,6 +493,7 @@ export const AppProvider = ({children}) => {
         onTesterSelect,
         onSetDefaultShowAnswer,
         handleSettingsClick,
+        handleCopyClick,
         handleHelpClick,
         goRight,
         goLeft,
