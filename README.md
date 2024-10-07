@@ -37,10 +37,12 @@ the code.
   - [ ] Change left and right arrow colors to use "secondary" palette, not "primary"
   - [ ] Make the "keyboard shortcuts" look better - maybe a table?
   - [ ] Add dark mode (should be easy with material ui)
+  - [ ] At the end of unit testing, change the right arrow to a "check" icon to denote that the next click
+  will finish the unit testing
 - [ ] Make it mobile friendly. For mobile devices (detected by screen width):
-  - [ ] Remove left/right words, and use horizontal flexbox in `WordDisplay.js`
-  - [ ] Hide "keyboard shortcuts"
-  - [ ] Make book/chapter/verse search/select look better
+  - [x] Remove left/right words, and use horizontal flexbox in `WordDisplay.js`
+  - [x] Hide "keyboard shortcuts"
+  - [x] Make book/chapter/verse search/select look better
 - [ ] Add a progress bar when running `loadOpenGNTData`
   - [ ] need to see if this is possible for a async promise
   - [ ] Faster loading times in general. We cache OpenGNTData (which is processed data), but maybe we should also
@@ -55,6 +57,8 @@ the code.
   for the TANTT keys to use, and Ctrl+F for the TANTT keys through `public/data/OpenGNT_keyedFeatures.csv` 
   to copy and paste the appropriate word endings.
 - [ ] Add unit tests
+- [ ] Include information about the difference between OpenGNT and TANTT
+(see [comparison files](https://github.com/eliranwong/OpenGNT/tree/master/mapping_BGB/compare_OGNT_NA28))
 
 ## Resources
 We use OpenGNT for our greek source text:

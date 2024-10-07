@@ -10,7 +10,7 @@ const WordDisplay = () => {
   const { displayWords, currentIndex, showAnswer, goLeft, goRight, flipCard,
   readingMode, selectedTesters, startLearning } = useContext(AppContext);
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm')); // Change 'sm' to any breakpoint
+  const isProbablyAPhone = useMediaQuery(theme.breakpoints.down('sm'));
 
   if (displayWords.length === 0) {
     return (
@@ -41,11 +41,11 @@ const WordDisplay = () => {
   if (currentWord.StudyChunkID === "finished round of testing") {
     return (
       <Box>
-        <Typography variant="h5">
-          <b>Finished Round of Testing!</b>
-        </Typography>
         <Box sx={{ textAlign: 'center', marginTop: '20%', alignItems: 'center' }}>
-          <Button sx={{ minWidth: "100px", maxWidth: "30vw" }} variant="contained"
+          <Typography variant="h5">
+            <b>Finished Round of Testing!</b>
+          </Typography>
+          <Button sx={{ minWidth: "100px", maxWidth: "30vw", my: 2}} variant="contained"
                   onClick={() => {startLearning()}}>
             Start another round
           </Button>
@@ -61,7 +61,7 @@ const WordDisplay = () => {
   const displayEnglish = !showAnswer ? '?' : currentWord.English;
 
   return (
-    <Box sx={{ textAlign: 'center', marginTop: '50px' }}>
+    <Box sx={{ textAlign: 'center', marginTop: 3 }}>
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Typography variant="h5" color="grey" sx={{ mx: 2 }}>
           {bibleBookAbbreviations[listOfBooks[currentWord.BookChapterVerseWord.book - 1]]} {currentWord.BookChapterVerseWord.chapter}:
@@ -70,9 +70,9 @@ const WordDisplay = () => {
       </Box>
       <Box sx={{
         display: 'flex',
-        flexDirection: isSmallScreen ? 'column' : 'row', // Change layout based on screen size
+        flexDirection: 'row',
         width: '100%',
-        justifyContent: isSmallScreen ? 'center' : 'space-between',
+        justifyContent: 'space-between',
         alignItems: 'center',
       }}>
         {/* Left Arrow Key */}
@@ -83,11 +83,14 @@ const WordDisplay = () => {
         </Box>
 
         {/* Left Word */}
-        <Box sx={{ flexGrow: 1, flexBasis: 0, textAlign: 'center', mx: 1 }}>
-          <Typography variant="h4" color="grey">
-            {leftWord?.Greek}
-          </Typography>
-        </Box>
+        {!isProbablyAPhone ? (
+          <Box sx={{ flexGrow: 1, flexBasis: 0, textAlign: 'center', mx: 1 }}>
+            <Typography variant="h4" color="grey">
+              {leftWord?.Greek}
+            </Typography>
+          </Box>
+        ) : null
+        }
 
         {/* Current Word */}
         <Box sx={{ flexGrow: 1, flexBasis: 0, textAlign: 'center', mx: 1 }}>
@@ -97,11 +100,14 @@ const WordDisplay = () => {
         </Box>
 
         {/* Right Word */}
-        <Box sx={{ flexGrow: 1, flexBasis: 0, textAlign: 'center', mx: 1 }}>
-          <Typography variant="h4" color="grey">
-            {rightWord?.Greek}
-          </Typography>
-        </Box>
+        {!isProbablyAPhone ? (
+          <Box sx={{ flexGrow: 1, flexBasis: 0, textAlign: 'center', mx: 1 }}>
+            <Typography variant="h4" color="grey">
+              {rightWord?.Greek}
+            </Typography>
+          </Box>
+        ) : null
+        }
 
         {/* Right Arrow Key */}
         <Box sx={{ flexGrow: 1, flexBasis: 0, textAlign: 'center', mx: 2 }} onClick={goRight}>
@@ -114,8 +120,8 @@ const WordDisplay = () => {
       {/* English Translation */}
       <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', justifyContent: 'center',
         alignItems: 'center', marginTop: '20px' }}>
-        <Box sx={{ width: "50%" }} onClick={flipCard}>
-          <Paper elevation={3} sx={{ padding: 3, maxWidth: 400, margin: 'auto' }}>
+        <Box sx={{ width: "100%" }}>
+          <Paper elevation={3} sx={{ padding: 3, maxWidth: 350, margin: 'auto' }} onClick={flipCard}>
             {
               showAnswer ? (
                 <Typography variant="h6" >

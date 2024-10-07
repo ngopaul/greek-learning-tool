@@ -34,6 +34,8 @@ function App() {
         <WordDisplay/>
         <CorrectIncorrectDisplay/>
         <WordContext/>
+        {/* Make sure that the user can scroll up until the point where the header is no longer visible */}
+        <div style={{height: '80vh'}}></div>
       </Container>
       <div>
         <MorphologyBanner/>

@@ -1,34 +1,36 @@
 import React from 'react';
-import { Modal, Box, IconButton, Typography } from '@mui/material';
+import { Box, IconButton, Typography, Dialog, DialogContent, DialogTitle } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '80%',
-  bgcolor: 'background.paper',
-  borderRadius: '8px',
-  boxShadow: 24,
-  p: 4,
-};
 
 const Popup = ({ open, onClose, title, children }) => {
   return (
-    <Modal open={open} onClose={onClose} aria-labelledby={`${title}-modal`} aria-describedby={`${title}-description`}>
-      <Box sx={style}>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      scroll="paper" // This enables scrolling when content overflows
+      aria-labelledby={`${title}-dialog`}
+      aria-describedby={`${title}-description`}
+      maxWidth="md" // Adjust width based on your requirement
+      fullWidth // Makes sure the dialog spans the width
+    >
+      {/* Dialog Title with Close Button */}
+      <DialogTitle>
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Typography id={`${title}-modal`} variant="h6" component="h2">
+          <Typography id={`${title}-dialog`} variant="h6">
             {title}
           </Typography>
           <IconButton onClick={onClose}>
             <CloseIcon />
           </IconButton>
         </Box>
+      </DialogTitle>
+
+      {/* Dialog Content */}
+      <DialogContent dividers>
+        {/* Wraps content inside DialogContent to ensure scrolling */}
         <Box mt={2}>{children}</Box>
-      </Box>
-    </Modal>
+      </DialogContent>
+    </Dialog>
   );
 };
 
