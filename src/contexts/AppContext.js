@@ -32,6 +32,7 @@ export const AppProvider = ({children}) => {
   const [selectedVerse, setSelectedVerse] = useState(null);
   const [showAnswerChecked, setShowAnswerChecked] = useState(true);
   const [startedTesting, setStartedTesting] = useState(false);
+  const [loadProgress, setLoadProgress] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,11 +40,12 @@ export const AppProvider = ({children}) => {
         const [sameHashAndChunks] = await Promise.all([loadStudyChunks()]);
         const sameHash = sameHashAndChunks[0];
         const chunks = sameHashAndChunks[1];
-        const [gntData, rmacDescriptions] = await Promise.all([loadOpenGNTData(chunks, sameHash), loadRMACDescriptions()]);
+        const [gntData, rmacDescriptions] = await Promise.all(
+          [loadRMACDescriptions(), loadOpenGNTData(chunks, sameHash, setLoadProgress)]
+        );
         setOpenGNTData(gntData);
         setRMACDescriptions(rmacDescriptions);
         setStudyChunks(chunks);
-
         setLoading(false);
       } catch (error) {
         console.error('Error loading data:', error);
@@ -483,6 +485,8 @@ export const AppProvider = ({children}) => {
         setShowAnswerChecked,
         startedTesting,
         setStartedTesting,
+        loadProgress,
+        setLoadProgress,
         handleCheckboxShowAnswer,
         handleRadioChange,
         startLearning,

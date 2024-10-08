@@ -26,12 +26,13 @@ const loadFromIndexedDB = async () => {
  *  English: the english meaning of the word
  *  BookChapterVerseWord: returns that object (with those fields, all of them being integers)
  */
-export const loadOpenGNTData = async (studyChunks, sameHash) => {
+export const loadOpenGNTData = async (studyChunks, sameHash, setLoadProgress) => {
   // if sameHash is true, then load the data from IndexedDB
   if (sameHash) {
     const storedData = await loadFromIndexedDB();
     if (storedData && storedData.length > 0) {
       console.log("Loading OpenGNT data from IndexedDB");
+      setLoadProgress(100);
       return storedData;
     }
   }
@@ -43,23 +44,47 @@ export const loadOpenGNTData = async (studyChunks, sameHash) => {
     Papa.parse(csvData, {
       header: true, complete: async (results) => {
         // Map the necessary fields
-        const mappedData = results.data.filter((item) => {
-          return (item["〔TANTT〕"] && item["〔TBESG｜IT｜LT｜ST｜Español〕"] && item["〔OGNTsort｜TANTTsort｜OpenTextWord_KEY〕"])
-        }).map((item) => {
-          // Parse fields as per your CSV structure
-          const greek = parseGreekWord(item["〔TANTT〕"]);
-          const morphology = parseMorphology(item["〔TANTT〕"]);
-          const english = parseEnglishMeaning(item["〔TBESG｜IT｜LT｜ST｜Español〕"]);
-          const bookChapterVerseWord = parseBookChapterVerseWord(item["〔OGNTsort｜TANTTsort｜OpenTextWord_KEY〕"]);
-          const studyChunkID = parseStudyChunkID(studyChunks, greek, morphology);
-          return {
-            BookChapterVerseWord: bookChapterVerseWord,
-            Greek: greek,
-            Morphology: morphology,
-            English: english,
-            StudyChunkID: studyChunkID
-          };
-        });
+        const totalWords = results.data.length;
+        let processedWords = 0;
+        let sizeBeforeUpdate = totalWords / 100;
+        let currentSizeBeforeUpdate = 0;
+        const mappedData = [];
+
+        // Instead of using map, loop asynchronously to allow state updates
+        for (let item of results.data) {
+          const tantt = item["〔TANTT〕"];
+          const tbessg = item["〔TBESG｜IT｜LT｜ST｜Español〕"];
+          const ognSort = item["〔OGNTsort｜TANTTsort｜OpenTextWord_KEY〕"];
+          if (tantt && tbessg && ognSort) {
+            // Parse fields as per your CSV structure
+            const greek = parseGreekWord(tantt);
+            const morphology = parseMorphology(tantt);
+            const english = parseEnglishMeaning(tbessg);
+            const bookChapterVerseWord = parseBookChapterVerseWord(ognSort);
+            const studyChunkID = parseStudyChunkID(studyChunks, greek, morphology);
+
+            mappedData.push({
+              BookChapterVerseWord: bookChapterVerseWord,
+              Greek: greek,
+              Morphology: morphology,
+              English: english,
+              StudyChunkID: studyChunkID,
+            });
+
+            // Increment the processed words and update progress
+            processedWords++;
+
+            // Allow React to update the progress by yielding control
+            if (currentSizeBeforeUpdate < sizeBeforeUpdate) {
+              currentSizeBeforeUpdate++;
+            } else {
+              // Yield control to React to update the progress
+              setLoadProgress(Math.round((processedWords / totalWords) * 100));
+              await new Promise((resolve) => setTimeout(resolve, 0));
+              currentSizeBeforeUpdate = 0;
+            }
+          }
+        }
         // Save the processed data to IndexedDB
         await saveToIndexedDB(mappedData);
         resolve(mappedData);
@@ -233,29 +258,31 @@ const parseBookChapterVerseWord = (sortKeys) => {
  * Given the studyChunks object
  */
 const parseStudyChunkID = (studyChunks, greek, morphology) => {
-  let studyChunkIDtoReturn = null;
-
-  for (const [unitName, studyChunksForTester] of Object.entries(studyChunks)) {
+  for (const [, studyChunksForTester] of Object.entries(studyChunks)) {
     if (studyChunksForTester) {
       // Check each study chunk under this unit
-      studyChunksForTester.forEach(chunk => {
+      for (const chunk of studyChunksForTester) {
         const {studyChunkID, morphologies, endings} = chunk;
 
         // Check if the word's morphology is in the list of morphologies
         const morphologyMatches = morphologies.includes(morphology);
 
+        if (!morphologyMatches) {
+          continue;
+        }
+
         // Check if the word's Greek ending matches any ending in the chunk
         const endingMatches = endings.some(ending => greekWordEndsWithEnding(greek, ending));
 
         // If both conditions are met, add the word's index to the set
-        if (morphologyMatches && endingMatches) {
-          studyChunkIDtoReturn = studyChunkID;
+        if (endingMatches) {
+          return studyChunkID;
         }
-      });
+      }
     }
   }
 
-  return studyChunkIDtoReturn;
+  return null;
 }
 
 /*

@@ -8,13 +8,32 @@ import CorrectIncorrectDisplay from "./components/CorrectIncorrectDisplay";
 import WordContext from "./components/WordContext";
 
 function App() {
-  const { loading } = useContext(AppContext);
+  const { loading, loadProgress } = useContext(AppContext);
 
   if (loading) {
     return (
       <Container sx={{ textAlign: 'center', marginTop: '20%' }}>
         <CircularProgress />
-        <Typography variant="h6">Loading Data...</Typography>
+        {
+          (loadProgress === 0) ? (
+            <Typography variant="h6">
+              {"Loading Book Units and Greek Morphologies..."}
+            </Typography>
+          ) : (
+            (loadProgress < 99) ? (
+              <Typography variant="h6">
+                {"Loading and Labeling Bible Data... " + loadProgress.toString() + "%"}
+              </Typography>
+            ) : (
+              <Typography variant="h6">
+                {"Marshalling Data for Fast Responsiveness..."}
+              </Typography>
+            )
+          )
+        }
+
+        <Typography variant="body1">First-time load may take a bit, depending on your internet speed and
+          device's processor.</Typography>
       </Container>
     );
   }

@@ -43,9 +43,9 @@ the code.
   - [x] Remove left/right words, and use horizontal flexbox in `WordDisplay.js`
   - [x] Hide "keyboard shortcuts"
   - [x] Make book/chapter/verse search/select look better
-- [ ] Add a progress bar when running `loadOpenGNTData`
-  - [ ] need to see if this is possible for a async promise
-  - [ ] Faster loading times in general. We cache OpenGNTData (which is processed data), but maybe we should also
+- [x] Add a progress bar when running `loadOpenGNTData`
+  - [x] need to see if this is possible for a async promise
+  - [x] Faster loading times in general. We cache OpenGNTData (which is processed data), but maybe we should also
   cache the raw data with only BookChapterVerseWord, Greek, Morphology, and English, and calculate only the
   StudyChunkID when needed (lazy load)?
 - [ ] Make a smarter version of SimpleTable that formats a table with an arbitrary number of columns, so that
