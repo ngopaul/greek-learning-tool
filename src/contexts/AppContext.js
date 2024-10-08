@@ -40,7 +40,7 @@ export const AppProvider = ({children}) => {
         const [sameHashAndChunks] = await Promise.all([loadStudyChunks()]);
         const sameHash = sameHashAndChunks[0];
         const chunks = sameHashAndChunks[1];
-        const [gntData, rmacDescriptions] = await Promise.all(
+        const [rmacDescriptions, gntData] = await Promise.all(
           [loadRMACDescriptions(), loadOpenGNTData(chunks, sameHash, setLoadProgress)]
         );
         setOpenGNTData(gntData);
