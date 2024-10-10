@@ -3,7 +3,7 @@ import {Box, Paper, Typography} from '@mui/material';
 import {AppContext} from "../contexts/AppContext";
 
 const MorphologyBanner = () => {
-  const {currentChapter, currentIndex, displayWords, showAnswer, RMACDescriptions, flipCard} = useContext(AppContext);
+  const { currentIndex, displayWords, showAnswer, RMACDescriptions, flipCard } = useContext(AppContext);
 
   if (displayWords.length === 0) {
     return null;
@@ -24,16 +24,20 @@ const MorphologyBanner = () => {
          onClick={flipCard}
     >
       <Paper elevation={3}
-             sx={{display: 'flex', justifyContent: 'space-around', padding: 2, maxWidth: '100%', margin: '0 auto'}}>
+             sx={{display: 'flex', justifyContent: 'space-around', padding: 2, maxWidth: '100%', margin: '0 auto',
+             overflowX: 'auto', whiteSpace: 'nowrap'
+             }}>
         {showAnswer ? (morphParts.map((part, index) => (
-            <Typography key={index} variant="body1" sx={{flex: 1, textAlign: 'center'}}>
-              {part}
-            </Typography>))) : (morphParts.map((part, index) => (
+            <Box sx={{px: 1}}>
+              <Typography key={index} variant="body1" sx={{flex: 1, textAlign: 'center'}}>
+                {part}
+              </Typography>
+            </Box>))) : (morphParts.map((part, index) => (
+          <Box sx={{px: 1}}>
             <Typography key={index} variant="h5" color="red" sx={{flex: 1, textAlign: 'center'}}>
               {part}
-            </Typography>)))}
-
-
+            </Typography>
+          </Box>)))}
       </Paper>
     </Box>);
 };

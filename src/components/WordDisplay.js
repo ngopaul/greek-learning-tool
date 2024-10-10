@@ -1,6 +1,7 @@
 import {Box, Button, Icon, Paper, Typography, useMediaQuery, useTheme} from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import DoneAllIcon from '@mui/icons-material/DoneAll';
 import {useContext} from "react";
 import {AppContext} from "../contexts/AppContext";
 import {listOfBooks} from "../utils/constants";
@@ -11,6 +12,7 @@ const WordDisplay = () => {
   readingMode, selectedTesters, startLearning } = useContext(AppContext);
   const theme = useTheme();
   const isProbablyAPhone = useMediaQuery(theme.breakpoints.down('sm'));
+  const isProbablyAPhoneOrTablet = useMediaQuery(theme.breakpoints.down('md'));
 
   if (displayWords.length === 0) {
     return (
@@ -40,15 +42,51 @@ const WordDisplay = () => {
 
   if (currentWord.StudyChunkID === "finished round of testing") {
     return (
-      <Box>
-        <Box sx={{ textAlign: 'center', marginTop: '20%', alignItems: 'center' }}>
-          <Typography variant="h5">
-            <b>Finished Round of Testing!</b>
-          </Typography>
-          <Button sx={{ minWidth: "100px", maxWidth: "30vw", my: 2}} variant="contained"
-                  onClick={() => {startLearning()}}>
-            Start another round
-          </Button>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          width: '100%',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        {/* Go back to the previous word */}
+        <Box
+          sx={{
+            width: 'max-content', // Ensure arrow takes a fixed percentage of space
+            textAlign: 'center',
+            whiteSpace: 'nowrap', // Prevent text from wrapping
+            overflow: 'hidden',
+            textOverflow: 'ellipsis', // Handle overflow gracefully
+          }}
+          onClick={goLeft}
+        >
+          <Icon fontSize={"large"}>
+            <ArrowBackIcon color={"primary"} fontSize={"large"} />
+          </Icon>
+        </Box>
+        <Box>
+          <Box sx={{ textAlign: 'center', marginTop: '20%', alignItems: 'center' }}>
+            <Typography variant="h5">
+              <b>Finished Round of Testing!</b>
+            </Typography>
+            <Button sx={{ minWidth: "100px", maxWidth: "30vw", my: 2}} variant="contained"
+                    onClick={() => {startLearning()}}>
+              Start another round
+            </Button>
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            width: 'max-content', // Ensure arrow takes a fixed percentage of space
+            textAlign: 'center',
+            whiteSpace: 'nowrap', // Prevent text from wrapping
+            overflow: 'hidden',
+            textOverflow: 'ellipsis', // Handle overflow gracefully
+          }}
+        >
+          <Icon fontSize={"large"}></Icon>
         </Box>
       </Box>
     )
@@ -68,54 +106,98 @@ const WordDisplay = () => {
           {currentWord.BookChapterVerseWord.verse} Word {currentWord.BookChapterVerseWord.word}
         </Typography>
       </Box>
-      <Box sx={{
-        display: 'flex',
-        flexDirection: 'row',
-        width: '100%',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      }}>
+
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          width: '100%',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
         {/* Left Arrow Key */}
-        <Box sx={{ flexGrow: 1, flexBasis: 0, textAlign: 'center', mx: 2 }} onClick={goLeft}>
-          <Icon  fontSize={"large"}>
-            <ArrowBackIcon color={leftWord.Greek ? "primary" : "disabled"} fontSize={"large"}/>
+        <Box
+          sx={{
+            width: 'max-content', // Ensure arrow takes a fixed percentage of space
+            textAlign: 'center',
+            whiteSpace: 'nowrap', // Prevent text from wrapping
+            overflow: 'hidden',
+            textOverflow: 'ellipsis', // Handle overflow gracefully
+          }}
+          onClick={goLeft}
+        >
+          <Icon fontSize={"large"}>
+            <ArrowBackIcon color={leftWord.Greek ? "primary" : "disabled"} fontSize={"large"} />
           </Icon>
         </Box>
 
         {/* Left Word */}
         {!isProbablyAPhone ? (
-          <Box sx={{ flexGrow: 1, flexBasis: 0, textAlign: 'center', mx: 1 }}>
-            <Typography variant="h4" color="grey">
+          <Box
+            sx={{
+              width: isProbablyAPhoneOrTablet ? '15%': '20%', // Fixed width to ensure it doesn't shrink or expand
+              textAlign: 'left',
+              whiteSpace: 'nowrap', // Prevent text from wrapping
+              overflow: 'hidden',
+            }}
+            onClick={goLeft}
+          >
+            <Typography variant={isProbablyAPhone ? "h5" : "h4"} color="grey">
               {leftWord?.Greek}
             </Typography>
           </Box>
-        ) : null
-        }
+        ) : null}
 
         {/* Current Word */}
-        <Box sx={{ flexGrow: 1, flexBasis: 0, textAlign: 'center', mx: 1 }}>
-          <Typography variant="h3">
+        <Box
+          sx={{
+            width: isProbablyAPhone ? '80%' : (isProbablyAPhoneOrTablet ? '50%' : '35%'), // Constrain the middle word to prevent overflow
+            textAlign: 'center',
+            whiteSpace: 'nowrap', // Prevent text from wrapping
+            overflow: 'auto',
+          }}
+        >
+          <Typography variant={isProbablyAPhone ? "h4" : "h3"}>
             {currentWord?.Greek}
           </Typography>
         </Box>
 
         {/* Right Word */}
         {!isProbablyAPhone ? (
-          <Box sx={{ flexGrow: 1, flexBasis: 0, textAlign: 'center', mx: 1 }}>
-            <Typography variant="h4" color="grey">
+          <Box
+            sx={{
+              width: isProbablyAPhoneOrTablet ? '15%': '20%',
+              textAlign: 'center',
+              whiteSpace: 'nowrap', // Prevent text from wrapping
+              overflow: 'hidden',
+            }}
+            onClick={goRight}
+          >
+            <Typography variant={isProbablyAPhone ? "h5" : "h4"} color="grey">
               {rightWord?.Greek}
             </Typography>
           </Box>
-        ) : null
-        }
+        ) : null}
 
         {/* Right Arrow Key */}
-        <Box sx={{ flexGrow: 1, flexBasis: 0, textAlign: 'center', mx: 2 }} onClick={goRight}>
-          <Icon  fontSize={"large"}>
-            <ArrowForwardIcon color={rightWord.Greek ? "primary" : "disabled"} fontSize={"large"}/>
+        <Box
+          sx={{
+            width: 'max-content', // Fixed percentage for the right arrow
+            textAlign: 'center',
+          }}
+          onClick={goRight}
+        >
+          <Icon fontSize={"large"}>
+            {
+              rightWord.StudyChunkID === "finished round of testing" ?
+              <DoneAllIcon color="primary" fontSize={"large"}/> :
+                <ArrowForwardIcon color={rightWord.Greek ? "primary" : "disabled"} fontSize={"large"}/>
+            }
           </Icon>
         </Box>
       </Box>
+
 
       {/* English Translation */}
       <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', justifyContent: 'center',

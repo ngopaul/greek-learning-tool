@@ -14,7 +14,7 @@ export const AppProvider = ({children}) => {
   const [studyChunks, setStudyChunks] = useState([]);
   const [RMACDescriptions, setRMACDescriptions] = useState({});
   const [loading, setLoading] = useState(true);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndexRaw] = useState(0);
   const [displayWords, setDisplayWords] = useState([]);
   const [testWordIndices, setTestWordIndices] = useState(new Set());
   const [showAnswer, setShowAnswer] = useState(true);
@@ -55,22 +55,28 @@ export const AppProvider = ({children}) => {
     fetchData();
   }, []);
 
-  const goLeft = () => {
-    setCurrentIndex((prev) => Math.max(prev - 1, 0));
-    if (testWordIndices.has(currentIndex - 1)) {
+  const setCurrentIndex = (idx) => {
+    if (idx === null || idx === undefined || isNaN(idx) || idx < 0 || idx >= displayWords.length) {
+      return;
+    }
+    setCurrentIndexRaw(idx);
+    if (testWordIndices.has(idx)) {
       setShowAnswer(false);
-    } else if (currentIndex > 0) {
+    } else if (readingMode === "chapter") {
       setShowAnswer(defaultShowAnswer);
+    } else if (readingMode === "unit" && idx !== displayWords.length) {
+      setShowAnswer(defaultShowAnswer);
+    } else {
+      setShowAnswer(true);
     }
   }
 
+  const goLeft = () => {
+    setCurrentIndex(Math.max(currentIndex - 1, 0));
+  }
+
   const goRight = () => {
-    setCurrentIndex((prev) => Math.min(prev + 1, displayWords.length - 1));
-    if (testWordIndices.has(currentIndex + 1)) {
-      setShowAnswer(false);
-    } else if (currentIndex + 1 < displayWords.length) {
-      setShowAnswer(defaultShowAnswer);
-    }
+    setCurrentIndex(Math.min(currentIndex + 1, displayWords.length - 1));
   }
 
   const previousTestWord = () => {
@@ -78,18 +84,12 @@ export const AppProvider = ({children}) => {
     if (testWordIndices.size === 0) {
       return;
     }
-    let i = currentIndex - 1;
-    for (i = currentIndex - 1; i > 0; i--) {
+    for (let i = currentIndex - 1; i > 0; i--) {
       if (testWordIndices.has(i)) {
+        const newIndex = Math.max(i, 0);
+        setCurrentIndex(newIndex);
         break;
       }
-    }
-    const newIndex = Math.max(i, 0);
-    setCurrentIndex(newIndex);
-    if (testWordIndices.has(newIndex)) {
-      setShowAnswer(false);
-    } else {
-      setShowAnswer(defaultShowAnswer);
     }
   }
 
@@ -98,18 +98,12 @@ export const AppProvider = ({children}) => {
     if (testWordIndices.size === 0) {
       return;
     }
-    let i = currentIndex + 1;
-    for (i = currentIndex + 1; i < displayWords.length; i++) {
+    for (let i = currentIndex + 1; i < displayWords.length; i++) {
       if (testWordIndices.has(i)) {
+        const newIndex = Math.min(i, displayWords.length - 1)
+        setCurrentIndex(newIndex);
         break;
       }
-    }
-    const newIndex = Math.min(i, displayWords.length - 1)
-    setCurrentIndex(newIndex);
-    if (testWordIndices.has(newIndex)) {
-      setShowAnswer(false);
-    } else {
-      setShowAnswer(defaultShowAnswer);
     }
   }
 
@@ -129,13 +123,19 @@ export const AppProvider = ({children}) => {
       } else if (e.key === '>') {
         nextTestWord();
       } else if (e.key === ' ') {
+        // prevent scrolling on space
+        if (e.target === document.body) {
+          e.preventDefault();
+        }
         flipCard();
       } else if (e.key === '?') {
         handleHelpClick();
       } else if (e.key === '/') {
         handleSettingsClick();
       } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
         markWord(currentIndex, true);
+        e.preventDefault();
       } else if (e.key === 'ArrowDown') {
         markWord(currentIndex, false);
       } else if (e.key === ';') {
@@ -234,15 +234,15 @@ export const AppProvider = ({children}) => {
   const startLearning = () => {
     // create a list for each chunk (aka wordGroup) in studyChunks
     const studyChunkLists = {};
-    let wordGroupsToTest = [];
-    for (const [unitName, studyChunksForTester] of Object.entries(studyChunks)) {
+    const initialWordGroupsToTest = [];
+    for (const [, studyChunksForTester] of Object.entries(studyChunks)) {
       if (studyChunksForTester) {
         // Check each study chunk under this unit
         studyChunksForTester.forEach(chunk => {
           const testerID = chunk.studyChunkID.split(" | ")[0];
           if (selectedTesters.map(tester => tester.value).includes(testerID)) {
             studyChunkLists[chunk.studyChunkID] = [];
-            wordGroupsToTest.push(chunk.studyChunkID);
+            initialWordGroupsToTest.push(chunk.studyChunkID);
           }
         });
       }
@@ -256,8 +256,8 @@ export const AppProvider = ({children}) => {
     }
     // Use either getSmartWordsToTest or getWordsToTest on the list of chunk names (wordGroups) and the userProgress, to get the wordsToTest
     let chunksToTest;
-    wordGroupsToTest.sort(() => Math.random() - 0.5);
-    wordGroupsToTest = wordGroupsToTest.slice(0, 20);
+    initialWordGroupsToTest.sort(() => Math.random() - 0.5);
+    const wordGroupsToTest = initialWordGroupsToTest.slice(0, 20);
     if (smartUnitLearning) {
       chunksToTest = getSmartChunksToTest(wordGroupsToTest, userProgress);
     } else {
@@ -283,9 +283,9 @@ export const AppProvider = ({children}) => {
     })
     // Set currentIndex, displayWords, testWordIndices, showAnswer, correctLog
     setDisplayWords(temporaryDisplayWords);
-    setCurrentIndex(0);
     const temporaryTestWordIndices = new Set(Array.from(Array(temporaryDisplayWords.length).keys()))
     setTestWordIndices(temporaryTestWordIndices);
+    setCurrentIndex(0);
     setStartedTesting(true);
     setShowAnswer(false);
     // correctLog is a list of booleans the length of displayWords, initialized to null

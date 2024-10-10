@@ -5,7 +5,7 @@ import Dexie from 'dexie';
 // Initialize Dexie database
 const db = new Dexie('OpenGNTDataDB');
 db.version(1).stores({
-  words: '++id, BookChapterVerseWord, Greek, Morphology, English, StudyChunkID', // Define schema
+  words: '++id, BookChapterVerseWord, Greek, Morphology, English, StudyChunkID, StrongsNumber', // Define schema
 });
 
 // Function to save data to IndexedDB
@@ -38,7 +38,7 @@ export const loadOpenGNTData = async (studyChunks, sameHash, setLoadProgress) =>
   }
   console.log("Loading OpenGNT data from server");
   // otherwise, load the data from the server
-  const response = await fetch('/data/OpenGNT_keyedFeatures.csv');
+  const response = await fetch('/data/OpenGNT_version3_3.csv');
   const csvData = await response.text();
   return new Promise((resolve, reject) => {
     Papa.parse(csvData, {
@@ -51,16 +51,27 @@ export const loadOpenGNTData = async (studyChunks, sameHash, setLoadProgress) =>
         const mappedData = [];
 
         // Instead of using map, loop asynchronously to allow state updates
+        let currentWordIdx = 1;
+        let currentBook = 40;
+        let currentChapter = 1;
+        let currentVerse = 1;
         for (let item of results.data) {
-          const tantt = item["〔TANTT〕"];
+          const greekBreakdown  = item["〔OGNTk｜OGNTu｜OGNTa｜lexeme｜rmac｜sn〕"];
           const tbessg = item["〔TBESG｜IT｜LT｜ST｜Español〕"];
-          const ognSort = item["〔OGNTsort｜TANTTsort｜OpenTextWord_KEY〕"];
-          if (tantt && tbessg && ognSort) {
+          const bookChapterVerse = item["〔Book｜Chapter｜Verse〕"];
+          if (greekBreakdown && tbessg && bookChapterVerse) {
             // Parse fields as per your CSV structure
-            const greek = parseGreekWord(tantt);
-            const morphology = parseMorphology(tantt);
+            const greek = parseGreekWord(greekBreakdown);
+            const morphology = parseMorphology(greekBreakdown);
+            const strongsNumber = parseStrongsNumber(greekBreakdown);
             const english = parseEnglishMeaning(tbessg);
-            const bookChapterVerseWord = parseBookChapterVerseWord(ognSort);
+            const bookChapterVerseWord = parseBookChapterVerseWord(currentWordIdx, bookChapterVerse);
+            currentWordIdx++;
+            if (currentBook !== bookChapterVerseWord.book ||
+              currentChapter !== bookChapterVerseWord.chapter ||
+              currentVerse !== bookChapterVerseWord.verse) {
+              currentWordIdx = 1;
+            }
             const studyChunkID = parseStudyChunkID(studyChunks, greek, morphology);
 
             mappedData.push({
@@ -69,6 +80,7 @@ export const loadOpenGNTData = async (studyChunks, sameHash, setLoadProgress) =>
               Morphology: morphology,
               English: english,
               StudyChunkID: studyChunkID,
+              StrongsNumber: strongsNumber
             });
 
             // Increment the processed words and update progress
@@ -186,30 +198,40 @@ export const loadRMACDescriptions = async () => {
 }
 
 // Implement parsing functions based on your data structure
-const parseGreekWord = (tantt) => {
-  if (!tantt) {
+const parseGreekWord = (greekBreakdown) => {
+  if (!greekBreakdown) {
     return '';
   }
-  tantt = tantt.toString();
-  // TANNT has values like 〔IMNW=Χριστοῦ=G5547=N-GSM-T; BRSTH=χριστοῦ=G5547=N-GSM-T;〕
-  // greek word is the second part of the definition
-  tantt = tantt.slice(1, -1);
-  const definitions = tantt.split(';');
-  const definition_parts = definitions[0].split('=');
-  return definition_parts[1];
+  greekBreakdown = greekBreakdown.toString();
+  // has values like 〔βιβλοϲ｜Βιβλος｜Βίβλος｜βίβλος｜N-NSF｜G976〕
+  // greek word is the third part of the definition
+  greekBreakdown = greekBreakdown.slice(1, -1);
+  const parts = greekBreakdown.split('｜');
+  return parts[2];
 };
 
-const parseMorphology = (tantt) => {
-  if (!tantt) {
+const parseMorphology = (greekBreakdown) => {
+  if (!greekBreakdown) {
     return '';
   }
-  tantt = tantt.toString();
-  // TANNT has values like 〔IMNW=Χριστοῦ=G5547=N-GSM-T; BRSTH=χριστοῦ=G5547=N-GSM-T;〕
-  // morphology is the last part of the definition
-  tantt = tantt.slice(1, -1);
-  const definitions = tantt.split(';');
-  const definition_parts = definitions[0].split('=');
-  return definition_parts[definition_parts.length - 1];
+  greekBreakdown = greekBreakdown.toString();
+  // has values like 〔βιβλοϲ｜Βιβλος｜Βίβλος｜βίβλος｜N-NSF｜G976〕
+  // morphology is the second to last part of the definition
+  greekBreakdown = greekBreakdown.slice(1, -1);
+  const parts = greekBreakdown.split('｜');
+  return parts[parts.length - 2];
+};
+
+const parseStrongsNumber = (greekBreakdown) => {
+  if (!greekBreakdown) {
+    return '';
+  }
+  greekBreakdown = greekBreakdown.toString();
+  // has values like 〔βιβλοϲ｜Βιβλος｜Βίβλος｜βίβλος｜N-NSF｜G976〕
+  // strongs number is the last part of the definition
+  greekBreakdown = greekBreakdown.slice(1, -1);
+  const parts = greekBreakdown.split('｜');
+  return parts[parts.length - 1];
 };
 
 const parseEnglishMeaning = (tbessg) => {
@@ -221,36 +243,30 @@ const parseEnglishMeaning = (tbessg) => {
 };
 
 /*
- * From the OpenGNT value of "〔OGNTsort｜TANTTsort｜OpenTextWord_KEY〕", return an object with
+ * From the OpenGNT value of "〔40｜1｜1〕", return an object with
  * the following fields:
  *  book number: int
  *  chapter number: int
  *  verse number: int
  *  word number: int
  */
-const parseBookChapterVerseWord = (sortKeys) => {
-  if (!sortKeys) {
-    return '';
-  }
-  // data of the form〔000001｜000001｜40.1.1.w1〕, we want the third one
-  sortKeys = sortKeys.toString();
-  sortKeys = sortKeys.slice(1, -1);
-  const splitKeys = sortKeys.split('｜');
-  const openTextWordKey = splitKeys[splitKeys.length - 1];
-  const bookChapterVerseWord = openTextWordKey.split('.');
-  const book = bookChapterVerseWord[0];
-  const chapter = bookChapterVerseWord[1];
-  const verse = bookChapterVerseWord[2];
-  let word = bookChapterVerseWord[3];
-  if (!word) {
+const parseBookChapterVerseWord = (currentWordIdx, bookChapterVerse) => {
+  if (!bookChapterVerse || !currentWordIdx) {
     return null;
   }
-  word = word.toString();
+  // bookChapterVerse of the form〔40｜1｜1〕, we want the third one
+  const bookChapterVerseArr = bookChapterVerse.slice(1, -1).split('｜');
+  const book = bookChapterVerseArr[0];
+  const chapter = bookChapterVerseArr[1];
+  const verse = bookChapterVerseArr[2];
+  if (!book || !chapter || !verse) {
+    return null;
+  }
   return {
     book: parseInt(book),
     chapter: parseInt(chapter),
     verse: parseInt(verse),
-    word: parseInt(word.slice(1, word.length))
+    word: currentWordIdx
   }
 }
 
