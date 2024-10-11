@@ -135,9 +135,9 @@ export const AppProvider = ({children}) => {
       } else if (e.key === 'ArrowUp') {
         e.preventDefault();
         markWord(currentIndex, true);
-        e.preventDefault();
       } else if (e.key === 'ArrowDown') {
         markWord(currentIndex, false);
+        e.preventDefault();
       } else if (e.key === ';') {
         printDebug();
       }
