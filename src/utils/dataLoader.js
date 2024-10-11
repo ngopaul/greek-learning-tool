@@ -51,7 +51,7 @@ export const loadOpenGNTData = async (studyChunks, sameHash, setLoadProgress) =>
         const mappedData = [];
 
         // Instead of using map, loop asynchronously to allow state updates
-        let currentWordIdx = 1;
+        let previousWordIdx = 1;
         let currentBook = 40;
         let currentChapter = 1;
         let currentVerse = 1;
@@ -65,13 +65,12 @@ export const loadOpenGNTData = async (studyChunks, sameHash, setLoadProgress) =>
             const morphology = parseMorphology(greekBreakdown);
             const strongsNumber = parseStrongsNumber(greekBreakdown);
             const english = parseEnglishMeaning(tbessg);
-            const bookChapterVerseWord = parseBookChapterVerseWord(currentWordIdx, bookChapterVerse);
-            currentWordIdx++;
-            if (currentBook !== bookChapterVerseWord.book ||
-              currentChapter !== bookChapterVerseWord.chapter ||
-              currentVerse !== bookChapterVerseWord.verse) {
-              currentWordIdx = 1;
-            }
+            const bookChapterVerseWord = parseBookChapterVerseWord(previousWordIdx, bookChapterVerse, currentBook, currentChapter, currentVerse);
+            currentBook = bookChapterVerseWord.book;
+            currentChapter = bookChapterVerseWord.chapter;
+            currentVerse = bookChapterVerseWord.verse;
+            previousWordIdx = bookChapterVerseWord.word;
+
             const studyChunkID = parseStudyChunkID(studyChunks, greek, morphology);
 
             mappedData.push({
@@ -250,23 +249,34 @@ const parseEnglishMeaning = (tbessg) => {
  *  verse number: int
  *  word number: int
  */
-const parseBookChapterVerseWord = (currentWordIdx, bookChapterVerse) => {
-  if (!bookChapterVerse || !currentWordIdx) {
+const parseBookChapterVerseWord = (previousWordIdx, bookChapterVerse, previousBook, previousChapter, previousVerse) => {
+  if (!bookChapterVerse || !previousWordIdx) {
     return null;
   }
   // bookChapterVerse of the form〔40｜1｜1〕, we want the third one
   const bookChapterVerseArr = bookChapterVerse.slice(1, -1).split('｜');
-  const book = bookChapterVerseArr[0];
-  const chapter = bookChapterVerseArr[1];
-  const verse = bookChapterVerseArr[2];
+  const book = parseInt(bookChapterVerseArr[0]);
+  const chapter = parseInt(bookChapterVerseArr[1]);
+  const verse = parseInt(bookChapterVerseArr[2]);
   if (!book || !chapter || !verse) {
     return null;
   }
+  if (book !== previousBook
+    || chapter !== previousChapter
+    || verse !== previousVerse
+  ) {
+    return {
+      book: book,
+      chapter: chapter,
+      verse: verse,
+      word: 1
+    }
+  }
   return {
-    book: parseInt(book),
-    chapter: parseInt(chapter),
-    verse: parseInt(verse),
-    word: currentWordIdx
+    book: book,
+    chapter: chapter,
+    verse: verse,
+    word: previousWordIdx + 1
   }
 }
 

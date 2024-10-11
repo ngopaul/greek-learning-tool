@@ -55,12 +55,12 @@ export const AppProvider = ({children}) => {
     fetchData();
   }, []);
 
-  const setCurrentIndex = (idx) => {
-    if (idx === null || idx === undefined || isNaN(idx) || idx < 0 || idx >= displayWords.length) {
+  const setCurrentIndex = (idx, newDisplayWords=displayWords, newTestWordIndices=testWordIndices) => {
+    if (idx === null || idx === undefined || isNaN(idx) || idx < 0 || idx >= newDisplayWords.length) {
       return;
     }
     setCurrentIndexRaw(idx);
-    if (testWordIndices.has(idx)) {
+    if (newTestWordIndices.has(idx)) {
       setShowAnswer(false);
     } else if (readingMode === "chapter") {
       setShowAnswer(defaultShowAnswer);
@@ -285,9 +285,8 @@ export const AppProvider = ({children}) => {
     setDisplayWords(temporaryDisplayWords);
     const temporaryTestWordIndices = new Set(Array.from(Array(temporaryDisplayWords.length).keys()))
     setTestWordIndices(temporaryTestWordIndices);
-    setCurrentIndex(0);
+    setCurrentIndex(0, temporaryDisplayWords, temporaryTestWordIndices);
     setStartedTesting(true);
-    setShowAnswer(false);
     // correctLog is a list of booleans the length of displayWords, initialized to null
     // it is used to keep track of whether the user got each word correct or not
     setCorrectLog(new Array(temporaryDisplayWords.length).fill(null));
