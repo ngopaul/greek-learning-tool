@@ -27,6 +27,10 @@ export const getSmartChunksToTest = (wordGroups, successes) => {
     }
     const successfulAttempts = successList.filter(success => success === true).length;
     const successRate = totalAttempts > 0 ? (successfulAttempts / totalAttempts) : 0.5;
+    // if the number of attempts is less than 3, consider it not started learning
+    if (totalAttempts < 3) {
+      return {wordGroup, successRate: 0.5};
+    }
     return {wordGroup, successRate};
   });
 
