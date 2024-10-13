@@ -10,6 +10,7 @@ export const AppProvider = ({children}) => {
   const [currentBook, setCurrentBook] = useState(null);
   const [currentChapter, setCurrentChapter] = useState(null);
   const [selectedTesters, setSelectedTesters] = useState([]);
+  const [gotNewData, setGotNewData] = useState(false);
   const [openGNTData, setOpenGNTData] = useState([]);
   const [strongsMapping, setStrongsMapping] = useState({});
   const [studyChunks, setStudyChunks] = useState([]);
@@ -39,7 +40,9 @@ export const AppProvider = ({children}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [needToUpdateFiles] = await Promise.all([loadDataVersions()]);
+        const [dataVersionsInfo] = await Promise.all([loadDataVersions()]);
+        const needToUpdateFiles = dataVersionsInfo.needToUpdateFiles;
+        setGotNewData(dataVersionsInfo.isNewData);
         const [chunks] = await Promise.all([loadStudyChunks(needToUpdateFiles)]);
         const [rmacDescriptions, gntData] = await Promise.all(
           [loadRMACDescriptions(), loadOpenGNTData(chunks, needToUpdateFiles, setLoadProgress)]
@@ -446,6 +449,8 @@ export const AppProvider = ({children}) => {
         setCurrentChapter,
         selectedTesters,
         setSelectedTesters,
+        gotNewData,
+        setGotNewData,
         openGNTData,
         setOpenGNTData,
         strongsMapping,

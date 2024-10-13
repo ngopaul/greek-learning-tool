@@ -8,7 +8,7 @@ import CorrectIncorrectDisplay from "./components/CorrectIncorrectDisplay";
 import WordContext from "./components/WordContext";
 
 function App() {
-  const { loading, loadProgress } = useContext(AppContext);
+  const { loading, loadProgress, gotNewData } = useContext(AppContext);
 
   if (loading) {
     return (
@@ -37,8 +37,18 @@ function App() {
           )
         }
 
-        <Typography variant="body1">First-time load may take a bit, depending on your internet speed and
-          device's processor.</Typography>
+        {
+          gotNewData ? (
+            <Typography variant="body1">
+              Got new Bible/unit data from the server! This may take a bit longer than usual.
+            </Typography>
+          ) : (
+            <Typography variant="body1">
+              First-time load may take a bit, depending on your internet speed and device's processor.
+            </Typography>
+          )
+        }
+
       </Container>
     );
   }

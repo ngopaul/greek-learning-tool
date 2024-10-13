@@ -20,17 +20,30 @@ const loadFromIndexedDB = async () => {
 };
 
 export const loadDataVersions = async () => {
-  // Get the hash of /data/study_chunks.csv
+  // return true if data version is different from local cache, and what to set gotNewData to
   const response = await fetch('/data/data_versions.txt');
   const dataVersions = await response.text();
-  const isSameVersion = localStorage.getItem('dataVersion') === dataVersions;
+  const localStorageDataVersion = localStorage.getItem('dataVersion');
+  const isSameVersion = localStorageDataVersion === dataVersions;
   if (isSameVersion) {
     console.log("Data version same - Loading data from local cache");
-    return false;
+    return {
+      needToUpdateFiles: false,
+      isNewData: false,
+    }
   }
   localStorage.setItem('dataVersion', dataVersions);
   console.log("Data version different - Loading data from server");
-  return true;
+  if (localStorageDataVersion) {
+    return {
+      needToUpdateFiles: true,
+      isNewData: true,
+    }
+  }
+  return {
+    needToUpdateFiles: true,
+    isNewData: false,
+  }
 }
 
 
