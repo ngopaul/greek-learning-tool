@@ -1,5 +1,5 @@
 import React, {createContext, useState, useEffect} from 'react';
-import {loadOpenGNTData, loadRMACDescriptions, loadStudyChunks} from "../utils/dataLoader";
+import {loadDataVersions, loadOpenGNTData, loadRMACDescriptions, loadStudyChunks} from "../utils/dataLoader";
 import {getSmartChunksToTest, getChunksToTest} from "../utils/getTestWords";
 
 // Create the context
@@ -11,6 +11,7 @@ export const AppProvider = ({children}) => {
   const [currentChapter, setCurrentChapter] = useState(null);
   const [selectedTesters, setSelectedTesters] = useState([]);
   const [openGNTData, setOpenGNTData] = useState([]);
+  const [strongsMapping, setStrongsMapping] = useState({});
   const [studyChunks, setStudyChunks] = useState([]);
   const [RMACDescriptions, setRMACDescriptions] = useState({});
   const [loading, setLoading] = useState(true);
@@ -25,6 +26,7 @@ export const AppProvider = ({children}) => {
   const [correctLog, setCorrectLog] = useState([]); // List of { index: number, correct: boolean }
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
+  const [wordInfoOpen, setWordInfoOpen] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
   const [chapterOptions, setChapterOptions] = useState([]);
   const [selectedChapter, setSelectedChapter] = useState(null);
@@ -37,13 +39,15 @@ export const AppProvider = ({children}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [sameHashAndChunks] = await Promise.all([loadStudyChunks()]);
-        const sameHash = sameHashAndChunks[0];
-        const chunks = sameHashAndChunks[1];
+        const [needToUpdateFiles] = await Promise.all([loadDataVersions()]);
+        const [chunks] = await Promise.all([loadStudyChunks(needToUpdateFiles)]);
         const [rmacDescriptions, gntData] = await Promise.all(
-          [loadRMACDescriptions(), loadOpenGNTData(chunks, sameHash, setLoadProgress)]
+          [loadRMACDescriptions(), loadOpenGNTData(chunks, needToUpdateFiles, setLoadProgress)]
         );
-        setOpenGNTData(gntData);
+        const wordGNTData = gntData[0];
+        const strongsMapping = gntData[1];
+        setStrongsMapping(strongsMapping);
+        setOpenGNTData(wordGNTData);
         setRMACDescriptions(rmacDescriptions);
         setStudyChunks(chunks);
         setLoading(false);
@@ -444,6 +448,8 @@ export const AppProvider = ({children}) => {
         setSelectedTesters,
         openGNTData,
         setOpenGNTData,
+        strongsMapping,
+        setStrongsMapping,
         studyChunks,
         setStudyChunks,
         RMACDescriptions,
@@ -471,6 +477,8 @@ export const AppProvider = ({children}) => {
         setSettingsOpen,
         helpOpen,
         setHelpOpen,
+        wordInfoOpen,
+        setWordInfoOpen,
         selectedBook,
         setSelectedBook,
         chapterOptions,

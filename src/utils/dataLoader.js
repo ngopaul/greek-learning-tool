@@ -19,6 +19,21 @@ const loadFromIndexedDB = async () => {
   return await db.words.toArray(); // Retrieve all stored data
 };
 
+export const loadDataVersions = async () => {
+  // Get the hash of /data/study_chunks.csv
+  const response = await fetch('/data/data_versions.txt');
+  const dataVersions = await response.text();
+  const isSameVersion = localStorage.getItem('dataVersion') === dataVersions;
+  if (isSameVersion) {
+    console.log("Data version same - Loading data from local cache");
+    return false;
+  }
+  localStorage.setItem('dataVersion', dataVersions);
+  console.log("Data version different - Loading data from server");
+  return true;
+}
+
+
 /* Function to parse OpenGNT_keyedFeatures.csv
  * Returns a very large list of objects. Each object has the following fields:
  *  Greek: the greek
@@ -26,17 +41,16 @@ const loadFromIndexedDB = async () => {
  *  English: the english meaning of the word
  *  BookChapterVerseWord: returns that object (with those fields, all of them being integers)
  */
-export const loadOpenGNTData = async (studyChunks, sameHash, setLoadProgress) => {
+export const loadOpenGNTData = async (studyChunks, needToUpdateFiles, setLoadProgress) => {
+  console.log("Loading OpenGNT data");
   // if sameHash is true, then load the data from IndexedDB
-  if (sameHash) {
+  if (!needToUpdateFiles) {
     const storedData = await loadFromIndexedDB();
     if (storedData && storedData.length > 0) {
-      console.log("Loading OpenGNT data from IndexedDB");
       setLoadProgress(100);
-      return storedData;
+      return [storedData, JSON.parse(localStorage.getItem('strongs_mapping'))];
     }
   }
-  console.log("Loading OpenGNT data from server");
   // otherwise, load the data from the server
   const response = await fetch('/data/OpenGNT_version3_3.csv');
   const csvData = await response.text();
@@ -49,9 +63,10 @@ export const loadOpenGNTData = async (studyChunks, sameHash, setLoadProgress) =>
         let sizeBeforeUpdate = totalWords / 100;
         let currentSizeBeforeUpdate = 0;
         const mappedData = [];
+        const strongsMapping = {};
 
         // Instead of using map, loop asynchronously to allow state updates
-        let previousWordIdx = 1;
+        let previousWordIdx = 0;
         let currentBook = 40;
         let currentChapter = 1;
         let currentVerse = 1;
@@ -82,6 +97,24 @@ export const loadOpenGNTData = async (studyChunks, sameHash, setLoadProgress) =>
               StrongsNumber: strongsNumber
             });
 
+            if (strongsMapping[strongsNumber]) {
+              if (strongsMapping[strongsNumber][morphology]) {
+                // add to the morphology dictionary's count
+                strongsMapping[strongsNumber][morphology].count += 1
+              } else {
+                strongsMapping[strongsNumber][morphology] = {
+                  greek: greek,
+                  count: 1
+                }
+              }
+            } else {
+              strongsMapping[strongsNumber] = {}
+              strongsMapping[strongsNumber][morphology] = {
+                greek: greek,
+                count: 1
+              }
+            }
+
             // Increment the processed words and update progress
             processedWords++;
 
@@ -98,7 +131,8 @@ export const loadOpenGNTData = async (studyChunks, sameHash, setLoadProgress) =>
         }
         // Save the processed data to IndexedDB
         await saveToIndexedDB(mappedData);
-        resolve(mappedData);
+        localStorage.setItem('strongs_mapping', JSON.stringify(strongsMapping));
+        resolve([mappedData, strongsMapping]);
       }, error: (err) => {
         reject(err);
       },
@@ -115,18 +149,14 @@ export const loadOpenGNTData = async (studyChunks, sameHash, setLoadProgress) =>
  *  endings: what the word must end with in order to be tested by this study chunk
  */
 
-export const loadStudyChunks = async () => {
+export const loadStudyChunks = async (needToUpdateFiles) => {
   // Get the hash of /data/study_chunks.csv
+  console.log("Loading study_chunks.csv");
   const response = await fetch('/data/study_chunks.csv');
   const csvData = await response.text();
-  const hash = createHash('sha256').update(csvData).digest('hex');
-  // compare hash to hash in localStorage
-  const hashIsInLocalStorage = localStorage.getItem('study_chunks_hash') === hash;
-  if (hashIsInLocalStorage) {
-    console.log("Loading study_chunks.csv from localStorage");
-    return [hashIsInLocalStorage, JSON.parse(localStorage.getItem('study_chunks'))];
+  if (!needToUpdateFiles) {
+    return JSON.parse(localStorage.getItem('study_chunks'));
   }
-  console.log("Loading study_chunks.csv from system");
   return new Promise((resolve, reject) => {
     Papa.parse(csvData, {
       header: true, complete: (results) => {
@@ -161,10 +191,8 @@ export const loadStudyChunks = async () => {
           unitDict[unit].push(entry);
         });
 
-        resolve([hashIsInLocalStorage, unitDict]);
-        // Store the hash in localStorage
-        localStorage.setItem('study_chunks_hash', hash);
         localStorage.setItem('study_chunks', JSON.stringify(unitDict));
+        resolve(unitDict);
       }, error: (err) => {
         reject(err);
       },
@@ -173,6 +201,7 @@ export const loadStudyChunks = async () => {
 };
 
 export const loadRMACDescriptions = async () => {
+  console.log("Loading RMAC descriptions");
   const response = await fetch('/data/OpenGNT_DictRMAC_English.tsv');
   const tsvData = await response.text();
 
@@ -250,7 +279,7 @@ const parseEnglishMeaning = (tbessg) => {
  *  word number: int
  */
 const parseBookChapterVerseWord = (previousWordIdx, bookChapterVerse, previousBook, previousChapter, previousVerse) => {
-  if (!bookChapterVerse || !previousWordIdx) {
+  if (!bookChapterVerse || previousWordIdx === null || previousWordIdx === undefined) {
     return null;
   }
   // bookChapterVerse of the form〔40｜1｜1〕, we want the third one
@@ -317,6 +346,12 @@ const parseStudyChunkID = (studyChunks, greek, morphology) => {
  * which means that the following letter should not be in the ending
  * greekWordEndsWithEnding("κοινωνίαν", "![ιερ]αν") => false
  * greekWordEndsWithEnding("κοινωνίαν", "ιαν") => true
+ * greekWordEndsWithEnding("Βίβλος", "![ιερ]α") => false
+ * greekWordEndsWithEnding("Βίβλος", "ης") => false
+ * greekWordEndsWithEnding("Βίβλος", "ος") => true
+ * greekWordEndsWithEnding("ἡ", "ἡ") => true
+ * greekWordEndsWithEnding("ἡ", "τῆς") => false
+ * greekWordEndsWithEnding("τῆς", "ἡ") => false
  */
 const greekWordEndsWithEnding = (greek, ending) => {
   const vowels_to_possibilities = {
@@ -334,79 +369,60 @@ const greekWordEndsWithEnding = (greek, ending) => {
   // Find the last vowel in the ending based on the keys in vowels_to_possibilities
   let vowelIndices = []
 
+  const getCharPossilibities = (char) => {
+    const charPossibilities = [];
+    charPossibilities.push(char);
+    if (vowels_to_possibilities[char]) {
+      for (const vowelVariation of vowels_to_possibilities[char]) {
+        charPossibilities.push(vowelVariation);
+      }
+    }
+    return charPossibilities;
+  }
+
   for (let i = ending.length - 1; i >= 0; i--) {
     if (vowels_to_possibilities[ending[i]]) {
       vowelIndices.push(i)
     }
   }
 
-  // Initialize possible endings with the original ending
-  let possibleEndings = [ending];
-
-  // If there is a vowel in the ending (lastVowelIndex is not -1)
-  for (let vowelIndex of vowelIndices) {
-    let possibilities = vowels_to_possibilities[ending[vowelIndex]];
-
-    // Generate multiple endings by replacing the last vowel with each possibility
-    possibilities.forEach(vowel => {
-      let newEnding = ending.substring(0, vowelIndex) + vowel + ending.substring(vowelIndex + 1);
-      possibleEndings.push(newEnding);
-    });
-  }
-
   // generate possible endings again with the ability to negate
   let includesNegation = false;
-  let smartEndings = [];
-  for (let pei = 0; pei < possibleEndings.length; ++pei) {
-    let possibleEnding = possibleEndings[pei];
-    smartEndings.push([]);
-    for (let i = 0; i < possibleEnding.length; i++) {
-      if (possibleEnding[i] === '!') {
-        includesNegation = true;
-        const nextChars = [];
-        for (let j = i+2; possibleEnding[j] !== "]"; j++) {
-          nextChars.push(possibleEnding[j]);
-          ++i;
-        }
-        smartEndings[pei].push([false, nextChars]);
-        i = i + 2;
-      } else {
-        const currentChar = possibleEnding[i];
-        smartEndings[pei].push([true, currentChar]);
+  let smartEnding = [];
+  for (let i = 0; i < ending.length; i++) {
+    if (ending[i] === '!') {
+      includesNegation = true;
+      const nextChars = new Set();
+      for (let j = i+2; ending[j] !== "]"; j++) {
+        getCharPossilibities(ending[j]).forEach(item => nextChars.add(item))
+        ++i;
       }
+      smartEnding.push([false, nextChars]);
+      i = i + 2;
+    } else {
+      const currentChar = ending[i];
+      const nextChars = new Set(getCharPossilibities(currentChar));
+      smartEnding.push([true, nextChars]);
     }
   }
 
-  let failedNegationCheck = false;
-  for (let smartEnding of smartEndings) {
-    if (greek.length >= smartEnding.length) {
-      let endingCorrect = true;
-      for (let i = greek.length - 1; i > greek.length - 1 - smartEnding.length; --i) {
-        const isPositiveMatch = smartEnding[i - greek.length + smartEnding.length][0];
-        const charToMatch = smartEnding[i - greek.length + smartEnding.length][1];
-        if (isPositiveMatch) {
-          if (greek[i] !== charToMatch) {
-            endingCorrect = false;
-            break;
-          }
-        } else {
-          if (charToMatch.includes(greek[i])) {
-            failedNegationCheck = true;
-            endingCorrect = false;
-            break;
-          }
+  // iterate backwards through smartEnding, and backwards through the greek.length
+  if (greek.length < smartEnding.length) {
+    return false;
+  } else {
+    for (let i = greek.length - 1; i > greek.length - 1 - smartEnding.length; --i) {
+      const isPositiveMatch = smartEnding[i - greek.length + smartEnding.length][0];
+      const charSet = smartEnding[i - greek.length + smartEnding.length][1];
+      if (isPositiveMatch) {
+        if (!charSet.has(greek[i])) {
+          return false;
         }
-      }
-      if (endingCorrect && !includesNegation) {
-        return true;
+      } else {
+        if (charSet.has(greek[i])) {
+          return false;
+        }
       }
     }
   }
-  if (includesNegation && failedNegationCheck) {
-    return false;
-  } else if (includesNegation && !failedNegationCheck) {
-    return true;
-  }
-  // does not include a negation and did not find a match
-  return false;
+  return true;
 }

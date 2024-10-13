@@ -16,9 +16,14 @@ function App() {
         <CircularProgress />
         {
           (loadProgress === 0) ? (
-            <Typography variant="h6">
-              {"Loading Book Units and Greek Morphologies..."}
-            </Typography>
+            <>
+              <Typography variant="h6">
+                {"Loading Book Units and Greek Morphologies..."}
+              </Typography>
+              <Typography variant="body1">
+                If this takes longer than a couple seconds, check your connection or refresh.
+              </Typography>
+            </>
           ) : (
             (loadProgress < 99) ? (
               <Typography variant="h6">

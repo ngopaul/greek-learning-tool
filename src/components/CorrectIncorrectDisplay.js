@@ -29,7 +29,14 @@ const CorrectIncorrectDisplay = () => {
     <Box sx={{ marginBottom: 1, px: 2, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
       <Box sx={{ px: 2, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
         <Paper elevation={2}
-               sx={{display: 'flex', justifyContent: 'space-around', padding: 0, width: '40vw', maxWidth: 175, mx: 0}}
+               sx={ testWordIndices.has(currentIndex) ?
+                {display: 'flex', justifyContent: 'space-around', padding: 0, width: '40vw', maxWidth: 175, mx: 0,
+                  backgroundColor: "white",
+                  '&:hover': {
+                    backgroundColor: 'grey.100'
+                  },
+                  cursor: 'pointer'} : {display: 'flex', justifyContent: 'space-around', padding: 0, width: '40vw', maxWidth: 175, mx: 0,}
+               }
                onClick={() => {
                  markWord(currentIndex, false);
                }}
@@ -44,7 +51,14 @@ const CorrectIncorrectDisplay = () => {
           }
         </Paper>
         <Paper elevation={2}
-               sx={{display: 'flex', justifyContent: 'space-around', padding: 0, width: '40vw', maxWidth: 175, mx: 0}}
+               sx={ testWordIndices.has(currentIndex) ?
+                 {display: 'flex', justifyContent: 'space-around', padding: 0, width: '40vw', maxWidth: 175, mx: 0,
+                 backgroundColor: "white",
+                 '&:hover': {
+                   backgroundColor: 'grey.100'
+                 },
+                 cursor: 'pointer'} : {display: 'flex', justifyContent: 'space-around', padding: 0, width: '40vw', maxWidth: 175, mx: 0,}
+               }
                onClick={() => {
                  markWord(currentIndex, true);
                }}
