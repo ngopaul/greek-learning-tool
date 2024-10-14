@@ -47,8 +47,8 @@ const WordInfoPopup = () => {
       <Box sx={{"my": 2}}>
         {
           (Object.keys(possibleDeclensions).map((declension, index) => (
-          <Box sx={{py: 1}}>
-            <Typography key={index} variant="body1" sx={{flex: 1, textAlign: 'center'}}>
+          <Box key={"word-declension-" + index} sx={{py: 1}}>
+            <Typography variant="body1" sx={{flex: 1, textAlign: 'center'}}>
               {RMACDescriptions[declension]}: {possibleDeclensions[declension].greek} ({possibleDeclensions[declension].count})
             </Typography>
           </Box>)))

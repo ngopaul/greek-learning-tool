@@ -28,8 +28,8 @@ const MorphologyBanner = () => {
              overflowX: 'auto', whiteSpace: 'nowrap'
              }}>
         {showAnswer ? (morphParts.map((part, index) => (
-            <Box sx={{px: 1}}>
-              <Typography key={index} variant="body1" sx={{flex: 1, textAlign: 'center'}}>
+            <Box key={"morphology-banner-" + index} sx={{px: 1}}>
+              <Typography variant="body1" sx={{flex: 1, textAlign: 'center'}}>
                 {part}
               </Typography>
             </Box>))) : (morphParts.map((part, index) => (
