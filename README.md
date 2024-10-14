@@ -103,3 +103,8 @@ This is the main component of the app. It displays everything else by using comp
 
 This is the context for the app. It contains the state of the app, and the functions to update the state.
 It provides a centralized place for all the variables that are used throughout the app.
+
+## License
+[Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/)
+
+Based on a work at https://github.com/eliranwong/OpenGNT.
