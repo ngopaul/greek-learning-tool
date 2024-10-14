@@ -64,7 +64,7 @@ const InfoPopup = () => {
         {/* Grammar Tables Box */}
         <Box sx={{ flexGrow: 5, flexBasis: 0, mx: 2 }}>
           <Typography variant="subtitle2" color={grey[800]}>
-            Learn Greek grammar and vocabulary from "A Reader's Grammar of the Greek New Testament"!
+            Learn Greek grammar from "A Reader's Grammar of the Greek New Testament"!
             By selecting a unit to test, those words will be hidden ("?") as you go through the Bible.
             Also check out "Unit Learning" in settings - use the whole Bible to learn the grammar of a unit!
           </Typography>
