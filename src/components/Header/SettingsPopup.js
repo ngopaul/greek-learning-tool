@@ -6,11 +6,26 @@ import grey from "@mui/material/colors/grey";
 
 const SettingsPopup = () => {
   const { settingsOpen, setSettingsOpen, showAnswerChecked, readingMode, handleCheckboxShowAnswer,
-    handleRadioChange, smartUnitLearning, handleSetSmartUnitLearning, restartLearning, showEnglishInContext,
-    setShowEnglishInContext} = useContext(AppContext);
+    handleChangeReadingMode, smartUnitLearning, handleSetSmartUnitLearning, restartLearning, showEnglishInContext,
+    setShowEnglishInContext, testingMode, setTestingMode} = useContext(AppContext);
 
   return (
     <Popup open={settingsOpen} onClose={() => setSettingsOpen(false)} title="Settings">
+      <Box sx={{ mt: 2, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Typography sx={{ mx: 2 }} variant="body1">Testing Mode:</Typography>
+        <RadioGroup
+          sx={{mx: 2}} row={true}
+          value={testingMode}
+          onChange={(event) => setTestingMode(event.target.value)}
+          name="learningMode">
+          <FormControlLabel value="morphology" control={<Radio/>} label="Morphology (parse the word)"/>
+          <FormControlLabel value="meaning" control={<Radio/>} label="Meaning (define the root)"/>
+        </RadioGroup>
+      </Box>
+      <Typography sx={{mx: 2}} variant="subtitle2" color={grey[500]}>
+        Choose between testing grammar (parsing the words) or testing meaning (defining the root).
+      </Typography>
+
       <Box sx={{ mt: 2, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
         <Typography sx={{ mx: 2 }} variant="body1">Show English below Word Context:</Typography>
         <Checkbox
@@ -40,7 +55,7 @@ const SettingsPopup = () => {
         <RadioGroup
           sx={{mx: 2}} row={true}
           value={readingMode}
-          onChange={handleRadioChange}
+          onChange={handleChangeReadingMode}
           name="learningMode">
           <FormControlLabel value="chapter" control={<Radio/>} label="Bible Reading"/>
           <FormControlLabel value="unit" control={<Radio/>} label="Unit Learning"/>

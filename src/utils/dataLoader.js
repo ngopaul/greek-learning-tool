@@ -92,7 +92,7 @@ export const loadOpenGNTData = async (studyChunks, needToUpdateFiles, setLoadPro
             const greek = parseGreekWord(greekBreakdown);
             const morphology = parseMorphology(greekBreakdown);
             const strongsNumber = parseStrongsNumber(greekBreakdown);
-            const english = parseEnglishMeaning(tbessg);
+            const [rootMeaning, english] = parseEnglishMeaning(tbessg);
             const bookChapterVerseWord = parseBookChapterVerseWord(previousWordIdx, bookChapterVerse, currentBook, currentChapter, currentVerse);
             currentBook = bookChapterVerseWord.book;
             currentChapter = bookChapterVerseWord.chapter;
@@ -106,6 +106,7 @@ export const loadOpenGNTData = async (studyChunks, needToUpdateFiles, setLoadPro
               Greek: greek,
               Morphology: morphology,
               English: english,
+              Meaning: rootMeaning,
               StudyChunkID: studyChunkID,
               StrongsNumber: strongsNumber
             });
@@ -279,8 +280,8 @@ const parseEnglishMeaning = (tbessg) => {
   if (!tbessg) {
     return '';
   }
-  const match = tbessg.match(/〔.*?｜(.*?)｜.*?〕/);
-  return match ? match[1] : '';
+  const tbessgValues = tbessg.slice(1, -1).split('｜');
+  return [tbessgValues[0], tbessgValues[1]];
 };
 
 /*

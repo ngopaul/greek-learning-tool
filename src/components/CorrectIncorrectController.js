@@ -7,7 +7,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import {useContext} from "react";
 import {AppContext} from "../contexts/AppContext";
 
-const CorrectIncorrectDisplay = () => {
+const CorrectIncorrectController = () => {
   const { displayWords, currentIndex, readingMode, markWord, correctLog, testWordIndices} = useContext(AppContext);
 
   if (displayWords.length === 0) {
@@ -79,4 +79,4 @@ const CorrectIncorrectDisplay = () => {
 
 };
 
-export default CorrectIncorrectDisplay;
+export default CorrectIncorrectController;

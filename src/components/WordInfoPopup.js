@@ -37,14 +37,25 @@ const WordInfoPopup = () => {
 
   return (
     <Popup open={wordInfoOpen} onClose={() => setWordInfoOpen(false)}
-           title={"Usages of " + strongsEntry["lemma"]}>
+           title={"Info On: " + currentWord.Greek}>
+      <Typography variant="body1">
+        {currentWord.Greek}: {RMACDescriptions[currentWord.Morphology]}
+      </Typography>
+      <hr/>
+      <Typography variant="h6">
+        {strongsEntry["lemma"]}
+      </Typography>
+      <Typography variant="body1">
+        Meaning: {currentWord.Meaning}
+      </Typography>
       <Typography variant="body1">
         Strong's Definition: {strongsGreekDictionary[currentStrongs]["strongs_def"] ? strongsGreekDictionary[currentStrongs]["strongs_def"] : "[none]"}
       </Typography>
       <Typography variant="body1">
         Derivation: {strongsGreekDictionary[currentStrongs]["derivation"] ? strongsGreekDictionary[currentStrongs]["derivation"] : "[none]"}
       </Typography>
-      <Box sx={{"my": 2}}>
+      <hr/>
+      <Box sx={{"my": 1}}>
         {
           (Object.keys(possibleDeclensions).map((declension, index) => (
           <Box key={"word-declension-" + index} sx={{py: 1}}>

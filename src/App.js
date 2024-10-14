@@ -1,12 +1,13 @@
 import React, {useContext} from 'react';
 import Header from './components/Header';
 import WordDisplay from './components/WordDisplay';
-import MorphologyBanner from './components/MorphologyBanner';
+import MorphologyDisplay from './components/MorphologyDisplay';
 import {Container, CircularProgress, Typography, Box} from '@mui/material';
 import {AppContext} from "./contexts/AppContext";
-import CorrectIncorrectDisplay from "./components/CorrectIncorrectDisplay";
+import CorrectIncorrectController from "./components/CorrectIncorrectController";
 import WordContext from "./components/WordContext";
 import StudyProgress from "./components/StudyProgress";
+import AnswerDisplay from "./components/AnswerDisplay";
 
 function App() {
   const { loading, loadProgress, gotNewData } = useContext(AppContext);
@@ -68,14 +69,12 @@ function App() {
         height: 'inherit'
       }}>
         <WordDisplay/>
-        <CorrectIncorrectDisplay/>
+        <AnswerDisplay/>
+        <CorrectIncorrectController/>
         <WordContext/>
         {/* Make sure that the user can scroll up until the point where the header is no longer visible */}
         <div style={{height: '80vh'}}></div>
       </Container>
-      <div>
-        <MorphologyBanner/>
-      </div>
 
     </div>
   );

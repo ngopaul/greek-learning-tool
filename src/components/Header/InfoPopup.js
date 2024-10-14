@@ -3,6 +3,7 @@ import {unitNameToTables} from "../../utils/ChapterTables";
 import Popup from "../Popup";
 import React, {useContext} from "react";
 import {AppContext} from "../../contexts/AppContext";
+import grey from "@mui/material/colors/grey";
 
 const InfoPopup = () => {
   const { helpOpen, setHelpOpen, testWordIndices, currentIndex, displayWords,
@@ -62,13 +63,19 @@ const InfoPopup = () => {
         )}
         {/* Grammar Tables Box */}
         <Box sx={{ flexGrow: 5, flexBasis: 0, mx: 2 }}>
+          <Typography variant="subtitle2" color={grey[800]}>
+            Learn Greek grammar and vocabulary from "A Reader's Grammar of the Greek New Testament"!
+            By selecting a unit to test, those words will be hidden ("?") as you go through the Bible.
+            Also check out "Unit Learning" in settings - use the whole Bible to learn the grammar of a unit!
+          </Typography>
+          <hr/>
           {
             (
               testWordIndices.has(currentIndex)
             ) ? (unitNameToTables[displayWords[currentIndex].StudyChunkID.split(" | ")[0]]) :
               (
                 selectedTesters.length === 1 ? (unitNameToTables[selectedTesters[0].value]) : (
-                  <Typography variant="body1">
+                  <Typography variant="subtitle2" color={grey[800]}>
                     When testing one unit, this area will show the grammar tables for the unit being tested.
                     When testing multiple units at the same time, this will only show the relevant table on a tested word.
                   </Typography>

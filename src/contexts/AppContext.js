@@ -24,6 +24,7 @@ export const AppProvider = ({children}) => {
   const [showEnglishInContext, setShowEnglishInContext] = useState(true);
   const [userProgress, setUserProgress] = useState({});
   const [readingMode, setReadingMode] = useState('chapter'); // 'chapter' or 'unit'
+  const [testingMode, setTestingMode] = useState('morphology'); // 'morphology' or 'meaning'
   const [smartUnitLearning, setSmartUnitLearning] = useState(true);
   const [correctLog, setCorrectLog] = useState([]); // List of { index: number, correct: boolean }
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -434,7 +435,7 @@ export const AppProvider = ({children}) => {
     onSetDefaultShowAnswer(isChecked);  // Call the callback with the updated value
   };
 
-  const handleRadioChange = (event) => {
+  const handleChangeReadingMode = (event) => {
     const newReadingMode = event.target.value;
     restartLearning();
     setReadingMode(newReadingMode);
@@ -486,6 +487,8 @@ export const AppProvider = ({children}) => {
         setUserProgress,
         readingMode,
         setReadingMode,
+        testingMode,
+        setTestingMode,
         smartUnitLearning,
         handleSetSmartUnitLearning,
         correctLog,
@@ -514,7 +517,7 @@ export const AppProvider = ({children}) => {
         loadProgress,
         setLoadProgress,
         handleCheckboxShowAnswer,
-        handleRadioChange,
+        handleChangeReadingMode,
         startLearning,
         markWord,
         onBookSelect,

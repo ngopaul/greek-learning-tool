@@ -244,36 +244,6 @@ const WordDisplay = () => {
             </Icon>
           </Box>
         </Box>
-
-        {/* English Translation */}
-        <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', justifyContent: 'center',
-          alignItems: 'center', marginTop: '20px' }}>
-          <Box sx={{ width: "100%" }}>
-            <Paper elevation={3}
-                   sx={{
-                     padding: 3, maxWidth: 350, margin: 'auto',
-                     backgroundColor: "white",
-                     '&:hover': {
-                       backgroundColor: 'grey.100'
-                     },
-                     cursor: 'pointer'
-                   }}
-                   onClick={flipCard}>
-              {
-                showAnswer ? (
-                  <Typography variant="h6" >
-                    {displayEnglish}
-                  </Typography>
-                ) : (
-                  <Typography variant="h6" color="red">
-                    {displayEnglish}
-                  </Typography>
-                )
-              }
-            </Paper>
-          </Box>
-        </Box>
-
       </Box>
     </>
 
