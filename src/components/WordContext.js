@@ -3,7 +3,8 @@ import { Box, Typography } from "@mui/material";
 import { AppContext } from "../contexts/AppContext";
 
 const WordContext = () => {
-  const { displayWords, currentIndex, openGNTData, testWordIndices, setCurrentIndex } = useContext(AppContext);
+  const { displayWords, currentIndex, openGNTData, testWordIndices, setCurrentIndex,
+    showEnglishInContext, showAnswer } = useContext(AppContext);
 
   // If there are no display words, or the current index is invalid, return null
   if (displayWords.length === 0 || !displayWords[currentIndex]) {
@@ -52,19 +53,26 @@ const WordContext = () => {
           <Box>
             <Typography variant="h6" align="center">{word.Greek}</Typography>
           </Box>
-          <Box>
-            {/* Don't display the English word if it is not the same as the current word and if is also
-            one of the test words
-             */}
-            {
-              (testWordIndices.has(word.displayIndex) ? (
-                <Typography variant="body1" align="center" sx={{color: 'red'}}>?</Typography>
-                ) : (
-                  <Typography variant="body1" align="center">{word.English}</Typography>
-                )
-              )
-            }
-          </Box>
+          {
+            showEnglishInContext ? (
+              <Box>
+                {/* Don't display the English word if it is not the same as the current word and if is also
+                one of the test words
+                 */}
+                {
+                  ((
+                    (testWordIndices.has(word.displayIndex) && currentIndex !== word.displayIndex)
+                      || (currentIndex === word.displayIndex && !showAnswer)
+                    ) ? (
+                      <Typography variant="body1" align="center" sx={{color: 'red'}}>?</Typography>
+                    ) : (
+                      <Typography variant="body1" align="center">{word.English}</Typography>
+                    )
+                  )
+                }
+              </Box>
+            ) : (<></>)
+          }
         </Box>
       ))}
     </Box>

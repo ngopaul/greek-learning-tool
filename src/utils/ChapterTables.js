@@ -19,11 +19,11 @@ const chapter2_2 = [
 ]
 
 const chapter2_3 = [
-  {title: 'εἰμὶ'},
+  {title: 'εἰμὶ Present Active Indicative'},
   {col1: 'Person', col2: 'Singular', col3: '', col4: 'Plural'},
   {col1: '1st', col2: 'εἰμὶ', col3: '', col4: 'ἐσμέν'},
   {col1: '2nd', col2: 'εἶ', col3: '', col4: 'ἐστέ'},
-  {col1: '3rd', col2: 'ἐστί(ν)', col3: '', col4: 'εἰσί'},
+  {col1: '3rd', col2: 'ἐστί(ν)', col3: '', col4: 'εἰσί(ν)'},
   {col1: 'Infinitive', col2: '', col3: '-εἶναι', col4: ''}
 ]
 
@@ -77,6 +77,30 @@ const chapter4_3 = [
   {col1: 'Vocative', col2: '...α', col3: '...α', col4: '...αι'}
 ]
 
+const chapter5_1 = [
+  {title: 'Imperfect Indicative -ω verbs: Active Voice'},
+  {col1: 'Person', col2: 'Singular', col3: '', col4: 'Plural'},
+  {col1: '1st', col2: '-ο-ν', col3: '', col4: '-ο-μεν'},
+  {col1: '2nd', col2: '-ε-ς', col3: '', col4: '-ε-τε'},
+  {col1: '3rd', col2: '-ε(ν)', col3: '', col4: '-ο-ν'},
+];
+
+const chapter5_2 = [
+  {title: 'Imperfect Indicative -ω verbs: Middle/Passive Voice'},
+  {col1: 'Person', col2: 'Singular', col3: '', col4: 'Plural'},
+  {col1: '1st', col2: '-ό-μην', col3: '', col4: '-ό-μεθα'},
+  {col1: '2nd', col2: '-ου', col3: '', col4: '-ε-σθε'},
+  {col1: '3rd', col2: '-ε-το', col3: '', col4: '-ο-ντο'},
+];
+
+const chapter5_3 = [
+  {title: 'εἰμὶ Imperfect Indicative'},
+  {col1: 'Person', col2: 'Singular', col3: '', col4: 'Plural'},
+  {col1: '1st', col2: 'ἤμην', col3: '', col4: 'ἦμεν/ἦμεθα'},
+  {col1: '2nd', col2: 'ἦς/ἦσθα', col3: '', col4: 'ἦτε'},
+  {col1: '3rd', col2: 'ἦν', col3: '', col4: 'ἦσαν'},
+]
+
 export const unitNameToTables = {
   "Chapter 2": (
     <div>
@@ -98,6 +122,13 @@ export const unitNameToTables = {
       <SimpleTable data={chapter4_1}/>
       <SimpleTable data={chapter4_2}/>
       <SimpleTable data={chapter4_3}/>
+    </div>
+  ),
+  "Chapter 5": (
+    <div>
+      <SimpleTable data={chapter5_1}/>
+      <SimpleTable data={chapter5_2}/>
+      <SimpleTable data={chapter5_3}/>
     </div>
   )
 };

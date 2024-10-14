@@ -21,6 +21,7 @@ export const AppProvider = ({children}) => {
   const [testWordIndices, setTestWordIndices] = useState(new Set());
   const [showAnswer, setShowAnswer] = useState(true);
   const [defaultShowAnswer, setDefaultShowAnswer] = useState(true);
+  const [showEnglishInContext, setShowEnglishInContext] = useState(true);
   const [userProgress, setUserProgress] = useState({});
   const [readingMode, setReadingMode] = useState('chapter'); // 'chapter' or 'unit'
   const [smartUnitLearning, setSmartUnitLearning] = useState(true);
@@ -162,7 +163,7 @@ export const AppProvider = ({children}) => {
   }, [currentBook, currentChapter]);
 
   useEffect(() => {
-    if (currentChapter && currentChapter.data) {
+    if (readingMode === 'chapter' && currentChapter && currentChapter.data) {
       setCorrectLog(new Array(currentChapter.data.length).fill(null));
       determineTestWords(displayWords);
     }
@@ -308,14 +309,21 @@ export const AppProvider = ({children}) => {
       return;
     }
     const newCorrectLog = [...correctLog];
-    const alreadyMarked = newCorrectLog[index] !== null;
+    const oldMarkValue = newCorrectLog[index];
+    const alreadyMarked = oldMarkValue !== null;
     newCorrectLog[index] = isCorrect;
     setCorrectLog(newCorrectLog);
     // update userProgress
     const newUserProgress = {...userProgress};
     const word = displayWords[index];
     const studyChunkID = word.StudyChunkID;
+    let latterValues = [];
     if (alreadyMarked && Array.isArray(newUserProgress[studyChunkID])) {
+      // get the index of the last value that was marked as oldMarkValue
+      const lastIndex = newUserProgress[studyChunkID].lastIndexOf(oldMarkValue);
+      // remove all values from the array after the last index, saving the items in latterValues
+      latterValues = newUserProgress[studyChunkID].slice(lastIndex + 1);
+      newUserProgress[studyChunkID] = newUserProgress[studyChunkID].slice(0, lastIndex + 1);
       newUserProgress[studyChunkID].pop();
     }
     if (newUserProgress[studyChunkID]) {
@@ -325,6 +333,10 @@ export const AppProvider = ({children}) => {
       }
     } else {
       newUserProgress[studyChunkID] = [isCorrect];
+    }
+    // add the formerValues back to the array
+    if (latterValues.length > 0) {
+      newUserProgress[studyChunkID].push(...latterValues);
     }
     setUserProgress(newUserProgress);
   };
@@ -495,6 +507,8 @@ export const AppProvider = ({children}) => {
         setSelectedVerse,
         showAnswerChecked,
         setShowAnswerChecked,
+        showEnglishInContext,
+        setShowEnglishInContext,
         startedTesting,
         setStartedTesting,
         loadProgress,

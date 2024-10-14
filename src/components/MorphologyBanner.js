@@ -17,7 +17,7 @@ const MorphologyBanner = () => {
 
   // Split morphology into parts or show question marks
   const morphologyDescription = RMACDescriptions[currentWord.Morphology];
-  const morphParts = !showAnswer ? ['?'] : morphologyDescription.split(', ');
+  const morphParts = !showAnswer ? ['[click to flip]'] : morphologyDescription.split(', ');
 
   return (
     <Box sx={{position: 'fixed', bottom: 0, width: 'calc(100vw - 32px)', bgcolor: 'background.paper', py: 2, px: 2}}
@@ -34,7 +34,7 @@ const MorphologyBanner = () => {
               </Typography>
             </Box>))) : (morphParts.map((part, index) => (
           <Box sx={{px: 1}}>
-            <Typography key={index} variant="h5" color="red" sx={{flex: 1, textAlign: 'center'}}>
+            <Typography key={index} variant="body1" color="red" sx={{flex: 1, textAlign: 'center'}}>
               {part}
             </Typography>
           </Box>)))}

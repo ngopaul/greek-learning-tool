@@ -30,18 +30,30 @@ const WordInfoPopup = () => {
   }
   const currentStrongs = currentWord.StrongsNumber;
   const possibleDeclensions = strongsMapping[currentStrongs];
+  let strongsEntry = strongsGreekDictionary[currentStrongs];
+  if (!strongsEntry) {
+    strongsEntry = {};
+  }
 
   return (
     <Popup open={wordInfoOpen} onClose={() => setWordInfoOpen(false)}
-           title={"Usages of " + strongsGreekDictionary[currentStrongs]["lemma"]}>
-      {
-        (Object.keys(possibleDeclensions).map((declension, index) => (
-        <Box sx={{py: 1}}>
-          <Typography key={index} variant="body1" sx={{flex: 1, textAlign: 'center'}}>
-            {RMACDescriptions[declension]}: {possibleDeclensions[declension].greek} ({possibleDeclensions[declension].count})
-          </Typography>
-        </Box>)))
-      }
+           title={"Usages of " + strongsEntry["lemma"]}>
+      <Typography variant="body1">
+        Strong's Definition: {strongsGreekDictionary[currentStrongs]["strongs_def"] ? strongsGreekDictionary[currentStrongs]["strongs_def"] : "[none]"}
+      </Typography>
+      <Typography variant="body1">
+        Derivation: {strongsGreekDictionary[currentStrongs]["derivation"] ? strongsGreekDictionary[currentStrongs]["derivation"] : "[none]"}
+      </Typography>
+      <Box sx={{"my": 2}}>
+        {
+          (Object.keys(possibleDeclensions).map((declension, index) => (
+          <Box sx={{py: 1}}>
+            <Typography key={index} variant="body1" sx={{flex: 1, textAlign: 'center'}}>
+              {RMACDescriptions[declension]}: {possibleDeclensions[declension].greek} ({possibleDeclensions[declension].count})
+            </Typography>
+          </Box>)))
+        }
+      </Box>
     </Popup>
   )
 }

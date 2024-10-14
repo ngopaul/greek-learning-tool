@@ -2,10 +2,11 @@ import React, {useContext} from 'react';
 import Header from './components/Header';
 import WordDisplay from './components/WordDisplay';
 import MorphologyBanner from './components/MorphologyBanner';
-import {Container, CircularProgress, Typography} from '@mui/material';
+import {Container, CircularProgress, Typography, Box} from '@mui/material';
 import {AppContext} from "./contexts/AppContext";
 import CorrectIncorrectDisplay from "./components/CorrectIncorrectDisplay";
 import WordContext from "./components/WordContext";
+import StudyProgress from "./components/StudyProgress";
 
 function App() {
   const { loading, loadProgress, gotNewData } = useContext(AppContext);
@@ -56,6 +57,7 @@ function App() {
   return (
     <div>
       <Header/>
+      <StudyProgress/>
       <Container sx={{
         display: 'flex',
         flexDirection: 'column',  // Stack items vertically

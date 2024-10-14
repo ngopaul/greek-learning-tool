@@ -102,3 +102,21 @@ Chapter 4,Definite Article Nominative Plural Feminine,T-NPF,αἰ
 Chapter 4,Definite Article Genitive Plural Feminine,T-GPF,τῶν
 Chapter 4,Definite Article Dative Plural Feminine,T-DPF,ταῖς
 Chapter 4,Definite Article Accusative Plural Feminine,T-APF,τὰς|τάς
+Chapter 5,ω verbs Active 1st Person Singular,V-IAI-1S,ον
+Chapter 5,ω verbs Active 2nd Person Singular,V-IAI-2S,ες
+Chapter 5,ω verbs Active 3rd Person Singular,V-IAI-3S,ε|εν
+Chapter 5,ω verbs Active 1st Person Plural,V-IAI-1P,ομεν
+Chapter 5,ω verbs Active 2nd Person Plural,V-IAI-2P,ετε
+Chapter 5,ω verbs Active 3rd Person Plural,V-IAI-3P,ον
+Chapter 5,ω verbs Middle/Passive 1st Person Singular,V-IMI-1S|V-IPI-1S|V-INI-1S,ομην
+Chapter 5,ω verbs Middle/Passive 2nd Person Singular,V-IMI-2S|V-IPI-2S|V-INI-2S,ου
+Chapter 5,ω verbs Middle/Passive 3rd Person Singular,V-IMI-3S|V-IPI-3S|V-INI-3S|V-IEI-3S,ετο
+Chapter 5,ω verbs Middle/Passive 1st Person Plural,V-IMI-1P|V-IPI-1P|V-INI-1P,ομεθα
+Chapter 5,ω verbs Middle/Passive 2nd Person Plural,V-IMI-2P|V-IPI-2P|V-INI-2P,εσθε
+Chapter 5,ω verbs Middle/Passive 3rd Person Plural,V-IMI-3P|V-IPI-3P|V-INI-3P|V-IDI-3P,οντο
+Chapter 5,εἰμι Imperfect 1st Person Singular,V-IMI-1S,ἤμην
+Chapter 5,εἰμι Imperfect 2nd Person Singular,V-IAI-2S|V-IMI-2S,ἦς|ἦσθα
+Chapter 5,εἰμι Imperfect 3rd Person Singular,V-IAI-3S,ἦν
+Chapter 5,εἰμι Imperfect 1st Person Plural,V-IAI-1P,ἦμεν|ἦμεθα
+Chapter 5,εἰμι Imperfect 2nd Person Plural,V-IAI-2P,ἦτε
+Chapter 5,εἰμι Imperfect 3rd Person Plural,V-IAI-3P,ἦσαν

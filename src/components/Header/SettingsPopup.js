@@ -6,11 +6,24 @@ import grey from "@mui/material/colors/grey";
 
 const SettingsPopup = () => {
   const { settingsOpen, setSettingsOpen, showAnswerChecked, readingMode, handleCheckboxShowAnswer,
-    handleRadioChange, smartUnitLearning, handleSetSmartUnitLearning, restartLearning} = useContext(AppContext);
+    handleRadioChange, smartUnitLearning, handleSetSmartUnitLearning, restartLearning, showEnglishInContext,
+    setShowEnglishInContext} = useContext(AppContext);
 
   return (
     <Popup open={settingsOpen} onClose={() => setSettingsOpen(false)} title="Settings">
-      {/*  Give a radio select that will use onSetDefaultShowAnswer */}
+      <Box sx={{ mt: 2, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Typography sx={{ mx: 2 }} variant="body1">Show English below Word Context:</Typography>
+        <Checkbox
+          sx={{ mx: 2 }}
+          color="primary"
+          checked={showEnglishInContext}
+          onChange={(event) => (setShowEnglishInContext(event.target.checked))}
+        />
+      </Box>
+      <Typography sx={{ mx: 2 }} variant="subtitle2" color={grey[500]}>
+        If this is checked, the word context below the main word will also display the English contextual meaning.
+      </Typography>
+
       <Box sx={{ mt: 2, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
         <Typography sx={{ mx: 2 }} variant="body1">Show Answer on Non-Tested Words:</Typography>
         <Checkbox

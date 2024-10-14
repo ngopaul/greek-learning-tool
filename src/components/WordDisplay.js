@@ -2,15 +2,19 @@ import {Box, Button, Icon, Paper, Typography, useMediaQuery, useTheme} from '@mu
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
-import {useContext, useState} from "react";
+import React, {useContext, useState} from "react";
 import {AppContext} from "../contexts/AppContext";
 import {listOfBooks} from "../utils/constants";
 import {bibleBookAbbreviations} from "../utils/bibleUtils";
 import WordInfoPopup from "./WordInfoPopup";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import DoDisturbIcon from '@mui/icons-material/DoDisturb';
+import grey from "@mui/material/colors/grey";
 
 const WordDisplay = () => {
   const { displayWords, currentIndex, showAnswer, goLeft, goRight, flipCard,
-  readingMode, selectedTesters, startLearning, setWordInfoOpen } = useContext(AppContext);
+  readingMode, selectedTesters, startLearning, setWordInfoOpen, correctLog } = useContext(AppContext);
   const [mainWordHovered, setMainWordHovered] = useState(false);
   const theme = useTheme();
   const isProbablyAPhone = useMediaQuery(theme.breakpoints.down('sm'));
@@ -73,6 +77,38 @@ const WordDisplay = () => {
             <Typography variant="h5">
               <b>Finished Round of Testing!</b>
             </Typography>
+
+            {/* Show how many the user got correct, incorrect, and skipped with little icons next to them */}
+            <Box display="flex" justifyContent="space-between" alignItems="center">
+              <Icon fontSize={"large"}>
+                <CheckCircleIcon sx={{color: 'green'}}/>
+              </Icon>
+              <Typography variant="h6">
+                {correctLog.filter((val) => (val === true)).length + " correct"}
+              </Typography>
+            </Box>
+            <Box display="flex" justifyContent="space-between" alignItems="center">
+              <Icon fontSize={"large"}>
+                <HighlightOffIcon sx={{color: 'red'}}/>
+              </Icon>
+              <Typography variant="h6">
+                {correctLog.filter((val) => (val === false)).length + " incorrect"}
+              </Typography>
+            </Box>
+            <Box display="flex" justifyContent="space-between" alignItems="center">
+              <Icon fontSize={"large"}>
+                <DoDisturbIcon />
+              </Icon>
+              <Typography variant="h6">
+                {correctLog.filter((val) => (val === null)).length - 1 + " unlabeled"}
+              </Typography>
+            </Box>
+            <Box sx={{maxWidth: '350px'}}>
+              <Typography variant="subtitle2" color={grey[500]}>
+                [more detailed progress report is in the works! But your progress on each grammar type has been saved]
+              </Typography>
+            </Box>
+
             <Button sx={{ minWidth: "100px", maxWidth: "30vw", my: 2}} variant="contained"
                     onClick={() => {startLearning()}}>
               Start another round
@@ -98,7 +134,7 @@ const WordDisplay = () => {
   const rightWord = displayWords[currentIndex + 1] || { Greek: '', Morphology: '', English: '' };
 
   // Display question marks if it's a test word and showAnswer is false
-  const displayEnglish = !showAnswer ? '?' : currentWord.English;
+  const displayEnglish = !showAnswer ? '[click to flip]' : currentWord.English;
 
   return (
     <>
@@ -229,7 +265,7 @@ const WordDisplay = () => {
                     {displayEnglish}
                   </Typography>
                 ) : (
-                  <Typography variant="h5" color="red">
+                  <Typography variant="h6" color="red">
                     {displayEnglish}
                   </Typography>
                 )
