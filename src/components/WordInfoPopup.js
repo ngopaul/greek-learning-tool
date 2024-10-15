@@ -32,6 +32,8 @@ const WordInfoPopup = () => {
   const possibleDeclensions = strongsMapping[currentStrongs];
   let strongsEntry = strongsGreekDictionary[currentStrongs];
   if (!strongsEntry) {
+    console.log("No strongs entry for " + currentStrongs + " word: ");
+    console.log(currentWord);
     strongsEntry = {};
   }
 
@@ -49,10 +51,10 @@ const WordInfoPopup = () => {
         Meaning: {currentWord.Meaning}
       </Typography>
       <Typography variant="body1">
-        Strong's Definition: {strongsGreekDictionary[currentStrongs]["strongs_def"] ? strongsGreekDictionary[currentStrongs]["strongs_def"] : "[none]"}
+        Strong's Definition: {strongsEntry["strongs_def"] ? strongsEntry["strongs_def"] : "[none]"}
       </Typography>
       <Typography variant="body1">
-        Derivation: {strongsGreekDictionary[currentStrongs]["derivation"] ? strongsGreekDictionary[currentStrongs]["derivation"] : "[none]"}
+        Derivation: {strongsEntry["derivation"] ? strongsEntry["derivation"] : "[none]"}
       </Typography>
       <hr/>
       <Box sx={{"my": 1}}>
