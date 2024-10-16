@@ -3,6 +3,8 @@ import Popup from "./Popup";
 import React, {useContext} from "react";
 import {AppContext} from "../contexts/AppContext";
 import strongsGreekDictionary from "../utils/strongs-greek-dictionary.js";
+import {bibleNumberToBook, getGreekVerse} from "../utils/bibleUtils";
+
 
 /*
  * Display the strongsMapping information about the current word
@@ -14,9 +16,11 @@ import strongsGreekDictionary from "../utils/strongs-greek-dictionary.js";
  * 5. maybe dynamically calculate the declension/group? TODO
  */
 const WordInfoPopup = () => {
-  const { wordInfoOpen, setWordInfoOpen, currentIndex, displayWords, strongsMapping, RMACDescriptions } = useContext(AppContext);
+  const { wordInfoOpen, setWordInfoOpen, currentIndex, displayWords, strongsMapping, RMACDescriptions, strongToIdMap, strongsToDeclensionsToIdsMap, setBookChapterVerse, openGNTData } = useContext(AppContext);
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const [expandedDeclensions, setExpandedDeclensions] = React.useState({})
 
   const currentWord = displayWords[currentIndex];
   if (!currentWord) {
@@ -58,11 +62,66 @@ const WordInfoPopup = () => {
       <Box sx={{"my": 1}}>
         {
           (Object.keys(possibleDeclensions).map((declension, index) => (
-          <Box key={"word-declension-" + index} sx={{py: 1}}>
+            <>
+          <Box key={"word-declension-" + index} sx={{py: 1}} 
+              onClick={() => {
+                console.log('strong to id:', strongToIdMap)
+                console.log('currentWord:', currentWord)
+                console.log('strongsMapping', strongsMapping)
+                console.log('possibleDeclensions', possibleDeclensions)
+                console.log("strong to declension to id")
+                console.log(strongsToDeclensionsToIdsMap)
+                console.log(strongsToDeclensionsToIdsMap[currentStrongs])
+                console.log(strongsToDeclensionsToIdsMap[currentStrongs][declension])
+                console.log('biblenumbertobook:', bibleNumberToBook)
+
+
+                if (expandedDeclensions.index === index) {
+                  console.log("click on the oopen one so should close")
+                  setExpandedDeclensions({})
+                  return;
+                }
+                
+                console.log('setting expandedDeclensions', {
+                  index: index,
+                  words: strongsToDeclensionsToIdsMap[currentStrongs][declension],
+                })
+                setExpandedDeclensions({
+                  index: index,
+                  words: strongsToDeclensionsToIdsMap[currentStrongs][declension],
+                })
+              }}
+          >
             <Typography variant="body1" sx={{flex: 1, textAlign: 'center'}}>
               {RMACDescriptions[declension]}: {possibleDeclensions[declension].greek} ({possibleDeclensions[declension].count})
             </Typography>
-          </Box>)))
+            
+            
+          </Box>
+          {expandedDeclensions.index === index ? (
+            expandedDeclensions.words.map(word => 
+            (
+                <Typography variant="body1" sx={{flex: 1, textAlign: 'left'}}
+                onClick={() => {
+                  console.log("need to go to:", word.BookChapterVerseWord.verse)
+                  // moveToBookChapterVerseWord(word.BookChapterVerseWord)
+                  setExpandedDeclensions({})
+                  setBookChapterVerse(word.BookChapterVerseWord)
+                  setWordInfoOpen(false)
+          console.log('book number:',word.BookChapterVerseWord.book)
+                }}
+                >
+            {word.Greek} | {bibleNumberToBook[word.BookChapterVerseWord.book]} {word.BookChapterVerseWord.chapter}:{word.BookChapterVerseWord.verse} |  <span color="blue" style={{color:"gray"}}>
+            {getGreekVerse(word.BookChapterVerseWord, openGNTData)}
+            </span>
+          </Typography>
+              )
+            )
+          ) 
+          : null
+        }
+        </>
+        )))
         }
       </Box>
     </Popup>

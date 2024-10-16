@@ -506,6 +506,8 @@ const bibleBookToNumber = {
   "Revelation": 66
 };
 
+export const bibleNumberToBook = Object.fromEntries(Array.from(Object.entries(bibleBookToNumber), ([book, number]) => [number, book]));
+
 export const bibleBookNameToChapterCounts = {
   "genesis": 50,
   "exodus": 40,
@@ -886,4 +888,17 @@ export function parseVerseReferences(input) {
   parsedVerses = [...new Set(parsedVerses)];
 
   return parsedVerses;
+}
+
+
+export const getGreekVerse = (targetBookChapterVerseWord, openGNTData) => {
+  // const currentWord = displayWords[currentIndex];
+  const { book, chapter, verse } = targetBookChapterVerseWord;
+  const wordsInChapter = openGNTData.filter(word =>
+    word.BookChapterVerseWord.book === book &&
+    word.BookChapterVerseWord.chapter === chapter &&
+    word.BookChapterVerseWord.verse === verse
+  );
+  return wordsInChapter.map(wordData => wordData.Greek).join(" ");
+  
 }

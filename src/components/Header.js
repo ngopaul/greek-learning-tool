@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {AppBar, Box, IconButton, Toolbar } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { ContentCopy, BugReport } from '@mui/icons-material';
@@ -37,6 +37,12 @@ const customStyles = {
 
 const Header = () => {
   const {
+    displayWords,
+    currentIndex,
+    idToAddressMap,
+    currentWord,
+    currentStrongsAddresses,
+    moveToBookChapterVerseWord,
     studyChunks,
     onBookSelect,
     onChapterSelect,
@@ -59,6 +65,23 @@ const Header = () => {
     handleHelpClick,
     readingMode
   } = useContext(AppContext);
+
+  const [strongsAddresses, setStrongsAddresses] = useState([]);
+
+  useEffect(() => {
+    console.log(displayWords)
+    // console.log(currentIndex)
+    if (!displayWords) {
+      const currentWord = displayWords[currentIndex]
+      const currentWordId = currentWord.id
+  
+      const strongsAddresses = idToAddressMap[currentWordId]
+      
+      console.log('strongsAddresses:', strongsAddresses)
+    }
+  }, [])
+  
+  
 
   // Currently the 'selectedVerse' state is not reactive. Use this as temporary measure until 'selectedVerse' is reactive.
   const [curSelectedVerse, setCurSelectedVerse] = React.useState();
@@ -149,6 +172,22 @@ const Header = () => {
                     isClearable
                   />
                 </Box>
+                {/* strongs Dropdown */}
+                <Box sx={{flexGrow: 1, mx: 1}}>
+                  <Select
+                    value={selectedVerse}
+                    options={currentStrongsAddresses}
+                    onChange={(selected) => {
+                      // setSelectedVerse(selected);
+                      // setCurSelectedVerse(selected);
+                      // onVerseSelect(selected);
+                      moveToBookChapterVerseWord(selected)
+                    }}
+                    placeholder="Verse (optional)"
+                    styles={customStyles}
+                    isClearable
+                  />
+                </Box>
                 {curSelectedVerse ? (
                   <>
                   {/* Copy click */}
@@ -156,7 +195,10 @@ const Header = () => {
                   <ContentCopy/>
                 </IconButton>
                 {/* print debug */}
-              <IconButton edge="start" color="inherit" aria-label="home" onClick={printDebug}>
+              <IconButton edge="start" color="inherit" aria-label="home" onClick={() => {
+                printDebug(); 
+                console.log('currentWord:', currentWord);
+                console.log('currentStrongsAddresses:', currentStrongsAddresses)}}>
                 <BugReport/>
               </IconButton>
               </>): null}
