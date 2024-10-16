@@ -38,6 +38,15 @@ export const AppProvider = ({children}) => {
   const [showAnswerChecked, setShowAnswerChecked] = useState(true);
   const [startedTesting, setStartedTesting] = useState(false);
   const [loadProgress, setLoadProgress] = useState(0);
+  const [idToAddressMap, setIdToAddressMap] = useState({});
+  const [strongToIdMap, setStrongToIdMap] = useState({});
+  const [idToDeclensionMap, setIdToDeclensionMap] = useState({});
+  const [strongsToDeclensionsToIdsMap, setStrongsToDeclensionsToIdsMap] = useState({})
+  // const [currentStrongsAddresses, setCurrentStrongsAddresses] = useState([])
+
+  const currentWord = displayWords[currentIndex]
+  const currentStrongsAddresses = strongToIdMap && currentWord ? strongToIdMap[currentWord.StrongsNumber].map(id => idToAddressMap[id]) : [];
+  // const currentStrongsAddresses = idToAddressMap && currentWord ? idToAddressMap[currentWord.id] : [];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,6 +61,53 @@ export const AppProvider = ({children}) => {
         const wordGNTData = gntData[0];
         const strongsMapping = gntData[1];
         setStrongsMapping(strongsMapping);
+
+        const getDeclensionFromStrongsNum = (strongsNum) => strongsMapping[strongsNum];
+
+        const strongToIdMap = {}
+        const idToAddressMap = {}
+        const idToDeclensionMap = {}
+        const strongsToDeclensionsToIdsMap = {}
+        wordGNTData.map(word => {
+          const curStrongsNumber = word.StrongsNumber
+          const curPossibleDeclensions = getDeclensionFromStrongsNum(curStrongsNumber);
+          const curWordId = word.id;
+          const curWordGreek = word.Greek;
+
+          Object.keys(curPossibleDeclensions).map((declension, _) => {
+            const curGreekFromDeclension = curPossibleDeclensions[declension].greek
+            if (!idToDeclensionMap[curWordId]) {
+              idToDeclensionMap[curWordId] = []
+            }
+            if (!strongsToDeclensionsToIdsMap[curStrongsNumber]) {
+              strongsToDeclensionsToIdsMap[curStrongsNumber] = {}
+            }
+            if (!strongsToDeclensionsToIdsMap[curStrongsNumber][declension]) {
+              strongsToDeclensionsToIdsMap[curStrongsNumber][declension] = []
+            }
+            if (curWordGreek === curGreekFromDeclension) {
+              strongsToDeclensionsToIdsMap[curStrongsNumber][declension].push(word)
+              // strongsToDeclensionsToIdsMap[curStrongsNumber][declension].push(curWordId)
+              // strongsToDeclensionsToIdsMap[curStrongsNumber][declension].push(curWordGreek)
+            }
+            // console.log(curPossibleDeclensions[declension].greek)
+          })
+          // console.log(curStrongsNumber)
+          if (!strongToIdMap[curStrongsNumber]) {
+            strongToIdMap[curStrongsNumber] = []
+          }
+          
+          strongToIdMap[curStrongsNumber].push(word.id)
+
+          if (!idToAddressMap[curWordId]) {
+            idToAddressMap[curWordId] = word.BookChapterVerseWord
+          }
+          // idToAddressMap[curWordId].push(word)
+        })
+        setIdToAddressMap(idToAddressMap);
+        setStrongToIdMap(strongToIdMap);
+        setStrongsToDeclensionsToIdsMap(strongsToDeclensionsToIdsMap)
+
         setOpenGNTData(wordGNTData);
         setRMACDescriptions(rmacDescriptions);
         setStudyChunks(chunks);
@@ -159,7 +215,8 @@ export const AppProvider = ({children}) => {
   useEffect(() => {
     if (currentChapter && currentChapter.data) {
       setDisplayWords(currentChapter.data);
-      setCurrentIndex(0);
+      // ****** this is curcial because it's causing race conditions and not allowing other set current index from firing.
+      // setCurrentIndex(0);
     }
   }, [currentBook, currentChapter]);
 
@@ -193,6 +250,26 @@ export const AppProvider = ({children}) => {
     console.log('correctLog:', correctLog);
     console.log('correctLog at currentIndex:', correctLog[currentIndex]);
     console.log('showAnswer:', showAnswer);
+
+
+    // const strongToIdMap = {}
+    // const idToAddressMap = {}
+    // openGNTData.map(word => {
+    //   const curStrongsNumber = word.StrongsNumber
+    //   const curWordId = word.id;
+    //   if (!strongToIdMap[curStrongsNumber]) {
+    //     strongToIdMap[curStrongsNumber] = []
+    //   }
+    //   strongToIdMap[curStrongsNumber].push(word.id)
+    //   if (!idToAddressMap[curWordId]) {
+    //     idToAddressMap[curWordId] = word.BookChapterVerseWord
+    //   }
+    // })
+
+
+    console.log('strongToIdMap:', strongToIdMap);
+    console.log('idToAddressMap:', idToAddressMap);
+    console.log('openGNTData:', openGNTData)
   }
 
   // Function to determine which words to test
@@ -343,7 +420,10 @@ export const AppProvider = ({children}) => {
   };
 
   const onBookSelect = (selected) => {
+    console.log('currentBook:', currentBook)
+    console.log('selecting book:', selected)
     if (selected && selected.value) {
+      console.log('about to set book to:', selected)
       setCurrentBook(selected);
     } else {
       setCurrentBook(null);
@@ -357,6 +437,9 @@ export const AppProvider = ({children}) => {
   }
 
   const onChapterSelect = (selected) => {
+    console.log('selecting chapter:', selected)
+    console.log('currentBook:', currentBook)
+
     if (selected) {
       const temporaryCurrentChapter = selected;
       // console.log(openGNTData);
@@ -387,7 +470,20 @@ export const AppProvider = ({children}) => {
     }
   };
 
+  const moveToBookChapterVerseWord = (bookChapterVerseWord) => {
+    for (let i = 0; i < displayWords.length; i++) {
+      if (displayWords[i].BookChapterVerseWord === bookChapterVerseWord) {
+        setCurrentIndex(i);
+        return;
+      }
+    }
+  }
+
   const onVerseSelect = (selected) => {
+    console.log('selecting verse:', selected)
+    console.log('currentBook:', currentBook)
+
+    console.log('currentChapter:', currentChapter)
     if (!selected) {
       return;
     }
@@ -397,6 +493,51 @@ export const AppProvider = ({children}) => {
         return;
       }
     }
+  }
+
+  const setBookChapterVerse = (targetBookChapterVerseWord) => {
+    const targetBookLabel = "templabel"
+    const targetBookValue = targetBookChapterVerseWord.book
+
+    const targetChapterLabel = "tempChapterLabel"
+    const targetChapterValue = targetBookChapterVerseWord.chapter
+
+    const targetVerseValue = targetBookChapterVerseWord.verse
+
+    const targetWordValue = targetBookChapterVerseWord.word
+
+    //book
+    setCurrentBook({label: targetBookLabel, value: targetBookValue})
+
+    //chapter
+      const curChapterData = openGNTData.filter((item) => {
+        if (!item) {
+          return false;
+        }
+        const bookChapterVerseWord = item.BookChapterVerseWord;
+        if (!bookChapterVerseWord) {
+          return false;
+        }
+        // Extract chapter info from 'OpenTextWord_KEY'
+        // Example Key: "〔40.1.1.w1〕" where 40 = Matthew
+        return bookChapterVerseWord.book === targetBookValue && bookChapterVerseWord.chapter === targetChapterValue;
+      });
+      setCurrentChapter({
+        bookName: targetBookLabel,
+        bookValue: targetBookValue,
+        chapterName: targetChapterLabel,
+        chapterValue: targetChapterValue,
+        data: curChapterData
+      });
+      setSelectedTesters(selectedTesters); // trigger callback to update testers
+
+      //verse
+      for (let i = 0; i < curChapterData.length; i++) {
+        if (curChapterData[i].BookChapterVerseWord.verse === targetVerseValue && curChapterData[i].BookChapterVerseWord.word === targetWordValue) {
+          setCurrentIndex(i);
+          return;
+        }
+      }
   }
 
   const onTesterSelect = (selected) => {
@@ -412,6 +553,8 @@ export const AppProvider = ({children}) => {
     setSettingsOpen((value) => (!value));
   };
 
+
+  // pull this out into getGreekVerse in bibleUtils.
   const handleCopyClick = () => {
     const currentWord = displayWords[currentIndex];
     const { book, chapter, verse } = currentWord.BookChapterVerseWord;
@@ -535,6 +678,13 @@ export const AppProvider = ({children}) => {
         nextTestWord,
         flipCard,
         restartLearning,
+        idToAddressMap,
+        currentWord,
+        currentStrongsAddresses,
+        moveToBookChapterVerseWord,
+        strongToIdMap,
+        strongsToDeclensionsToIdsMap,
+        setBookChapterVerse,
       }}
     >
       {children}
