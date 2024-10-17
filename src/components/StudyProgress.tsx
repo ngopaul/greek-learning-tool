@@ -4,7 +4,11 @@ import {Typography, Box} from '@mui/material';
 import {AppContext} from "../contexts/AppContext";
 import LinearProgress from '@mui/material/LinearProgress';
 
-function LinearProgressWithLabel(props) {
+type Props = {
+  value: number
+}
+
+function LinearProgressWithLabel(props: Props) {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <Box sx={{ width: '100%', mr: 1 }}>
@@ -27,8 +31,12 @@ LinearProgressWithLabel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-function StudyProgress() {
-  const { readingMode, currentIndex, displayWords } = useContext(AppContext);
+const StudyProgress = () => {
+  const context = useContext(AppContext);
+  if (!context) {
+    return null;
+  }
+  const { readingMode, currentIndex, displayWords } = context;
 
   if (readingMode === 'chapter') {
     return null;

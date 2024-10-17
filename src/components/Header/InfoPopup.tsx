@@ -6,10 +6,17 @@ import {AppContext} from "../../contexts/AppContext";
 import grey from "@mui/material/colors/grey";
 
 const InfoPopup = () => {
-  const { helpOpen, setHelpOpen, testWordIndices, currentIndex, displayWords,
-    selectedTesters } = useContext(AppContext);
+
   const theme = useTheme();
   const probablyNoKeyboard = useMediaQuery(theme.breakpoints.down('md'));
+
+  const context = useContext(AppContext);
+  if (!context) {
+    return null;
+  }
+  const { helpOpen, setHelpOpen, testWordIndices, currentIndex, displayWords,
+    selectedTesters } = context;
+  
 
   return (
     <Popup open={helpOpen} onClose={() => setHelpOpen(false)} title="Help">

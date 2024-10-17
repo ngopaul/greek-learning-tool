@@ -1,3 +1,5 @@
+// @ts-nocheck
+// TODO (Caleb): nocheck..
 /**
  * @file bible_utils.js
  * @description Functions for working with the Bible, verses, chapters, etc.
@@ -5,7 +7,7 @@
 
 import { bookNameToChapterCounts } from "./constants";
 
-export const bibleBookAbbreviations= {
+export const bibleBookAbbreviations: Record<string, string>= {
   "gen": "Genesis",
   "ge": "Genesis",
   "gn": "Genesis",
@@ -506,7 +508,7 @@ const bibleBookToNumber = {
   "Revelation": 66
 };
 
-export const bibleBookNameToChapterCounts = {
+export const bibleBookNameToChapterCounts: Record<string, number> = {
   "genesis": 50,
   "exodus": 40,
   "leviticus": 27,
@@ -575,7 +577,7 @@ export const bibleBookNameToChapterCounts = {
   "revelation": 22,
 };
 
-export const bibleBookVerseCounts = {
+export const bibleBookVerseCounts: Record<string, number[]> = {
   "1 chronicles": [54, 55, 24, 43, 26, 81, 40, 40, 44, 14, 47, 40, 14, 17, 29,
     43, 27, 17, 19, 8, 30, 19, 32, 31, 31, 32, 34, 21, 30],
   "1 corinthians": [31, 16, 23, 21, 13, 20, 40, 13, 27, 33, 34, 31, 13, 40, 58,

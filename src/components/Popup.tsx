@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Box, IconButton, Typography, Dialog, DialogContent, DialogTitle } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
-const Popup = ({ open, onClose, title, children }) => {
+type PopupProps = {
+  open: boolean,
+  onClose: () => void,
+  title: string,
+  children: ReactNode,
+}
+
+const Popup = ({ open, onClose, title, children }: PopupProps) => {
   return (
     <Dialog
       open={open}

@@ -10,10 +10,23 @@ import {
   Typography
 } from '@mui/material';
 
-const SimpleTable = ({ data }) => {
+type TableTitleType = {
+  title: string
+}
+type TableRowType = {
+  col1: string,
+  col2: string,
+  col3: string,
+  col4: string,
+}
+
+export type TableDataType = [TableTitleType, ...Array<TableRowType>];
+
+const SimpleTable = ({ data }: {data: TableDataType}) => {
   return (
     <TableContainer component={Paper} sx={{ maxWidth: '100%', margin: 'auto', mt: 1 }}>
-      <Typography variant="h8" component="div" sx={{ p: 0, textAlign: 'center' }}>
+      {/** TODO (Caleb): investigate this: removed variant="h8" from below because it was causing typescript errors.*/}
+      <Typography component="div" sx={{ p: 0, textAlign: 'center' }}>
         {data[0].title}
       </Typography>
       <Table size="small">
@@ -26,7 +39,8 @@ const SimpleTable = ({ data }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.slice(2).map((row, index) => (
+          {// TODO (Caleb): fix the any...
+          data.slice(2).map((row: any, index: number) => (
             <TableRow key={index}>
               <TableCell padding="none"><b>{row.col1}</b></TableCell>
               <TableCell padding="none">{row.col2}</TableCell>

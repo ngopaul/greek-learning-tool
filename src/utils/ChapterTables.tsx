@@ -1,4 +1,7 @@
-import SimpleTable from "../components/SimpleTable";
+// @ts-nocheck
+// TODO (Caleb): nocheck..
+import { ReactNode } from "react";
+import SimpleTable, { TableDataType } from "../components/SimpleTable";
 
 const chapter2_1 = [
   {title: 'Present Indicative -ω verbs: Active Voice'},
@@ -101,16 +104,15 @@ const chapter5_3 = [
   {col1: '3rd', col2: 'ἦν', col3: '', col4: 'ἦσαν'},
 ]
 
-export const unitNameToTables = {
-  "Chapter 2": (
+export const unitNameToTables: Record<string, ReactNode> = {
+  "Chapter 2": (<div>
     <div>
-      <div>
-        <SimpleTable data={chapter2_1}/>
-        <SimpleTable data={chapter2_2}/>
-        <SimpleTable data={chapter2_3}/>
-      </div>
+      <SimpleTable data={chapter2_1}/>
+      <SimpleTable data={chapter2_2}/>
+      <SimpleTable data={chapter2_3}/>
     </div>
-  ),
+  </div>
+),
   "Chapter 3": (
     <div>
       <SimpleTable data={chapter3_1}/>
