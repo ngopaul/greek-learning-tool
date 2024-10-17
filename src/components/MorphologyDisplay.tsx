@@ -3,7 +3,11 @@ import {Box, Typography} from '@mui/material';
 import {AppContext} from "../contexts/AppContext";
 
 const MorphologyDisplay = () => {
-  const {currentIndex, displayWords, showAnswer, RMACDescriptions, flipCard} = useContext(AppContext);
+  const context = useContext(AppContext);
+  if (!context) {
+    return null;
+  }
+  const {currentIndex, displayWords, showAnswer, RMACDescriptions, flipCard} = context;
 
   if (displayWords.length === 0) {
     return null;

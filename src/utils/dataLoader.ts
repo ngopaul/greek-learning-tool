@@ -1,3 +1,5 @@
+// @ts-nocheck
+// TODO (Caleb): nocheck..
 import Papa from 'papaparse';
 import { createHash } from 'crypto-browserify';
 import Dexie from 'dexie';
@@ -54,7 +56,7 @@ export const loadDataVersions = async () => {
  *  English: the english meaning of the word
  *  BookChapterVerseWord: returns that object (with those fields, all of them being integers)
  */
-export const loadOpenGNTData = async (studyChunks, needToUpdateFiles, setLoadProgress) => {
+export const loadOpenGNTData: any = async (studyChunks, needToUpdateFiles, setLoadProgress) => {
   console.log("Loading OpenGNT data");
   // if sameHash is true, then load the data from IndexedDB
   if (!needToUpdateFiles) {
@@ -214,7 +216,7 @@ export const loadStudyChunks = async (needToUpdateFiles) => {
   });
 };
 
-export const loadRMACDescriptions = async () => {
+export const loadRMACDescriptions: any = async () => {
   console.log("Loading RMAC descriptions");
   const response = await fetch('/data/OpenGNT_DictRMAC_English.tsv');
   const tsvData = await response.text();

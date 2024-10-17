@@ -3,7 +3,11 @@ import React, {useContext} from "react";
 import {AppContext} from "../contexts/AppContext";
 
 const MeaningDisplay = () => {
-  const {displayWords, currentIndex, showAnswer, flipCard} = useContext(AppContext);
+  const context = useContext(AppContext);
+  if (!context) {
+      return null;
+    }
+  const {displayWords, currentIndex, showAnswer, flipCard} = context;
 
   if (displayWords.length === 0) {
     return null;

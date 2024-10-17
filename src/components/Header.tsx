@@ -10,6 +10,7 @@ import {bibleBookAbbreviations, bibleBookNameToChapterCounts, bibleBookVerseCoun
 import {AppContext} from "../contexts/AppContext";
 import SettingsPopup from "./Header/SettingsPopup";
 import InfoPopup from "./Header/InfoPopup";
+import { VerseOption } from '../contexts/AppContextTypes';
 
 let bookOptions = [];
 let startValue = 40;
@@ -23,19 +24,27 @@ for (let i = 39; i < listOfBooks.length; i++) {
 
 const animatedComponents = makeAnimated();
 
+
+// TODO (Caleb): clean up the anys!!
 const customStyles = {
-  option: (provided) => ({
+  option: (provided: any) => ({
     ...provided, color: 'black',      // Customize text color
     padding: 10,         // Customize padding
-  }), singleValue: (provided) => ({
+  }), singleValue: (provided: any) => ({
     ...provided, color: 'black',      // Customize text color of the selected value
     fontSize: '1.0rem',  // Customize text size
-  }), placeholder: (provided) => ({
+  }), placeholder: (provided: any) => ({
     ...provided, color: 'grey',       // Customize placeholder text color
   }),
 };
 
 const Header = () => {
+  // Currently the 'selectedVerse' state is not reactive. Use this as temporary measure until 'selectedVerse' is reactive.
+  const [curSelectedVerse, setCurSelectedVerse] = React.useState<VerseOption>();
+  const context = useContext(AppContext);
+  if (!context) {
+    return null;
+  }
   const {
     studyChunks,
     onBookSelect,
@@ -58,14 +67,16 @@ const Header = () => {
     selectedVerse,
     handleHelpClick,
     readingMode
-  } = useContext(AppContext);
+  } = context;
 
-  // Currently the 'selectedVerse' state is not reactive. Use this as temporary measure until 'selectedVerse' is reactive.
-  const [curSelectedVerse, setCurSelectedVerse] = React.useState();
+  
+
+  type StudyChunkOption = {label: string, value: string}
 
   // Function to generate studyChunkOptions
-  const createStudyChunkOptions = (studyChunks) => {
-    let studyChunkOptions = [];
+  // TODO (Caleb): investigate this any.
+  const createStudyChunkOptions = (studyChunks: any): StudyChunkOption[] => {
+    let studyChunkOptions: StudyChunkOption[] = [];
 
     Object.keys(studyChunks).forEach(unit => {
       const label = `${unit}`;
@@ -94,10 +105,14 @@ const Header = () => {
                   <Select
                     options={bookOptions}
                     onChange={(selected) => {
+                      if (selected === null) {
+                        console.error("selected book is null somehow. investigate");
+                        return;
+                      }
                       setSelectedBook(selected.label.toLowerCase())
                       onBookSelect(selected);
-                      setSelectedChapter(null);
-                      setSelectedVerse(null);
+                      setSelectedChapter(undefined);
+                      setSelectedVerse(undefined);
                       let temporaryChapterOptions = [];
                       for (let i = 0; i < bibleBookNameToChapterCounts[selected.label.toLowerCase()]; ++i) {
                         temporaryChapterOptions.push({'value': i + 1, 'label': (i + 1).toString()});
@@ -115,11 +130,16 @@ const Header = () => {
                     value={selectedChapter}
                     options={chapterOptions}
                     onChange={(selected) => {
-                      setSelectedChapter(selected);
+                      //TODO Caleb: replicate this pattern in other places.
+                      setSelectedChapter(selected === null ? undefined : selected);
                       onChapterSelect(selected);
-                      setSelectedVerse(null);
+                      setSelectedVerse(undefined);
                       if (selected && selected.value) {
                         let temporaryVerseOptions = [];
+                        if (selectedBook === undefined) {
+                          console.error("selectedBook is undefined somehow. inestigate this")
+                          return;
+                        }
                         // bibleBookVerseCounts maps lowercase bible book names to a list of verses in each chapter
                         const verseCount = bibleBookVerseCounts[selectedBook.toLowerCase()][selected.value - 1];
                         for (let i = 0; i < verseCount; ++i) {
@@ -140,6 +160,10 @@ const Header = () => {
                     value={selectedVerse}
                     options={verseOptions}
                     onChange={(selected) => {
+                      if (!selected) {
+                        console.error("verse dropdown onchange is undefined somehow. investigate");
+                        return;
+                      }
                       setSelectedVerse(selected);
                       setCurSelectedVerse(selected);
                       onVerseSelect(selected);
