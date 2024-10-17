@@ -1,7 +1,7 @@
 import Papa from 'papaparse';
 // import { createHash } from 'crypto-browserify';
 import Dexie from 'dexie';
-import { BookChapterVerseWord } from '../types/AppContextTypes';
+import { MappedDataEntry, RMACResults, StudyChunk, StudyChunkCSVResult } from '../types/dataLoaderTypes';
 
 // Initialize Dexie database
 const db = new Dexie('OpenGNTDataDB');
@@ -52,22 +52,6 @@ export const loadDataVersions = async () => {
   }
 }
 
-export interface GNTDataEntry {
-  Greek: string;
-  Morphology: string;
-  English: string;
-  BookChapterVerseWord: BookChapterVerseWord;
-}
-
-interface MappedDataEntry {
-  BookChapterVerseWord: BookChapterVerseWord;
-  Greek: string;
-  Morphology: string;
-  English: string;
-  Meaning: string;
-  StudyChunkID: string;
-  StrongsNumber: string;
-}
 
 
 /* Function to parse OpenGNT_keyedFeatures.csv
@@ -186,32 +170,7 @@ export const loadOpenGNTData = async (studyChunks: StudyChunk[], needToUpdateFil
   });
 };
 
-export interface StudyChunk {
-  identifier: string;
-  studyChunkID: string;
-  morphologies: string[];
-  endings: string[];
-}
 
-interface StudyChunkRaw {
-  unit: string;
-  name: string;
-  morphologies:string;
-  endings:string;
-}
-
-interface StudyChunkCSVResult {
-  data: StudyChunkRaw[]
-}
-
-interface RMACEntryRaw {
-  RMAC: string;
-  Description: string[]
-}
-
-interface RMACResults {
-  data: RMACEntryRaw[]
-}
 
 
 /*
