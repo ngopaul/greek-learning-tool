@@ -3,7 +3,7 @@
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { loadDataVersions, loadOpenGNTData, loadRMACDescriptions, loadStudyChunks } from '../utils/dataLoader';
 import { getSmartChunksToTest, getChunksToTest } from '../utils/getTestWords';
-import { AppContextType, CurrentChapter, WordData } from './AppContextTypes';
+import { AppContextType, CurrentChapter, WordData } from '../types/AppContextTypes';
 
 
 

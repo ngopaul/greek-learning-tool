@@ -10,7 +10,7 @@ import {bibleBookAbbreviations, bibleBookNameToChapterCounts, bibleBookVerseCoun
 import {AppContext} from "../contexts/AppContext";
 import SettingsPopup from "./Header/SettingsPopup";
 import InfoPopup from "./Header/InfoPopup";
-import { VerseOption } from '../contexts/AppContextTypes';
+import { VerseOption } from '../types/AppContextTypes';
 
 let bookOptions = [];
 let startValue = 40;

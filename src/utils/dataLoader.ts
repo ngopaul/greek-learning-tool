@@ -1,7 +1,7 @@
 import Papa from 'papaparse';
 // import { createHash } from 'crypto-browserify';
 import Dexie from 'dexie';
-import { BookChapterVerseWord } from '../contexts/AppContextTypes';
+import { BookChapterVerseWord } from '../types/AppContextTypes';
 
 // Initialize Dexie database
 const db = new Dexie('OpenGNTDataDB');
