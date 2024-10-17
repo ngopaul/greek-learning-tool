@@ -1,5 +1,3 @@
-// @ts-nocheck
-// TODO (Caleb): nocheck..
 /*
 Function: getSmartChunksToTest
 Given:
@@ -18,13 +16,14 @@ Pseudocode:
 8. Add all the items in the first 1/5 of sortedWordGroups to wordsToTest
 9. Return wordsToTest
  */
-export const getSmartChunksToTest = (wordGroups, successes) => {
+export const getSmartChunksToTest = (wordGroups: string[], successes: Record<string, boolean[]>) => {
   // Step 1: Calculate the success percentage for each wordGroup
   let detectedStartedLearning = false;
   const successPercentages = wordGroups.map((wordGroup) => {
     const successList = successes[wordGroup] || [];
     const totalAttempts = successList.length;
-    if (totalAttempts.length > 0) {
+    // TODO: (Caleb): modified from totalAttempts.length to totalAttempts. (because this didn't make sense and typscript error)
+    if (totalAttempts > 0) {
       detectedStartedLearning = true;
     }
     const successfulAttempts = successList.filter(success => success === true).length;
@@ -100,7 +99,7 @@ Function: getChunksToTest
 Given the same input as getSmartWordsToTest, return wordGroups duplicated three times
 (pseudocode: […wordGroups, …wordGroups, …wordGroups])
  */
-export const getChunksToTest = (wordGroups, successes) => {
+export const getChunksToTest = (wordGroups: string[], successes : Record<string, boolean[]>) => {
   const wordsToTest = [];
   for (let i = 0; i < 3; i++) {
     wordsToTest.push(...wordGroups);
