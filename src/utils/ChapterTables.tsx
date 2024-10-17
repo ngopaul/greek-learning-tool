@@ -1,9 +1,7 @@
-// @ts-nocheck
-// TODO (Caleb): nocheck..
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 import SimpleTable, { TableDataType } from "../components/SimpleTable";
 
-const chapter2_1 = [
+const chapter2_1 : TableDataType = [
   {title: 'Present Indicative -ω verbs: Active Voice'},
   {col1: 'Person', col2: 'Singular', col3: '', col4: 'Plural'},
   {col1: '1st', col2: '-ω', col3: '', col4: '-ομεν'},
@@ -12,7 +10,7 @@ const chapter2_1 = [
   {col1: 'Infinitive', col2: '', col3: '-ειν', col4: ''}
 ];
 
-const chapter2_2 = [
+const chapter2_2 : TableDataType = [
   {title: 'Present Indicative -ω verbs: Middle/Passive Voice'},
   {col1: 'Person', col2: 'Singular', col3: '', col4: 'Plural'},
   {col1: '1st', col2: '-ομαι', col3: '', col4: '-όμεθα'},
@@ -21,7 +19,7 @@ const chapter2_2 = [
   {col1: 'Infinitive', col2: '', col3: '-εσθαι', col4: ''}
 ]
 
-const chapter2_3 = [
+const chapter2_3 : TableDataType = [
   {title: 'εἰμὶ Present Active Indicative'},
   {col1: 'Person', col2: 'Singular', col3: '', col4: 'Plural'},
   {col1: '1st', col2: 'εἰμὶ', col3: '', col4: 'ἐσμέν'},
@@ -30,7 +28,7 @@ const chapter2_3 = [
   {col1: 'Infinitive', col2: '', col3: '-εἶναι', col4: ''}
 ]
 
-const chapter3_1 = [
+const chapter3_1 : TableDataType = [
   {title: '2nd Declension Masculine Nouns'},
   {col1: 'Declension', col2: 'Singular', col3: 'Plural', col4: ''},
   {col1: 'Nominative', col2: 'ὁ ...ος', col3: 'οἱ ...οι', col4: ''},
@@ -40,7 +38,7 @@ const chapter3_1 = [
   {col1: 'Vocative', col2: '...ε', col3: '...οι', col4: ''}
 ]
 
-const chapter3_2 = [
+const chapter3_2 : TableDataType = [
   {title: '2nd Declension Neuter Nouns'},
   {col1: 'Declension', col2: 'Singular', col3: 'Plural', col4: ''},
   {col1: 'Nominative', col2: 'τὸ ...ον', col3: 'τὰ ...α', col4: ''},
@@ -50,7 +48,7 @@ const chapter3_2 = [
   {col1: 'Vocative', col2: '...ον', col3: '...α', col4: ''}
 ]
 
-const chapter4_1 = [
+const chapter4_1 : TableDataType = [
   {title: '1st Declension Feminine Nouns (Sing.)'},
   {col1: '', col2: 'Normal Base', col3: 'ε, ι, ρ base', col4: 'Mixed Base'},
   {col1: 'Nominative', col2: 'ἡ ...η', col3: 'ἡ ...α', col4: 'ἡ ...α'},
@@ -60,7 +58,7 @@ const chapter4_1 = [
   {col1: 'Vocative', col2: '...η', col3: '...α', col4: '...α'},
 ]
 
-const chapter4_2 = [
+const chapter4_2 : TableDataType = [
   {title: '1st Declension Feminine Nouns (Plur.)'},
   {col1: '', col2: 'Normal Base', col3: 'ε, ι, ρ base', col4: 'Mixed Base'},
   {col1: 'Nominative', col2: 'ἡ ...αι', col3: 'ἡ ...αι', col4: 'ἡ ...αι'},
@@ -70,7 +68,7 @@ const chapter4_2 = [
   {col1: 'Vocative', col2: '...αι', col3: '...αι', col4: '...αι'}
 ]
 
-const chapter4_3 = [
+const chapter4_3 : TableDataType = [
   {title: '1st Declension Masculine Nouns'},
   {col1: '', col2: 'Normal Base (Sing.)', col3: 'ε, ι, ρ base (Sing.)', col4: 'All Plurals'},
   {col1: 'Nominative', col2: 'ὁ ...ης', col3: 'ὁ ...ας', col4: 'οἱ ...αι'},
@@ -80,7 +78,7 @@ const chapter4_3 = [
   {col1: 'Vocative', col2: '...α', col3: '...α', col4: '...αι'}
 ]
 
-const chapter5_1 = [
+const chapter5_1 : TableDataType = [
   {title: 'Imperfect Indicative -ω verbs: Active Voice'},
   {col1: 'Person', col2: 'Singular', col3: '', col4: 'Plural'},
   {col1: '1st', col2: '-ο-ν', col3: '', col4: '-ο-μεν'},
@@ -88,7 +86,7 @@ const chapter5_1 = [
   {col1: '3rd', col2: '-ε(ν)', col3: '', col4: '-ο-ν'},
 ];
 
-const chapter5_2 = [
+const chapter5_2 : TableDataType = [
   {title: 'Imperfect Indicative -ω verbs: Middle/Passive Voice'},
   {col1: 'Person', col2: 'Singular', col3: '', col4: 'Plural'},
   {col1: '1st', col2: '-ό-μην', col3: '', col4: '-ό-μεθα'},
@@ -96,7 +94,7 @@ const chapter5_2 = [
   {col1: '3rd', col2: '-ε-το', col3: '', col4: '-ο-ντο'},
 ];
 
-const chapter5_3 = [
+const chapter5_3 : TableDataType = [
   {title: 'εἰμὶ Imperfect Indicative'},
   {col1: 'Person', col2: 'Singular', col3: '', col4: 'Plural'},
   {col1: '1st', col2: 'ἤμην', col3: '', col4: 'ἦμεν/ἦμεθα'},
