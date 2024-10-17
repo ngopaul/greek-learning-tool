@@ -1,5 +1,3 @@
-// @ts-nocheck
-// TODO (Caleb): nocheck..
 /**
  * @file bible_utils.js
  * @description Functions for working with the Bible, verses, chapters, etc.
@@ -439,7 +437,7 @@ export const bibleBookAbbreviations: Record<string, string>= {
   "the revelation": "Revelation"
 }
 
-const bibleBookToNumber = {
+const bibleBookToNumber : Record<string, number> = {
   "Genesis": 1,
   "Exodus": 2,
   "Leviticus": 3,
@@ -691,7 +689,7 @@ export const bibleBookVerseCounts: Record<string, number[]> = {
  * @param book {string}
  * @returns {string}
  */
-export function capitalizeBook(book) {
+export function capitalizeBook(book : string) {
   if (book.charAt(0).match(/[0-9]/)) {
     // if the first character is a number, captialize the third character
     return (
@@ -713,9 +711,9 @@ export function capitalizeBook(book) {
  * @param chapter {number}
  * @returns {string[]}
  */
-export function getListOfVerses(book, chapter) {
+export function getListOfVerses(book: string, chapter: number) {
   // read from bible/{book name}/{chapter number}.txt
-  let verses = [];
+  let verses: string[] = [];
   let request = new XMLHttpRequest();
   request.open("GET", `bible/${book}/${chapter}.txt`, false);
   request.send(null);
@@ -737,7 +735,7 @@ export function getListOfVerses(book, chapter) {
  * getReadingPortionsFromBooks(["Genesis", "Exodus"])
  * // returns [[["Genesis", 1], ["Genesis", 50]], [["Exodus", 1], ["Exodus", 40]]]
  */
-export function getReadingPortionsFromBooks(books) {
+export function getReadingPortionsFromBooks(books: string[]) {
   let reading_portions = [];
   for (let i = 0; i < books.length; i++) {
     let book = books[i];
@@ -755,7 +753,7 @@ export function getReadingPortionsFromBooks(books) {
  * @param book {string} a book name, could be anything and with or without a . at the end
  * @returns {string} a standard book name
  */
-export function standardizeBookName(book) {
+export function standardizeBookName(book: string) {
   book = book.toLowerCase();
   let book_without_period = book;
   if (book.charAt(book.length - 1) === ".") {
@@ -775,13 +773,14 @@ export function standardizeBookName(book) {
  * Returns:
  * - An array of verse strings in the format "<book> <chapter>:<verse>"
 */
-export function parseVerseReferences(input) {
+// TODO (Caleb): I dont think this is being used rn.
+export function parseVerseReferences(input : string) : [string, [number, number, number]][] {
   // no bible verse is more than 176
   input = input.replace(/\d+/g, match => {
     return parseInt(match) > 176 ? "176" : match;
   });
   const originalSegments = input.split(';');
-  let enhancedSegments = [];
+  let enhancedSegments : string[] = [];
   let lastBook = "";  // To store the last used book name
 
   // Preprocess segments to ensure each has a book name
@@ -809,7 +808,7 @@ export function parseVerseReferences(input) {
 
   // console.log(enhancedSegments);
 
-  let parsedVerses = [];
+  let parsedVerses : [string, [number, number, number]][] = [];
 
   // Process each segment
   enhancedSegments.forEach(segment => {
