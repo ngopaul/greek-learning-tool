@@ -13,16 +13,17 @@ import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import grey from "@mui/material/colors/grey";
 
 const WordDisplay = () => {
+  const [mainWordHovered, setMainWordHovered] = useState(false);
+  const theme = useTheme();
+  const isProbablyAPhone = useMediaQuery(theme.breakpoints.down('sm'));
+  const isProbablyAPhoneOrTablet = useMediaQuery(theme.breakpoints.down('md'));
   const context = useContext(AppContext);
   if (!context) {
     return null;
   }
   const { displayWords, currentIndex, showAnswer, goLeft, goRight, flipCard,
   readingMode, selectedTesters, startLearning, setWordInfoOpen, correctLog } = context;
-  const [mainWordHovered, setMainWordHovered] = useState(false);
-  const theme = useTheme();
-  const isProbablyAPhone = useMediaQuery(theme.breakpoints.down('sm'));
-  const isProbablyAPhoneOrTablet = useMediaQuery(theme.breakpoints.down('md'));
+  
 
   if (displayWords.length === 0) {
     return (
