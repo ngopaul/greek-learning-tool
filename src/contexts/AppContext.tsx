@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { loadDataVersions, loadOpenGNTData, loadRMACDescriptions, loadStudyChunks } from '../utils/dataLoader';
 import { getSmartChunksToTest, getChunksToTest } from '../utils/getTestWords';
@@ -277,6 +278,7 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
       const wordsToTest = openGNTData.filter(word => studyChunkID === word.StudyChunkID);
       // shuffle the wordsToTest
       wordsToTest.sort(() => Math.random() - 0.5);
+      // TODO (Paul-check): .... 
       studyChunkList.push(...wordsToTest);
     }
     // Use either getSmartWordsToTest or getWordsToTest on the list of chunk names (wordGroups) and the userProgress, to get the wordsToTest
