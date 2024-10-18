@@ -135,4 +135,7 @@ export interface AppContextType {
   restartLearning: () => void;
   handleSetSmartUnitLearning: (value: boolean) => void;
   printDebug: () => void;
+  chartsOpen: boolean;
+  setChartsOpen: (chartsOpen: boolean) => void;
+  handleChartsClick: () => void;
 }

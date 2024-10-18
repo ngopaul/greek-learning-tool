@@ -39,6 +39,7 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
   const [correctLog, setCorrectLog] = useState<{index: number, correct: boolean}[]>([]); // List of { index: number, correct: boolean } // TODO (Caleb): pull out
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
+  const [chartsOpen, setChartsOpen] = useState(false);
   const [wordInfoOpen, setWordInfoOpen] = useState(false);
   const [selectedBook, setSelectedBook] = useState();
   const [chapterOptions, setChapterOptions] = useState([]);
@@ -430,11 +431,6 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     setDefaultShowAnswer(shouldShow);
   }
 
-  const handleSettingsClick = () => {
-    setHelpOpen(false);
-    setSettingsOpen((value) => (!value));
-  };
-
   const handleCopyClick = () => {
     const currentWord = displayWords[currentIndex];
     const { book, chapter, verse } = currentWord.BookChapterVerseWord;
@@ -447,9 +443,22 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     navigator.clipboard.writeText(currentVerse);
   }
 
+  const handleSettingsClick = () => {
+    setHelpOpen(false);
+    setChartsOpen(false);
+    setSettingsOpen((value) => (!value));
+  };
+
   const handleHelpClick = () => {
     setSettingsOpen(false);
+    setChartsOpen(false);
     setHelpOpen((value) => (!value));
+  };
+
+  const handleChartsClick = () => {
+    setSettingsOpen(false);
+    setHelpOpen(false);
+    setChartsOpen((value) => (!value));
   };
 
   const handleCheckboxShowAnswer = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -526,6 +535,8 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
         setSettingsOpen,
         helpOpen,
         setHelpOpen,
+        chartsOpen,
+        setChartsOpen,
         wordInfoOpen,
         setWordInfoOpen,
         selectedBook,
@@ -555,6 +566,7 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
         onTesterSelect,
         onSetDefaultShowAnswer,
         handleSettingsClick,
+        handleChartsClick,
         handleCopyClick,
         printDebug,
         handleHelpClick,

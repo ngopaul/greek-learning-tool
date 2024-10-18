@@ -11,6 +11,8 @@ import {AppContext} from "../contexts/AppContext";
 import SettingsPopup from "./Header/SettingsPopup";
 import InfoPopup from "./Header/InfoPopup";
 import { VerseOption } from '../types/AppContextTypes';
+import ChartsPopup from "./Header/ChartsPopup";
+import TableChartIcon from '@mui/icons-material/TableChart';
 
 let bookOptions = [];
 let startValue = 40;
@@ -66,6 +68,7 @@ const Header = () => {
     printDebug,
     selectedVerse,
     handleHelpClick,
+    handleChartsClick,
     readingMode
   } = context;
 
@@ -202,6 +205,10 @@ const Header = () => {
               />
             </Box>
           </Box>
+          {/* Charts Button */}
+          <IconButton color="inherit" aria-label="charts" onClick={handleChartsClick}>
+            <TableChartIcon/>
+          </IconButton>
           {/* Info Button */}
           <IconButton edge="end" color="inherit" aria-label="info" onClick={handleHelpClick}>
             <QuestionMarkIcon/>
@@ -214,6 +221,9 @@ const Header = () => {
 
       {/* Info Popup */}
       <InfoPopup/>
+
+      {/* Charts Popup */}
+      <ChartsPopup/>
     </>);
 };
 

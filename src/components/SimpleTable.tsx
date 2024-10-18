@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Table,
   TableBody,
@@ -7,50 +7,100 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Typography
+  Typography, IconButton, Box
 } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
-type TableTitleType = {
-  title: string
+export type SimpleTableData = [{
+  title: string;
+  numColumns: number;
+}, ...string[][]]
+
+export type SimpleTableProps = {
+  data: SimpleTableData
 }
-type TableRowType = {
-  col1: string,
-  col2: string,
-  col3: string,
-  col4: string,
-}
 
-export type TableDataType = [TableTitleType, ...Array<TableRowType>];
+const SimpleTable = ({ data } : SimpleTableProps) => {
+  const [toggleAll, setToggleAll] = useState(false);
 
-const SimpleTable = ({ data }: {data: TableDataType}) => {
+  const handleToggleAll = () => {
+    setToggleAll((prev) => !prev); // Toggle between true and false
+  };
+
+  const numberOfColumns = data[0].numColumns;
+  const header = [];
+  for (let i = 0; i < numberOfColumns; i++) {
+    header.push(
+      <TableCell padding="none" key={"header-" + i}><b>{data[1][i]}</b></TableCell>
+    );
+  }
+  const dummyArray = Array(numberOfColumns).fill(null);
+
   return (
     <TableContainer component={Paper} sx={{ maxWidth: '100%', margin: 'auto', mt: 1 }}>
-      {/** TODO (Caleb): investigate this: removed variant="h8" from below because it was causing typescript errors.*/}
-      <Typography component="div" sx={{ p: 0, textAlign: 'center' }}>
-        {data[0].title}
-      </Typography>
+      <Box display="flex" alignItems="center" justifyContent="center">
+        <Typography variant="h6" component="div" sx={{ p: 0, textAlign: 'center', mr: 1 }}>
+          {data[0].title}
+        </Typography>
+        <IconButton onClick={handleToggleAll} aria-label="toggle-all">
+          {toggleAll ? <VisibilityOffIcon /> : <VisibilityIcon />}
+        </IconButton>
+      </Box>
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell padding="none"><b>{data[1].col1}</b></TableCell>
-            <TableCell padding="none"><b>{data[1].col2}</b></TableCell>
-            <TableCell padding="none"><b>{data[1].col3}</b></TableCell>
-            <TableCell padding="none"><b>{data[1].col4}</b></TableCell>
+            {header}
           </TableRow>
         </TableHead>
         <TableBody>
-          {// TODO (Caleb): fix the any...
-          data.slice(2).map((row: any, index: number) => (
-            <TableRow key={index}>
-              <TableCell padding="none"><b>{row.col1}</b></TableCell>
-              <TableCell padding="none">{row.col2}</TableCell>
-              <TableCell padding="none">{row.col3}</TableCell>
-              <TableCell padding="none">{row.col4}</TableCell>
+        {/** TODO (Caleb): casting row as string but there should be better way to solve this. */}
+          {data.slice(2).map((row, row_index) => (
+            <TableRow key={"row"+row_index}>
+              <TableCell padding="none"><b>{(row as string[])[0]}</b></TableCell>
+              {
+                dummyArray.map((_, col_index) => (
+                  (row as string[])[col_index + 1] ? (
+                    <TogglingTableCell value={(row as string[])[col_index + 1]} alternateValue={"?"} toggleAll={toggleAll} key={"cell-" + col_index}/>
+                  ) : (
+                    <TableCell padding="none" key={"cell-" + col_index}></TableCell>
+                  )
+
+                ))
+              }
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
+  );
+};
+
+// Component for a TableCell that toggles between two values
+const TogglingTableCell = ({ value, alternateValue, toggleAll } : {value: string; alternateValue: string; toggleAll: boolean}) => {
+  const [isToggled, setIsToggled] = useState(false);
+
+  const handleClick = () => {
+    setIsToggled(!isToggled);
+  };
+
+  // Use an effect to set the state when toggleAll is true
+  useEffect(() => {
+    setIsToggled(toggleAll);
+  }, [toggleAll]);
+
+  return (
+    <TableCell
+    // TODO (Caleb): verify why?
+    // @ts-ignore
+      px={1}
+      onClick={handleClick}
+      sx={{
+        cursor: 'pointer', // Indicates the cell is clickable
+      }}
+    >
+      {isToggled ? alternateValue : value}
+    </TableCell>
   );
 };
 
