@@ -67,7 +67,7 @@ const InfoPopup = () => {
           <ul>
             <li>
               <Typography variant="subtitle2">
-                Select a tester, then click the "?" again. Use the show/hide button to hide a table and test your
+                Select a tester, then click the chart button. Use the show/hide button to hide a table and test your
                 memory!
               </Typography>
             </li>
