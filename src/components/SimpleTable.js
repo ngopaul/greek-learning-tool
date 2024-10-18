@@ -19,6 +19,15 @@ const SimpleTable = ({ data }) => {
     setToggleAll((prev) => !prev); // Toggle between true and false
   };
 
+  const numberOfColumns = data[0].numColumns;
+  const header = [];
+  for (let i = 0; i < numberOfColumns; i++) {
+    header.push(
+      <TableCell padding="none" key={"header-" + i}><b>{data[1][i]}</b></TableCell>
+    );
+  }
+  const dummyArray = Array(numberOfColumns).fill(null);
+
   return (
     <TableContainer component={Paper} sx={{ maxWidth: '100%', margin: 'auto', mt: 1 }}>
       <Box display="flex" alignItems="center" justifyContent="center">
@@ -32,19 +41,18 @@ const SimpleTable = ({ data }) => {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell padding="none"><b>{data[1].col1}</b></TableCell>
-            <TableCell padding="none"><b>{data[1].col2}</b></TableCell>
-            <TableCell padding="none"><b>{data[1].col3}</b></TableCell>
-            <TableCell padding="none"><b>{data[1].col4}</b></TableCell>
+            {header}
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.slice(2).map((row, index) => (
-            <TableRow key={index}>
-              <TableCell padding="none"><b>{row.col1}</b></TableCell>
-              <TogglingTableCell value={row.col2} alternateValue={"?"} toggleAll={toggleAll} ></TogglingTableCell>
-              <TogglingTableCell value={row.col3} alternateValue={"?"} toggleAll={toggleAll} ></TogglingTableCell>
-              <TogglingTableCell value={row.col4} alternateValue={"?"} toggleAll={toggleAll} ></TogglingTableCell>
+          {data.slice(2).map((row, row_index) => (
+            <TableRow key={"row"+row_index}>
+              <TableCell padding="none"><b>{row[0]}</b></TableCell>
+              {
+                dummyArray.map((_, col_index) => (
+                  <TogglingTableCell value={row[col_index + 1]} alternateValue={"?"} toggleAll={toggleAll} key={"cell-" + col_index}/>
+                ))
+              }
             </TableRow>
           ))}
         </TableBody>
