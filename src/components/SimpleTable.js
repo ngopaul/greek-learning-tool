@@ -50,7 +50,12 @@ const SimpleTable = ({ data }) => {
               <TableCell padding="none"><b>{row[0]}</b></TableCell>
               {
                 dummyArray.map((_, col_index) => (
-                  <TogglingTableCell value={row[col_index + 1]} alternateValue={"?"} toggleAll={toggleAll} key={"cell-" + col_index}/>
+                  row[col_index + 1] ? (
+                    <TogglingTableCell value={row[col_index + 1]} alternateValue={"?"} toggleAll={toggleAll} key={"cell-" + col_index}/>
+                  ) : (
+                    <TableCell padding="none" key={"cell-" + col_index}></TableCell>
+                  )
+
                 ))
               }
             </TableRow>
