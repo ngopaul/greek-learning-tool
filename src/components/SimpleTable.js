@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Table,
   TableBody,
@@ -7,15 +7,28 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Typography
+  Typography, IconButton, Box
 } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const SimpleTable = ({ data }) => {
+  const [toggleAll, setToggleAll] = useState(false);
+
+  const handleToggleAll = () => {
+    setToggleAll((prev) => !prev); // Toggle between true and false
+  };
+
   return (
     <TableContainer component={Paper} sx={{ maxWidth: '100%', margin: 'auto', mt: 1 }}>
-      <Typography variant="h8" component="div" sx={{ p: 0, textAlign: 'center' }}>
-        {data[0].title}
-      </Typography>
+      <Box display="flex" alignItems="center" justifyContent="center">
+        <Typography variant="h6" component="div" sx={{ p: 0, textAlign: 'center', mr: 1 }}>
+          {data[0].title}
+        </Typography>
+        <IconButton onClick={handleToggleAll} aria-label="toggle-all">
+          {toggleAll ? <VisibilityOffIcon /> : <VisibilityIcon />}
+        </IconButton>
+      </Box>
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -29,14 +42,40 @@ const SimpleTable = ({ data }) => {
           {data.slice(2).map((row, index) => (
             <TableRow key={index}>
               <TableCell padding="none"><b>{row.col1}</b></TableCell>
-              <TableCell padding="none">{row.col2}</TableCell>
-              <TableCell padding="none">{row.col3}</TableCell>
-              <TableCell padding="none">{row.col4}</TableCell>
+              <TogglingTableCell value={row.col2} alternateValue={"?"} toggleAll={toggleAll} ></TogglingTableCell>
+              <TogglingTableCell value={row.col3} alternateValue={"?"} toggleAll={toggleAll} ></TogglingTableCell>
+              <TogglingTableCell value={row.col4} alternateValue={"?"} toggleAll={toggleAll} ></TogglingTableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
+  );
+};
+
+// Component for a TableCell that toggles between two values
+const TogglingTableCell = ({ value, alternateValue, toggleAll }) => {
+  const [isToggled, setIsToggled] = useState(false);
+
+  const handleClick = () => {
+    setIsToggled(!isToggled);
+  };
+
+  // Use an effect to set the state when toggleAll is true
+  useEffect(() => {
+    setIsToggled(toggleAll);
+  }, [toggleAll]);
+
+  return (
+    <TableCell
+      padding="none"
+      onClick={handleClick}
+      sx={{
+        cursor: 'pointer', // Indicates the cell is clickable
+      }}
+    >
+      {isToggled ? alternateValue : value}
+    </TableCell>
   );
 };
 
