@@ -238,7 +238,7 @@ export const loadStudyChunks = async (needToUpdateFiles: boolean): Promise<Recor
   });
 };
 
-export const loadRMACDescriptions: any = async () => {
+export const loadRMACDescriptions = async (): Promise<Record<string, string[]>> => {
   console.log("Loading RMAC descriptions");
   const response = await fetch('/data/OpenGNT_DictRMAC_English.tsv');
   const tsvData = await response.text();
