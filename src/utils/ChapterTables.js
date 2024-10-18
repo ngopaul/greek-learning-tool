@@ -80,7 +80,7 @@ const chapter4_3 = [
 const chapter4_4 = [
   {title: "The Definite Article: 'the'", numColumns: 7},
   ['', 'M Sing.' , 'F Sing.', 'N Sing.', 'M Plur.', 'F Plur.', 'N Plur.'],
-  ['Nominative', 'ὁ', 'ἡ', 'τὀ', 'οἱ', 'αἱ', 'τά'],
+  ['Nominative', 'ὁ', 'ἡ', 'τό', 'οἱ', 'αἱ', 'τά'],
   ['Genitive', 'τοῦ', 'τῆς', 'τοῦ', 'τῶν', 'τῶν', 'τῶν'],
   ['Dative', 'τῷ', 'τῇ', 'τῷ', 'τοῖς', 'ταῖς', 'τοῖς'],
   ['Accusative', 'τόν', 'τήν', 'τό', 'τούς', 'τάς', 'τά'],
