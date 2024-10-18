@@ -1,9 +1,8 @@
-// @ts-nocheck
-// TODO (Caleb): nocheck..
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { loadDataVersions, loadOpenGNTData, loadRMACDescriptions, loadStudyChunks } from '../utils/dataLoader';
 import { getSmartChunksToTest, getChunksToTest } from '../utils/getTestWords';
-import { AppContextType, CurrentChapter, WordData } from '../types/AppContextTypes';
+import { AppContextType, BookOption, ChapterOption, CurrentChapter, Tester, VerseOption, WordData } from '../types/AppContextTypes';
+import { StudyChunk } from '../types/dataLoaderTypes';
 
 
 
@@ -16,13 +15,14 @@ interface AppProviderProps {
 
 // Create the provider component
 export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
-  const [currentBook, setCurrentBook] = useState();
+  const [currentBook, setCurrentBook] = useState<BookOption>();
   const [currentChapter, setCurrentChapter] = useState<CurrentChapter>();
-  const [selectedTesters, setSelectedTesters] = useState([]);
+  const [selectedTesters, setSelectedTesters] = useState<Tester[]>([]);
   const [gotNewData, setGotNewData] = useState(false);
   const [openGNTData, setOpenGNTData] = useState<WordData[]>([]);
   const [strongsMapping, setStrongsMapping] = useState({});
-  const [studyChunks, setStudyChunks] = useState([]);
+  // TODO (Caleb (Paul-check): verify removing [] in initi is safe
+  const [studyChunks, setStudyChunks] = useState<Record<string, StudyChunk[]>>();
   const [RMACDescriptions, setRMACDescriptions] = useState({});
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndexRaw] = useState(0);
@@ -31,7 +31,7 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
   const [showAnswer, setShowAnswer] = useState(true);
   const [defaultShowAnswer, setDefaultShowAnswer] = useState(true);
   const [showEnglishInContext, setShowEnglishInContext] = useState(true);
-  const [userProgress, setUserProgress] = useState({});
+  const [userProgress, setUserProgress] = useState<Record<string, boolean[]>>({});
   const [readingMode, setReadingMode] = useState<"chapter" | "unit">('chapter'); // 'chapter' or 'unit'
   const [testingMode, setTestingMode] = useState<"morphology" | "meaning">('morphology'); // 'morphology' or 'meaning'
   const [smartUnitLearning, setSmartUnitLearning] = useState(true);
@@ -161,7 +161,10 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
       }
     };
 
+    // TODO (Caleb): verify this later.. 
+    // @ts-ignore
     window.addEventListener('keydown', handleKeyDown);
+    // @ts-ignore
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [displayWords.length, defaultShowAnswer, currentIndex, testWordIndices, correctLog]);
 
@@ -205,7 +208,7 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
   }
 
   // Function to determine which words to test
-  const determineTestWords = (words) => {
+  const determineTestWords = (words : WordData[]) => {
     // If no testers are selected, clear the test word indices
     if (selectedTesters.length === 0) {
       setTestWordIndices(new Set());
@@ -213,7 +216,7 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     }
 
     // Create a set to store the indices of words that should be tested
-    const testIndices = new Set();
+    const testIndices = new Set<number>();
 
     // Iterate over each word in the words array
     words.forEach((word, index) => {
@@ -251,8 +254,12 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
 
   const startLearning = () => {
     // create a list for each chunk (aka wordGroup) in studyChunks
-    const studyChunkLists = {};
-    const initialWordGroupsToTest = [];
+    const studyChunkLists : Record<string, StudyChunk[]> = {};
+    const initialWordGroupsToTest : string[] = [];
+    if (!studyChunks) {
+      // handle undefined studyChunks
+      return;
+    }
     for (const [, studyChunksForTester] of Object.entries(studyChunks)) {
       if (studyChunksForTester) {
         // Check each study chunk under this unit
@@ -310,7 +317,7 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     setCorrectLog(new Array(temporaryDisplayWords.length).fill(null));
   };
 
-  const markWord = (index, isCorrect) => {
+  const markWord = (index : number, isCorrect : boolean) => {
     if (
       displayWords.length === 0
       || (readingMode === "unit" && currentIndex === displayWords.length - 1)
@@ -327,7 +334,7 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     const newUserProgress = {...userProgress};
     const word = displayWords[index];
     const studyChunkID = word.StudyChunkID;
-    let latterValues = [];
+    let latterValues : boolean[] = [];
     if (alreadyMarked && Array.isArray(newUserProgress[studyChunkID])) {
       // get the index of the last value that was marked as oldMarkValue
       const lastIndex = newUserProgress[studyChunkID].lastIndexOf(oldMarkValue);
@@ -351,13 +358,13 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     setUserProgress(newUserProgress);
   };
 
-  const onBookSelect = (selected) => {
+  const onBookSelect = (selected : BookOption) => {
     if (selected && selected.value) {
       setCurrentBook(selected);
     } else {
-      setCurrentBook(null);
+      setCurrentBook(undefined);
     }
-    setCurrentChapter(null);
+    setCurrentChapter(undefined);
     setSelectedTesters([]);
     setCurrentIndex(0);
     setDisplayWords([]);
@@ -365,7 +372,11 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     setShowAnswer(defaultShowAnswer);
   }
 
-  const onChapterSelect = (selected) => {
+  const onChapterSelect = (selected : ChapterOption) => {
+    if (!currentBook) {
+      // TODO: Handle when book is not selected and selecting chapter here.
+      return false;
+    }
     if (selected) {
       const temporaryCurrentChapter = selected;
       // console.log(openGNTData);
@@ -378,6 +389,7 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
         if (!bookChapterVerseWord) {
           return false;
         }
+        
         // Extract chapter info from 'OpenTextWord_KEY'
         // Example Key: "〔40.1.1.w1〕" where 40 = Matthew
         return bookChapterVerseWord.book === currentBook.value && bookChapterVerseWord.chapter === temporaryCurrentChapter.value;
@@ -392,11 +404,11 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
       });
       setSelectedTesters(selectedTesters); // trigger callback to update testers
     } else {
-      setCurrentChapter(null);
+      setCurrentChapter(undefined);
     }
   };
 
-  const onVerseSelect = (selected) => {
+  const onVerseSelect = (selected : VerseOption) => {
     if (!selected) {
       return;
     }
@@ -408,11 +420,11 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     }
   }
 
-  const onTesterSelect = (selected) => {
+  const onTesterSelect = (selected : Tester[]) => {
     setSelectedTesters(selected);
   };
 
-  const onSetDefaultShowAnswer = (shouldShow) => {
+  const onSetDefaultShowAnswer = (shouldShow : boolean) => {
     setDefaultShowAnswer(shouldShow);
   }
 
@@ -462,7 +474,7 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     setTestWordIndices(new Set());
   }
 
-  const handleSetSmartUnitLearning = (value) => {
+  const handleSetSmartUnitLearning = (value : boolean) => {
     setSmartUnitLearning(value);
     if (readingMode === 'unit') {
       restartLearning();

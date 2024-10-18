@@ -9,6 +9,11 @@ export interface BookChapterVerseWord {
   word: number;
 }
 
+export interface BookOption {
+  value: number;
+  label: string;
+}
+
 export interface WordData {
   Greek: string;
   Morphology: string;
@@ -20,7 +25,7 @@ export interface WordData {
   StrongsNumber: string; // This name is confusing because it's a string.
 }
 
-interface ChapterOption {
+export interface ChapterOption {
   value: number;
   label: string;
 }
@@ -28,6 +33,10 @@ interface ChapterOption {
 export interface VerseOption {
   value: number;
   label: string;
+}
+
+export interface Tester {
+  value: string;
 }
 
 // setCurrentChapter({
@@ -109,7 +118,7 @@ export interface AppContextType {
   flipCard: () => void;
   determineTestWords: (words: WordData[]) => void;
   markWord: (index: number, isCorrect: boolean) => void;
-  onBookSelect: (selected: any) => void;
+  onBookSelect: (selected: BookOption) => void
   onChapterSelect: (selected: any) => void;
   onVerseSelect: (selected: any) => void;
   onTesterSelect: (testers: MultiValue<unknown>) => void;

@@ -62,7 +62,7 @@ export const loadDataVersions = async () => {
  *  BookChapterVerseWord: returns that object (with those fields, all of them being integers)
  */
 // TODO (Caleb): any...
-export const loadOpenGNTData = async (studyChunks: StudyChunk[], needToUpdateFiles: boolean, setLoadProgress : React.Dispatch<React.SetStateAction<number>>): Promise<any> => {
+export const loadOpenGNTData = async (studyChunks: Record<string, StudyChunk[]>, needToUpdateFiles: boolean, setLoadProgress : React.Dispatch<React.SetStateAction<number>>): Promise<any> => {
   console.log("Loading OpenGNT data");
   // if sameHash is true, then load the data from IndexedDB
   if (!needToUpdateFiles) {
@@ -351,12 +351,11 @@ const parseBookChapterVerseWord = (previousWordIdx : number, bookChapterVerse : 
 /*
  * Given the studyChunks object
  */
-const parseStudyChunkID = (studyChunks : StudyChunk[], greek : string, morphology : string) => {
+const parseStudyChunkID = (studyChunks : Record<string, StudyChunk[]>, greek : string, morphology : string) => {
   for (const [, studyChunksForTester] of Object.entries(studyChunks)) {
     if (studyChunksForTester) {
       // Check each study chunk under this unit
-      // TODO (Caleb) (Paul-check) : potential error??? added [] around studyChunksForTester 
-      for (const chunk of [studyChunksForTester]) {
+      for (const chunk of studyChunksForTester) {
         // TODO (Caleb): remove the casting! "as StudyCHunk"
         const {studyChunkID, morphologies, endings} = chunk as StudyChunk;
 
