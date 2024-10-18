@@ -120,3 +120,302 @@ Chapter 5,εἰμι Imperfect 3rd Person Singular,V-IAI-3S,ἦν
 Chapter 5,εἰμι Imperfect 1st Person Plural,V-IAI-1P,ἦμεν|ἦμεθα
 Chapter 5,εἰμι Imperfect 2nd Person Plural,V-IAI-2P,ἦτε
 Chapter 5,εἰμι Imperfect 3rd Person Plural,V-IAI-3P,ἦσαν
+Chapter 14,3rd Decl Adj in -ης/-ες Nominative Singular Masculine/Feminine,A-NSF|A-NSM,ης
+Chapter 14,3rd Decl Adj in -ης/-ες Genitive Singular Masculine/Feminine,A-GSF|A-GSM,ους
+Chapter 14,3rd Decl Adj in -ης/-ες Dative Singular Masculine/Feminine,A-DSF|A-DSM,ει
+Chapter 14,3rd Decl Adj in -ης/-ες Accusative Singular Masculine/Feminine,A-ASF|A-ASM,η
+Chapter 14,3rd Decl Adj in -ης/-ες Vocative Singular Masculine/Feminine,A-VSF|A-VSM,ες
+Chapter 14,3rd Decl Adj in -ης/-ες Nominative Singular Neuter,A-NSN,ες
+Chapter 14,3rd Decl Adj in -ης/-ες Genitive Singular Neuter,A-GSN,ους
+Chapter 14,3rd Decl Adj in -ης/-ες Dative Singular Neuter,A-DSN,ει
+Chapter 14,3rd Decl Adj in -ης/-ες Accusative Singular Neuter,A-ASN,ες
+Chapter 14,3rd Decl Adj in -ης/-ες Vocative Singular Neuter,A-VSN,ες
+Chapter 14,3rd Decl Adj in -ης/-ες Nominative Plural Masculine/Feminine,A-NPF|A-NPM,εις
+Chapter 14,3rd Decl Adj in -ης/-ες Genitive Plural Masculine/Feminine,A-GPF|A-GPM,ων
+Chapter 14,3rd Decl Adj in -ης/-ες Dative Plural Masculine/Feminine,A-DPF|A-DPM,εσι|εσιν
+Chapter 14,3rd Decl Adj in -ης/-ες Accusative Plural Masculine/Feminine,A-APM|A-APF,εις
+Chapter 14,3rd Decl Adj in -ης/-ες Vocative Plural Masculine/Feminine,A-VPM|A-VPF,εις
+Chapter 14,3rd Decl Adj in -ης/-ες Nominative Plural Neuter,A-NPN,η
+Chapter 14,3rd Decl Adj in -ης/-ες Genitive Plural Neuter,A-GPN,ων
+Chapter 14,3rd Decl Adj in -ης/-ες Dative Plural Neuter,A-DPN,εσι|εσιν
+Chapter 14,3rd Decl Adj in -ης/-ες Accusative Plural Neuter,A-APN,η
+Chapter 14,3rd Decl Adj in -ης/-ες Vocative Plural Neuter,A-VPN,η
+Chapter 14,3rd Decl Adj in -ων/-ον Nominative Singular Masculine/Feminine,A-NSF|A-NSM,ων
+Chapter 14,3rd Decl Adj in -ων/-ον Genitive Singular Masculine/Feminine,A-GSF|A-GSM,ονος
+Chapter 14,3rd Decl Adj in -ων/-ον Dative Singular Masculine/Feminine,A-DSF|A-DSM,ονι
+Chapter 14,3rd Decl Adj in -ων/-ον Accusative Singular Masculine/Feminine,A-ASF|A-ASM,ονα
+Chapter 14,3rd Decl Adj in -ων/-ον Vocative Singular Masculine/Feminine,A-VSF|A-VSM,ον
+Chapter 14,3rd Decl Adj in -ων/-ον Nominative Singular Neuter,A-NSN,ον
+Chapter 14,3rd Decl Adj in -ων/-ον Genitive Singular Neuter,A-GSN,ονος
+Chapter 14,3rd Decl Adj in -ων/-ον Dative Singular Neuter,A-DSN,ονι
+Chapter 14,3rd Decl Adj in -ων/-ον Accusative Singular Neuter,A-ASN,ον
+Chapter 14,3rd Decl Adj in -ων/-ον Vocative Singular Neuter,A-VSN,ον
+Chapter 14,3rd Decl Adj in -ων/-ον Nominative Plural Neuter,A-NPF|A-NPM,ονες
+Chapter 14,3rd Decl Adj in -ων/-ον Genitive Plural Masculine/Feminine,A-GPF|A-GPM,ονων
+Chapter 14,3rd Decl Adj in -ων/-ον Dative Plural Masculine/Feminine,A-DPF|A-DPM,οσι|οσιν
+Chapter 14,3rd Decl Adj in -ων/-ον Accusative Plural Masculine/Feminine,A-APM|A-APF,ονας
+Chapter 14,3rd Decl Adj in -ων/-ον Vocative Plural Masculine/Feminine,A-VPM|A-VPF,ονες
+Chapter 14,3rd Decl Adj in -ων/-ον Nominative Plural Neuter,A-NPN,ονα
+Chapter 14,3rd Decl Adj in -ων/-ον Genitive Plural Neuter,A-GPN,ονων
+Chapter 14,3rd Decl Adj in -ων/-ον Dative Plural Neuter,A-DPN,οσι|σοιν
+Chapter 14,3rd Decl Adj in -ων/-ον Accusative Plural Neuter,A-APN,ονα
+Chapter 14,3rd Decl Adj in -ων/-ον Vocative Plural Neuter,A-VPN,ονα
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Nominative Singular Masculine,A-NSM,υς
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Genitive Singular Masculine,A-GSM,εως
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Dative Singular Masculine,A-DSM,ει
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Accusative Singular Masculine,A-ASM,υν
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Vocative Singular Masculine,A-VSM,υ
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Nominative Singular Feminine,A-NSF,εια
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Genitive Singular Feminine,A-GSF,ειας
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Dative Singular Feminine,A-DSF,ειᾳ
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Accusative Singular Feminine,A-ASF,ειαν
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Vocative Singular Feminine,A-VSF,εια
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Nominative Singular Neuter,A-NSN,υ
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Genitive Singular Neuter,A-GSN,εως
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Dative Singular Neuter,A-DSN,ει
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Accusative Singular Neuter,A-ASN,υ
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Vocative Singular Neuter,A-VSN,υ
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Nominative Plural Masculine,A-NPM,εις
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Genitive Plural Masculine,A-GPM,εων
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Dative Plural Masculine,A-DPM,εσι|εσιν
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Accusative Plural Masculine,A-APM,εις
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Vocative Plural Masculine,A-VPM,εις
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Nominative Plural Feminine,A-NPF,ειαι
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Genitive Plural Feminine,A-GPF,ειων
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Dative Plural Feminine,A-DPF,ειαις
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Accusative Plural Feminine,A-APF,ειας
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Vocative Plural Feminine,A-VPF,ειαι
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Nominative Plural Neuter,A-NPN,εα
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Genitive Plural Neuter,A-GPN,εων
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Dative Plural Neuter,A-DPN,εσι|εσιν
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Accusative Plural Neuter,A-APN,εα
+Chapter 14,3rd Decl Adj in -υς/-εια/-υ Vocative Plural Neuter,A-VPN,εα
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Nominative Singular Masculine,A-NSM,ας
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Genitive Singular Masculine,A-GSM,αντος
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Dative Singular Masculine,A-DSM,αντι
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Accusative Singular Masculine,A-ASM,αντα
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Vocative Singular Masculine,A-VSM,ας
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Nominative Singular Feminine,A-NSF,ασα
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Genitive Singular Feminine,A-GSF,ασης
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Dative Singular Feminine,A-DSF,ασῃ
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Accusative Singular Feminine,A-ASF,ασαν
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Vocative Singular Feminine,A-VSF,ασα
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Nominative Singular Neuter,A-NSN,αν
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Genitive Singular Neuter,A-GSN,αντος
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Dative Singular Neuter,A-DSN,αντι
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Accusative Singular Neuter,A-ASN,αν
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Vocative Singular Neuter,A-VSN,αν
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Nominative Plural Masculine,A-NPM,αντες
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Genitive Plural Masculine,A-GPM,αντων
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Dative Plural Masculine,A-DPM,ασι|ασιν
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Accusative Plural Masculine,A-APM,αντας
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Vocative Plural Masculine,A-VPM,αντες
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Nominative Plural Feminine,A-NPF,ασαι
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Genitive Plural Feminine,A-GPF,ασων
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Dative Plural Feminine,A-DPF,ασαις
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Accusative Plural Feminine,A-APF,ασας
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Vocative Plural Feminine,A-VPF,ασαι
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Nominative Plural Neuter,A-NPN,αντα
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Genitive Plural Neuter,A-GPN,αντων
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Dative Plural Neuter,A-DPN,ασι|ασιν
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Accusative Plural Neuter,A-APN,αντα
+Chapter 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Vocative Plural Neuter,A-VPN,αντα
+Chapter 14,Irregular Adj πολύς/πολλή/πολύ Nominative Singular Masculine,A-NSM,πολύς
+Chapter 14,Irregular Adj πολύς/πολλή/πολύ Genitive Singular Masculine,A-GSM,πολλοῦ
+Chapter 14,Irregular Adj πολύς/πολλή/πολύ Dative Singular Masculine,A-DSM,πολλῷ
+Chapter 14,Irregular Adj πολύς/πολλή/πολύ Accusative Singular Masculine,A-ASM,πολύν
+Chapter 14,Irregular Adj πολύς/πολλή/πολύ Nominative Singular Feminine,A-NSF,πολλή
+Chapter 14,Irregular Adj πολύς/πολλή/πολύ Genitive Singular Feminine,A-GSF,πολλῆς
+Chapter 14,Irregular Adj πολύς/πολλή/πολύ Dative Singular Feminine,A-DSF,πολλῇ
+Chapter 14,Irregular Adj πολύς/πολλή/πολύ Accusative Singular Feminine,A-ASF,πολλήν
+Chapter 14,Irregular Adj πολύς/πολλή/πολύ Nominative Singular Neuter,A-NSN,πολύ
+Chapter 14,Irregular Adj πολύς/πολλή/πολύ Genitive Singular Neuter,A-GSN,πολλοῦ
+Chapter 14,Irregular Adj πολύς/πολλή/πολύ Dative Singular Neuter,A-DSN,πολλῷ
+Chapter 14,Irregular Adj πολύς/πολλή/πολύ Accusative Singular Neuter,A-ASN,πολύ
+Chapter 14,Irregular Adj πολύς/πολλή/πολύ Nominative Plural Masculine,A-NPM,πολλοί
+Chapter 14,Irregular Adj πολύς/πολλή/πολύ Genitive Plural Masculine,A-GPM,πολλῶν
+Chapter 14,Irregular Adj πολύς/πολλή/πολύ Dative Plural Masculine,A-DPM,πολλοῖς
+Chapter 14,Irregular Adj πολύς/πολλή/πολύ Accusative Plural Masculine,A-APM,πολλούς
+Chapter 14,Irregular Adj πολύς/πολλή/πολύ Nominative Plural Feminine,A-NPF,πολλαί
+Chapter 14,Irregular Adj πολύς/πολλή/πολύ Genitive Plural Feminine,A-GPF,πολλῶν
+Chapter 14,Irregular Adj πολύς/πολλή/πολύ Dative Plural Feminine,A-DPF,πολλαῖς
+Chapter 14,Irregular Adj πολύς/πολλή/πολύ Accusative Plural Feminine,A-APF,πολλάς
+Chapter 14,Irregular Adj πολύς/πολλή/πολύ Nominative Plural Neuter,A-NPN,πολλά
+Chapter 14,Irregular Adj πολύς/πολλή/πολύ Genitive Plural Neuter,A-GPN,πολλών
+Chapter 14,Irregular Adj πολύς/πολλή/πολύ Dative Plural Neuter,A-DPN,πολλοῖς
+Chapter 14,Irregular Adj πολύς/πολλή/πολύ Accusative Plural Neuter,A-APN,πολλά
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Nominative Singular Masculine,A-NSM,μέγας
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Genitive Singular Masculine,A-GSM,μεγάλου
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Dative Singular Masculine,A-DSM,μεγάλῳ
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Accusative Singular Masculine,A-ASM,μέγαν
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Vocative Singular Masculine,A-VSM,μεγάλε
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Nominative Singular Feminine,A-NSF,μεγάλη
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Genitive Singular Feminine,A-GSF,μεγάλης
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Dative Singular Feminine,A-DSF,μεγάλῃ
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Accusative Singular Feminine,A-ASF,μεγἀλην
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Vocative Singular Feminine,A-VSF,μεγἀλη
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Nominative Singular Neuter,A-NSN,μέγα
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Genitive Singular Neuter,A-GSN,μεγάλου
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Dative Singular Neuter,A-DSN,μεγάλῳ
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Accusative Singular Neuter,A-ASN,μέγα
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Vocative Singular Neuter,A-VSN,μέγα
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Nominative Plural Masculine,A-NPM,μεγάλοι
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Genitive Plural Masculine,A-GPM,μεγάων
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Dative Plural Masculine,A-DPM,μεγάλοις
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Accusative Plural Masculine,A-APM,μεγάλους
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Vocative Plural Masculine,A-VPM,μεγάλοι
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Nominative Plural Feminine,A-NPF,μεγάλαι
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Genitive Plural Feminine,A-GPF,μεγάλων
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Dative Plural Feminine,A-DPF,μεγάλαις
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Accusative Plural Feminine,A-APF,μεγάλας
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Vocative Plural Feminine,A-VPF,μεγάλαι
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Nominative Plural Neuter,A-NPN,μεγάλα
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Genitive Plural Neuter,A-GPN,μεγάλων
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Dative Plural Neuter,A-DPN,μεγάλοις
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Accusative Plural Neuter,A-APN,μεγἀλα
+Chapter 14,Irregular Adj μέγας/μεγάλη/μέγα Vocative Plural Neuter,A-VPN,μεγἀλα
+Chapter 15,Interrogative Pronoun Nominative Singular Masculine/Feminine,I-NSM|I-NSF,τις
+Chapter 15,Interrogative Pronoun Nominative Singular Neuter,I-NSN,τι
+Chapter 15,Interrogative Pronoun Genitive Singular All,I-GSM|I-GSF|I-GSN,τινος
+Chapter 15,Interrogative Pronoun Dative Singular All,I-DSM|I-DSF|I-DSN,τινι
+Chapter 15,Interrogative Pronoun Accusative Singular Masculine/Feminine,I-ASM|I-ASF,τινα
+Chapter 15,Interrogative Pronoun Accusative Singular Neuter,I-ASN,τι
+Chapter 15,Interrogative Pronoun Nominative Plural Masculine/Feminine,I-NPM|I-NPF,τινες
+Chapter 15,Interrogative Pronoun Nominative Plural Neuter,I-NPN,τινα
+Chapter 15,Interrogative Pronoun Genitive Plural All,I-GPM|I-GPF|I-GPN,τινων
+Chapter 15,Interrogative Pronoun Dative Plural All,I-DPM|I-DPF|I-DPN,τισι|τισιν
+Chapter 15,Interrogative Pronoun Accusative Plural Masculine/Feminine,I-APM|I-APF,τινας
+Chapter 15,Interrogative Pronoun Accusative Plural Neuter,I-APN,τινα
+Chapter 15,Indefinite Pronoun Nominative Singular Masculine/Feminine,X-NSF|X-NSM,τις
+Chapter 15,Indefinite Pronoun Nominative Singular Neuter,X-NSN,τι
+Chapter 15,Indefinite Pronoun Genitive Singular All,X-GSM|X-GSF|X-GSN,τινος
+Chapter 15,Indefinite Pronoun Dative Singular All,X-DSM|X-DSF|X-DSN,τινι
+Chapter 15,Indefinite Pronoun Accusative Singular Masculine/Feminine,X-ASM|X-ASF,τινα
+Chapter 15,Indefinite Pronoun Accusative Singular Neuter,X-ASN,τι
+Chapter 15,Indefinite Pronoun Nominative Plural Masculine/Feminine,X-NPM|X-NPF,τινες
+Chapter 15,Indefinite Pronoun Nominative Plural Neuter,X-NPN,τινα
+Chapter 15,Indefinite Pronoun Genitive Plural All,X-GPM|X-GPF|X-GPN,τινων
+Chapter 15,Indefinite Pronoun Dative Plural All,X-DPM|X-DPF|X-DPN,τισι|τισιν
+Chapter 15,Indefinite Pronoun Accusative Plural Masculine/Feminine,X-APM|X-APF,τινας
+Chapter 15,Indefinite Pronoun Accusative Plural Neuter,X-APN,τινα
+Chapter 15,Indefinite Relative Pronoun Nominative Singular Masculine,R-NSM,οστις|ὅστις
+Chapter 15,Indefinite Relative Pronoun Nominative Singular Feminine,R-NSF,ητις|ἥτις
+Chapter 15,Indefinite Relative Pronoun Nominative Singular Neuter,R-NSN,οτι|ὅτι
+Chapter 15,Indefinite Relative Pronoun Accusative Singular Neuter,R-ASN,οτι|ὅτι
+Chapter 15,Indefinite Relative Pronoun Nominative Plural Masculine,R-NPM,αιτινες|οἵτινες
+Chapter 15,Indefinite Relative Pronoun Nominative Plural Feminine,R-NPF,αιτινες|αἵτινες
+Chapter 15,Indefinite Relative Pronoun Nominative Plural Neuter,R-NPN,ατινα|ἅτινα
+Chapter 15,Reflexive Pronoun 1st Genitive Singular Masculine,F-1GSM,
+Chapter 15,Reflexive Pronoun 1st Genitive Singular Feminine,F-1GSF,
+Chapter 15,Reflexive Pronoun 2nd Genitive Singular Masculine,F-2GSM,
+Chapter 15,Reflexive Pronoun 2nd Genitive Singular Feminine,F-2GSF,
+Chapter 15,Reflexive Pronoun 3rd Genitive Singular Masculine,F-3GSM,
+Chapter 15,Reflexive Pronoun 3rd Genitive Singular Feminine,F-3GSF,
+Chapter 15,Reflexive Pronoun 3rd Genitive Singular Neuter,F-3GSN,
+Chapter 15,Reflexive Pronoun 1st Dative Singular Masculine,F-1DSM,
+Chapter 15,Reflexive Pronoun 1st Dative Singular Feminine,F-1DSF,
+Chapter 15,Reflexive Pronoun 2nd Dative Singular Masculine,F-2DSM,
+Chapter 15,Reflexive Pronoun 2nd Dative Singular Feminine,F-2DSF,
+Chapter 15,Reflexive Pronoun 3rd Dative Singular Masculine,F-3DSM,
+Chapter 15,Reflexive Pronoun 3rd Dative Singular Feminine,F-3DSF,
+Chapter 15,Reflexive Pronoun 3rd Dative Singular Neuter,F-3DSN,
+Chapter 15,Reflexive Pronoun 1st Accusative Singular Masculine,F-1ASM,
+Chapter 15,Reflexive Pronoun 1st Accusative Singular Feminine,F-1ASF,
+Chapter 15,Reflexive Pronoun 2nd Accusative Singular Masculine,F-2ASM,
+Chapter 15,Reflexive Pronoun 2nd Accusative Singular Feminine,F-2ASF,
+Chapter 15,Reflexive Pronoun 3rd Accusative Singular Masculine,F-3ASM,
+Chapter 15,Reflexive Pronoun 3rd Accusative Singular Feminine,F-3ASF,
+Chapter 15,Reflexive Pronoun 3rd Accusative Singular Neuter,F-3ASN,
+Chapter 15,Reflexive Pronoun 1/2/3 Genitive Plural Masculine,F-1GPM|F-2GPM|F-3GPM,
+Chapter 15,Reflexive Pronoun 1/2/3 Genitive Plural Feminine,F-1GPF|F-2GPF|F-3GPF,
+Chapter 15,Reflexive Pronoun 1/2/3 Genitive Plural Neuter,F-1GPN|F-2GPN|F-3GPN,
+Chapter 15,Reflexive Pronoun 1/2/3 Dative Plural Masculine,F-1DPM|F-2DPM|F-3DPM,
+Chapter 15,Reflexive Pronoun 1/2/3 Dative Plural Feminine,F-1DPF|F-2DPF|F-3DPF,
+Chapter 15,Reflexive Pronoun 1/2/3 Dative Plural Neuter,F-1DPN|F-2DPN|F-3DPN,
+Chapter 15,Reflexive Pronoun 1/2/3 Accusative Plural Masculine,F-1APM|F-2APM|F-3APM,
+Chapter 15,Reflexive Pronoun 1/2/3 Accusative Plural Feminine,F-1APF|F-2APF|F-3APF,
+Chapter 15,Reflexive Pronoun 1/2/3 Accusative Plural Neuter,F-1APN|F-2APN|F-3APN,
+Chapter 15,Declinable Numeral One Nominative Masculine,A-NSM,εἷς
+Chapter 15,Declinable Numeral One Nominative Feminine,A-NSF,μία
+Chapter 15,Declinable Numeral One Nominative Neuter,A-NSN,ἕν
+Chapter 15,Declinable Numeral One Genitive Masculine,A-GSM,ἑνός
+Chapter 15,Declinable Numeral One Genitive Feminine,A-GSF,μιᾶς
+Chapter 15,Declinable Numeral One Genitive Neuter,A-GSN,ἑνός
+Chapter 15,Declinable Numeral One Dative Masculine,A-DSM,ἑνί
+Chapter 15,Declinable Numeral One Dative Feminine,A-DSF,μιᾷ
+Chapter 15,Declinable Numeral One Dative Neuter,A-DSN,ἑνί
+Chapter 15,Declinable Numeral One Accusative Masculine,A-ASM,ἕνα
+Chapter 15,Declinable Numeral One Accusative Feminine,A-ASF,μίαν
+Chapter 15,Declinable Numeral One Accusative Neuter,A-ASN,ἕν
+Chapter 15,Declinable Numeral Three Nominative/Accusative Masculine/Feminine,A-NPM|A-NPF|A-APM|A-APF,τρεῖς
+Chapter 15,Declinable Numeral Three Nominative/Accusative Neuter,A-NPN|A-APN,τρία
+Chapter 15,Declinable Numeral Three Genitive,A-GPM|A-GPF|A-GPN,τριῶν
+Chapter 15,Declinable Numeral Three Dative,A-DPM|A-DPF|A-DPN,τρισί|τρισίν
+Chapter 15,Declinable Numeral Four Nominative Masculine/Feminine,A-NPM|A-NPF,τέσσαρες
+Chapter 15,Declinable Numeral Four Nominative Neuter,A-NPN,τέσσαρα
+Chapter 15,Declinable Numeral Four Genitive,A-GPM|A-GPF|A-GPN,τεσσαράων
+Chapter 15,Declinable Numeral Four Dative,A-DPM|A-DPF|A-DPN,τεσσαράσι|τεσσαράσιν
+Chapter 15,Declinable Numeral Four Accusative Masculine/Feminine,A-APM|A-APF,τέσσαρας
+Chapter 15,Declinable Numeral Four Accusative Neuter,A-APN,τέσσαρα
+Chapter 15,Numeral Two Nominative/Genitive/Accusative,A-NPM|A-NPF|A-NPN|A-GPM|A-GPF|A-GPN|A-APM|A-APF|A-APN,δύο
+Chapter 15,Numeral Two Dative,A-DPM|A-DPF|A-DPN,δύσι|δύσιν|δυσὶν|δυσὶ
+Chapter 16,ω verbs Perfect Indicative Active 1st Singular,V-RAI-1S,α
+Chapter 16,ω verbs Perfect Indicative Active 2nd Singular,V-RAI-2S,ας
+Chapter 16,ω verbs Perfect Indicative Active 3rd Singular,V-RAI-3S,ε|εν
+Chapter 16,ω verbs Perfect Indicative Active 1st Plural,V-RAI-1P,αμεν
+Chapter 16,ω verbs Perfect Indicative Active 2nd Plural,V-RAI-2P,ατε
+Chapter 16,ω verbs Perfect Indicative Active 3rd Plural,V-RAI-3P,ασι|αν
+Chapter 16,ω verbs Perfect Active Infinitive,V-RAN,εναι
+Chapter 16,ω verbs Perfect Indicative Middle/Passive 1st Singular,V-RMI-1S|V-RPI-1S|V-RNI-1S,μαι
+Chapter 16,ω verbs Perfect Indicative Middle/Passive 2nd Singular,V-RMI-2S|V-RPI-2S|V-RNI-2S,σαι
+Chapter 16,ω verbs Perfect Indicative Middle/Passive 3rd Singular,V-RMI-3S|V-RPI-3S|V-RNI-3S,ται
+Chapter 16,ω verbs Perfect Indicative Middle/Passive 1st Plural,V-RMI-1P|V-RPI-1P|V-RNI-1P,μεθα
+Chapter 16,ω verbs Perfect Indicative Middle/Passive 2nd Plural,V-RMI-2P|V-RPI-2P|V-RNI-2P,σθε
+Chapter 16,ω verbs Perfect Indicative Middle/Passive 3rd Plural,V-RMI-3P|V-RPI-3P|V-RNI-3P,νται
+Chapter 16,ω verbs Perfect Indicative Middle/Passive Active Infinitive,V-RPN|V-RNN,σθαι
+Chapter 16,Perfect Active Participle Nominative Singular Masculine,V-RAP-NSM,
+Chapter 16,Perfect Active Participle Nominative Singular Feminine,V-RAP-NSF,
+Chapter 16,Perfect Active Participle Nominative Singular Neuter,V-RAP-NSN,
+Chapter 16,Perfect Active Participle Genitive Singular Masculine,V-RAP-GSM,
+Chapter 16,Perfect Active Participle Genitive Singular Feminine,V-RAP-GSF,
+Chapter 16,Perfect Active Participle Genitive Singular Neuter,V-RAP-GSN,
+Chapter 16,Perfect Active Participle Dative Singular Masculine,V-RAP-DSM,
+Chapter 16,Perfect Active Participle Dative Singular Feminine,V-RAP-DSF,
+Chapter 16,Perfect Active Participle Dative Singular Neuter,V-RAP-DSN,
+Chapter 16,Perfect Active Participle Accusative Singular Masculine,V-RAP-ASM,
+Chapter 16,Perfect Active Participle Accusative Singular Feminine,V-RAP-ASF,
+Chapter 16,Perfect Active Participle Accusative Singular Neuter,V-RAP-ASN,
+Chapter 16,Perfect Active Participle Nominative Plural Masculine,V-RAP-NPM,
+Chapter 16,Perfect Active Participle Nominative Plural Feminine,V-RAP-NPF,
+Chapter 16,Perfect Active Participle Nominative Plural Neuter,V-RAP-NPN,
+Chapter 16,Perfect Active Participle Genitive Plural Masculine,V-RAP-GPM,
+Chapter 16,Perfect Active Participle Genitive Plural Feminine,V-RAP-GPF,
+Chapter 16,Perfect Active Participle Genitive Plural Neuter,V-RAP-GPN,
+Chapter 16,Perfect Active Participle Dative Plural Masculine,V-RAP-DPM,
+Chapter 16,Perfect Active Participle Dative Plural Feminine,V-RAP-DPF,
+Chapter 16,Perfect Active Participle Dative Plural Neuter,V-RAP-DPN,
+Chapter 16,Perfect Active Participle Accusative Plural Masculine,V-RAP-APM,
+Chapter 16,Perfect Active Participle Accusative Plural Feminine,V-RAP-APF,
+Chapter 16,Perfect Active Participle Accusative Plural Neuter,V-RAP-APN,
+Chapter 16,Perfect Active Participle Nominative Singular Masculine,V-RMP-NSM|V-RPP-NSM|V-REP-NSM,
+Chapter 16,Perfect Active Participle Nominative Singular Feminine,V-RMP-NSF|V-RPP-NSF|V-REP-NSF,
+Chapter 16,Perfect Active Participle Nominative Singular Neuter,V-RMP-NSN|V-RPP-NSN|V-REP-NSN,
+Chapter 16,Perfect Active Participle Genitive Singular Masculine,V-RMP-GSM|V-RPP-GSM|V-REP-GSM,
+Chapter 16,Perfect Active Participle Genitive Singular Feminine,V-RMP-GSF|V-RPP-GSF|V-REP-GSF,
+Chapter 16,Perfect Active Participle Genitive Singular Neuter,V-RMP-GSN|V-RPP-GSN|V-REP-GSN,
+Chapter 16,Perfect Active Participle Dative Singular Masculine,V-RMP-DSM|V-RPP-DSM|V-REP-DSM,
+Chapter 16,Perfect Active Participle Dative Singular Feminine,V-RMP-DSF|V-RPP-DSF|V-REP-DSF,
+Chapter 16,Perfect Active Participle Dative Singular Neuter,V-RMP-DSN|V-RPP-DSN|V-REP-DSN,
+Chapter 16,Perfect Active Participle Accusative Singular Masculine,V-RMP-ASM|V-RPP-ASM|V-REP-ASM,
+Chapter 16,Perfect Active Participle Accusative Singular Feminine,V-RMP-ASF|V-RPP-ASF|V-REP-ASF,
+Chapter 16,Perfect Active Participle Accusative Singular Neuter,V-RMP-ASN|V-RPP-ASN|V-REP-ASN,
+Chapter 16,Perfect Active Subjunctive 1st Singular,V-RAS-1S,
+Chapter 16,Perfect Active Subjunctive 1st Plural,V-RAS-1P,
+Chapter 16,Perfect Active Subjunctive 2nd Singular,V-RAS-2S,
+Chapter 16,Perfect Active Subjunctive 2nd Plural,V-RAS-2P,
+Chapter 16,Pluperfect Middle/Passive Indicative 1st Singular,V-LDI-1S|V-LMI-1S|V-LPI-1S,
+Chapter 16,Pluperfect Middle/Passive Indicative 1st Plural,V-LDI-1P|V-LMI-1P|V-LPI-1P,
+Chapter 16,Pluperfect Middle/Passive Indicative 2nd Singular,V-LDI-2S|V-LMI-2S|V-LPI-2S,
+Chapter 16,Pluperfect Middle/Passive Indicative 2nd Plural,V-LDI-2P|V-LMI-2P|V-LPI-2P,
+Chapter 16,Pluperfect Middle/Passive Indicative 3rd Singular,V-LDI-3S|V-LMI-3S|V-LPI-3S,
+Chapter 16,Pluperfect Middle/Passive Indicative 3rd Plural,V-LDI-3P|V-LMI-3P|V-LPI-3P,
