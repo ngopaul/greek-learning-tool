@@ -81,7 +81,7 @@ const TogglingTableCell = ({ value, alternateValue, toggleAll }) => {
 
   return (
     <TableCell
-      padding="none"
+      px={1}
       onClick={handleClick}
       sx={{
         cursor: 'pointer', // Indicates the cell is clickable
