@@ -10,15 +10,6 @@ export interface BookChapterVerseWord {
   }
   
 
-//   mappedData.push({
-//     BookChapterVerseWord: bookChapterVerseWord,
-//     Greek: greek,
-//     Morphology: morphology,
-//     English: english,
-//     Meaning: rootMeaning,
-//     StudyChunkID: studyChunkID,
-//     StrongsNumber: strongsNumber
-//   });
 export interface WordData {
     Greek: string;
     Morphology: string;
