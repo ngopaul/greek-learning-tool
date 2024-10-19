@@ -75,26 +75,11 @@ const WordInfoPopup = () => {
             <>
           <Box key={"word-declension-" + index} sx={{py: 1}} 
               onClick={() => {
-                console.log('currentWord:', currentWord)
-                console.log('strongsMapping', strongsMapping)
-                console.log('possibleDeclensions', possibleDeclensions)
-                console.log("strong to declension to id")
-                console.log(strongsToDeclensionsToWordsMap)
-                console.log(strongsToDeclensionsToWordsMap[currentStrongs])
-                console.log(strongsToDeclensionsToWordsMap[currentStrongs][declension])
-                console.log('biblenumbertobook:', bibleNumberToBook)
-
-
                 if (expandedDeclensions && expandedDeclensions.index === index) {
                   console.log("click on the oopen one so should close")
                   setExpandedDeclensions(undefined)
                   return;
                 }
-                
-                console.log('setting expandedDeclensions', {
-                  index: index,
-                  words: strongsToDeclensionsToWordsMap[currentStrongs][declension],
-                })
                 setExpandedDeclensions({
                   index: index,
                   words: strongsToDeclensionsToWordsMap[currentStrongs][declension],
@@ -112,8 +97,6 @@ const WordInfoPopup = () => {
             (
                 <Typography variant="body1" sx={{flex: 1, textAlign: 'left'}}
                 onClick={() => {
-                  console.log("need to go to:", word.BookChapterVerseWord.verse)
-                  // moveToBookChapterVerseWord(word.BookChapterVerseWord)
                   setExpandedDeclensions(undefined)
                   setBookChapterVerseWord(word.BookChapterVerseWord)
                   setWordInfoOpen(false)

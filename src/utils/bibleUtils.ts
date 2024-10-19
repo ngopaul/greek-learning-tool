@@ -894,7 +894,6 @@ export function parseVerseReferences(input : string) : [string, [number, number,
 
 
 export const getGreekVerse = (targetBookChapterVerseWord: BookChapterVerseWord, openGNTData : WordData[]) => {
-  // const currentWord = displayWords[currentIndex];
   const { book, chapter, verse } = targetBookChapterVerseWord;
   const wordsInChapter = openGNTData.filter(word =>
     word.BookChapterVerseWord.book === book &&

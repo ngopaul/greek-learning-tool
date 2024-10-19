@@ -91,7 +91,6 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
             if (curWordGreek === curGreekFromDeclension) {
               strongsToDeclensionsToWordsMap[curStrongsNumber][declension].push(word)
             }
-            // console.log(curPossibleDeclensions[declension].greek)
           })
         })
         setStrongsToDeclensionsToWordsMap(strongsToDeclensionsToWordsMap)
@@ -206,8 +205,6 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
   useEffect(() => {
     if (currentChapter && currentChapter.data) {
       setDisplayWords(currentChapter.data);
-      // ****** this is curcial because it's causing race conditions and not allowing other set current index from firing.
-      // setCurrentIndex(0);
     }
   }, [currentBook, currentChapter]);
 
@@ -398,7 +395,6 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
 
   const onBookSelect = (selected : BookOption) => {
     if (selected && selected.value) {
-      console.log('about to set book to:', selected)
       setCurrentBook(selected);
     } else {
       setCurrentBook(undefined);
@@ -448,10 +444,6 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
   };
 
   const onVerseSelect = (selected: VerseOption) => {
-    console.log('selecting verse:', selected)
-    console.log('currentBook:', currentBook)
-
-    console.log('currentChapter:', currentChapter)
     if (!selected) {
       return;
     }
