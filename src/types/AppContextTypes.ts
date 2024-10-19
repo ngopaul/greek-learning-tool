@@ -39,14 +39,6 @@ export interface Tester {
   value: string;
 }
 
-// setCurrentChapter({
-//   bookName: currentBook.label,
-//   bookValue: currentBook.value,
-//   chapterName: temporaryCurrentChapter.label,
-//   chapterValue: temporaryCurrentChapter.value,
-//   data: filteredData
-// });
-
 export interface CurrentChapter {
   bookName: string;
   bookValue: number;
@@ -55,6 +47,8 @@ export interface CurrentChapter {
   data: any; // fix
 }
 
+
+// TODO (Caleb): still need to clean up these types. any of the "unknown" or "any" types need to be removed.
 // Define context type
 export interface AppContextType {
   strongsMapping: Record<string, any>; // TODO: need ot fix.
