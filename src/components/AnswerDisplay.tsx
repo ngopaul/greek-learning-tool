@@ -5,7 +5,11 @@ import MorphologyDisplay from "./MorphologyDisplay";
 import {Box, Paper} from '@mui/material';
 
 const AnswerDisplay = () => {
-  const {displayWords, currentIndex, testingMode, flipCard} = useContext(AppContext);
+  const context = useContext(AppContext);
+  if (!context) {
+    return null;
+  }
+  const {displayWords, currentIndex, testingMode, flipCard} = context;
 
   if (displayWords.length === 0) {
     return null;

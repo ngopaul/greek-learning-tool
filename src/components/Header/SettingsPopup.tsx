@@ -5,9 +5,13 @@ import {AppContext} from "../../contexts/AppContext";
 import grey from "@mui/material/colors/grey";
 
 const SettingsPopup = () => {
+  const context = useContext(AppContext);
+  if (!context) {
+    return null;
+  }
   const { settingsOpen, setSettingsOpen, showAnswerChecked, readingMode, handleCheckboxShowAnswer,
     handleChangeReadingMode, smartUnitLearning, handleSetSmartUnitLearning, restartLearning, showEnglishInContext,
-    setShowEnglishInContext, testingMode, setTestingMode} = useContext(AppContext);
+    setShowEnglishInContext, testingMode, setTestingMode} = context;
 
   return (
     <Popup open={settingsOpen} onClose={() => setSettingsOpen(false)} title="Settings">
@@ -15,7 +19,17 @@ const SettingsPopup = () => {
         <Typography sx={{ marginRight: 2 }} variant="body1">Testing Mode:</Typography>
         <RadioGroup row={true}
           value={testingMode}
-          onChange={(event) => setTestingMode(event.target.value)}
+          onChange={(event) => {
+            const value = event.target.value;
+            switch (value) {
+              case "morphology":
+                setTestingMode(value);
+              case "meaning":
+                setTestingMode(value);
+              default:
+                console.error("tried to set reading mode to something other than chapter or unit");
+              }
+          }}
           name="learningMode">
           <FormControlLabel value="morphology" control={<Radio/>} label="Morphology (parse the word)"/>
           <FormControlLabel value="meaning" control={<Radio/>} label="Meaning (define the root)"/>

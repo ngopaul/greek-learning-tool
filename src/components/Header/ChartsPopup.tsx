@@ -6,10 +6,15 @@ import {AppContext} from "../../contexts/AppContext";
 import grey from "@mui/material/colors/grey";
 
 const ChartsPopup = () => {
+  const theme = useTheme();
+  const context = useContext(AppContext);
+  if (!context) {
+    return null;
+  }
   const {
     chartsOpen, setChartsOpen, testWordIndices, currentIndex, displayWords, selectedTesters
-  } = useContext(AppContext);
-  const theme = useTheme();
+  } = context;
+  
 
   return (<Popup open={chartsOpen} onClose={() => setChartsOpen(false)} title="Grammar Tables">
       {/* List the keyboard shortcuts:

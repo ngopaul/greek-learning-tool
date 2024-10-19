@@ -12,7 +12,16 @@ import {
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
-const SimpleTable = ({ data }) => {
+export type SimpleTableData = [{
+  title: string;
+  numColumns: number;
+}, ...string[][]]
+
+export type SimpleTableProps = {
+  data: SimpleTableData
+}
+
+const SimpleTable = ({ data } : SimpleTableProps) => {
   const [toggleAll, setToggleAll] = useState(false);
 
   const handleToggleAll = () => {
@@ -45,13 +54,14 @@ const SimpleTable = ({ data }) => {
           </TableRow>
         </TableHead>
         <TableBody>
+        {/** TODO (Caleb): casting row as string but there should be better way to solve this. */}
           {data.slice(2).map((row, row_index) => (
             <TableRow key={"row"+row_index}>
-              <TableCell padding="none"><b>{row[0]}</b></TableCell>
+              <TableCell padding="none"><b>{(row as string[])[0]}</b></TableCell>
               {
                 dummyArray.map((_, col_index) => (
-                  row[col_index + 1] ? (
-                    <TogglingTableCell value={row[col_index + 1]} alternateValue={"?"} toggleAll={toggleAll} key={"cell-" + col_index}/>
+                  (row as string[])[col_index + 1] ? (
+                    <TogglingTableCell value={(row as string[])[col_index + 1]} alternateValue={"?"} toggleAll={toggleAll} key={"cell-" + col_index}/>
                   ) : (
                     <TableCell padding="none" key={"cell-" + col_index}></TableCell>
                   )
@@ -67,7 +77,7 @@ const SimpleTable = ({ data }) => {
 };
 
 // Component for a TableCell that toggles between two values
-const TogglingTableCell = ({ value, alternateValue, toggleAll }) => {
+const TogglingTableCell = ({ value, alternateValue, toggleAll } : {value: string; alternateValue: string; toggleAll: boolean}) => {
   const [isToggled, setIsToggled] = useState(false);
 
   const handleClick = () => {
@@ -81,6 +91,8 @@ const TogglingTableCell = ({ value, alternateValue, toggleAll }) => {
 
   return (
     <TableCell
+    // TODO (Caleb): verify why?
+    // @ts-ignore
       px={1}
       onClick={handleClick}
       sx={{

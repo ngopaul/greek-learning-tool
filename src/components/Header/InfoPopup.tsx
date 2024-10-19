@@ -6,11 +6,15 @@ import {AppContext} from "../../contexts/AppContext";
 import grey from "@mui/material/colors/grey";
 
 const InfoPopup = () => {
-  const {
-    helpOpen, setHelpOpen, testWordIndices, currentIndex, displayWords, selectedTesters
-  } = useContext(AppContext);
   const theme = useTheme();
   const probablyNoKeyboard = useMediaQuery(theme.breakpoints.down('md'));
+  const context = useContext(AppContext);
+  if (!context) {
+    return null;
+  }
+  const {
+    helpOpen, setHelpOpen, testWordIndices, currentIndex, displayWords, selectedTesters
+  } = context;
 
   return (<Popup open={helpOpen} onClose={() => setHelpOpen(false)} title="Help">
       {/* List the keyboard shortcuts:
@@ -78,7 +82,7 @@ const InfoPopup = () => {
               </Typography>
             </li>
             <li>
-              <Typography variant="subtitle2">Select a tester, then go to "Settings > Reading Mode: Unit Learning".
+              <Typography variant="subtitle2">Select a tester, then go to "Settings {">"} Reading Mode: Unit Learning".
                 Start testing yourself on grammar to see if you can identify the declination/conjugation/morphology!
               </Typography>
             </li>
