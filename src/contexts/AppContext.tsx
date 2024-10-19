@@ -1,52 +1,57 @@
-import React, {createContext, useState, useEffect} from 'react';
-import {loadDataVersions, loadOpenGNTData, loadRMACDescriptions, loadStudyChunks} from "../utils/dataLoader";
-import {getSmartChunksToTest, getChunksToTest} from "../utils/getTestWords";
+// @ts-nocheck
+import React, { createContext, useState, useEffect, ReactNode } from 'react';
+import { loadDataVersions, loadOpenGNTData, loadRMACDescriptions, loadStudyChunks } from '../utils/dataLoader';
+import { getSmartChunksToTest, getChunksToTest } from '../utils/getTestWords';
+import { AppContextType, BookChapterVerseWord, BookOption, ChapterOption, CurrentChapter, Tester, VerseOption, WordData } from '../types/AppContextTypes';
+import { StudyChunk } from '../types/dataLoaderTypes';
 
-// Create the context
-export const AppContext = createContext();
+
+
+// Create the context with default values
+export const AppContext = createContext<AppContextType | undefined>(undefined);
+
+interface AppProviderProps {
+  children: ReactNode;
+}
 
 // Create the provider component
-export const AppProvider = ({children}) => {
-  const [currentBook, setCurrentBook] = useState(null);
-  const [currentChapter, setCurrentChapter] = useState(null);
-  const [selectedTesters, setSelectedTesters] = useState([]);
+export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
+  const [currentBook, setCurrentBook] = useState<BookOption>();
+  const [currentChapter, setCurrentChapter] = useState<CurrentChapter>();
+  const [selectedTesters, setSelectedTesters] = useState<Tester[]>([]);
   const [gotNewData, setGotNewData] = useState(false);
-  const [openGNTData, setOpenGNTData] = useState([]);
+  const [openGNTData, setOpenGNTData] = useState<WordData[]>([]);
   const [strongsMapping, setStrongsMapping] = useState({});
-  const [studyChunks, setStudyChunks] = useState([]);
+  // TODO (Caleb (Paul-check): verify removing [] in initi is safe
+  const [studyChunks, setStudyChunks] = useState<Record<string, StudyChunk[]>>();
   const [RMACDescriptions, setRMACDescriptions] = useState({});
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndexRaw] = useState(0);
-  const [displayWords, setDisplayWords] = useState([]);
-  const [testWordIndices, setTestWordIndices] = useState(new Set());
+  const [displayWords, setDisplayWords] = useState<WordData[]>([]);
+  const [testWordIndices, setTestWordIndices] = useState<Set<number>>(new Set());
   const [showAnswer, setShowAnswer] = useState(true);
   const [defaultShowAnswer, setDefaultShowAnswer] = useState(true);
   const [showEnglishInContext, setShowEnglishInContext] = useState(true);
-  const [userProgress, setUserProgress] = useState({});
-  const [readingMode, setReadingMode] = useState('chapter'); // 'chapter' or 'unit'
-  const [testingMode, setTestingMode] = useState('morphology'); // 'morphology' or 'meaning'
+  const [userProgress, setUserProgress] = useState<Record<string, boolean[]>>({});
+  const [readingMode, setReadingMode] = useState<"chapter" | "unit">('chapter'); // 'chapter' or 'unit'
+  const [testingMode, setTestingMode] = useState<"morphology" | "meaning">('morphology'); // 'morphology' or 'meaning'
   const [smartUnitLearning, setSmartUnitLearning] = useState(true);
-  const [correctLog, setCorrectLog] = useState([]); // List of { index: number, correct: boolean }
+  const [correctLog, setCorrectLog] = useState<{index: number, correct: boolean}[]>([]); // List of { index: number, correct: boolean } // TODO (Caleb): pull out
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
+  const [chartsOpen, setChartsOpen] = useState(false);
   const [wordInfoOpen, setWordInfoOpen] = useState(false);
-  const [selectedBook, setSelectedBook] = useState(null);
+  const [selectedBook, setSelectedBook] = useState();
   const [chapterOptions, setChapterOptions] = useState([]);
-  const [selectedChapter, setSelectedChapter] = useState(null);
+  const [selectedChapter, setSelectedChapter] = useState();
   const [verseOptions, setVerseOptions] = useState([]);
   const [selectedVerse, setSelectedVerse] = useState(null);
   const [showAnswerChecked, setShowAnswerChecked] = useState(true);
   const [startedTesting, setStartedTesting] = useState(false);
   const [loadProgress, setLoadProgress] = useState(0);
-  const [idToAddressMap, setIdToAddressMap] = useState({});
-  const [strongToIdMap, setStrongToIdMap] = useState({});
-  const [idToDeclensionMap, setIdToDeclensionMap] = useState({});
-  const [strongsToDeclensionsToIdsMap, setStrongsToDeclensionsToIdsMap] = useState({})
-  // const [currentStrongsAddresses, setCurrentStrongsAddresses] = useState([])
+  const [strongsToDeclensionsToWordsMap, setStrongsToDeclensionsToWordsMap] = useState<Record<string, Record<string, WordData[]>>>({})
 
   const currentWord = displayWords[currentIndex]
-  const currentStrongsAddresses = strongToIdMap && currentWord ? strongToIdMap[currentWord.StrongsNumber].map(id => idToAddressMap[id]) : [];
-  // const currentStrongsAddresses = idToAddressMap && currentWord ? idToAddressMap[currentWord.id] : [];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,10 +69,8 @@ export const AppProvider = ({children}) => {
 
         const getDeclensionFromStrongsNum = (strongsNum) => strongsMapping[strongsNum];
 
-        const strongToIdMap = {}
-        const idToAddressMap = {}
         const idToDeclensionMap = {}
-        const strongsToDeclensionsToIdsMap = {}
+        const strongsToDeclensionsToWordsMap = {}
         wordGNTData.map(word => {
           const curStrongsNumber = word.StrongsNumber
           const curPossibleDeclensions = getDeclensionFromStrongsNum(curStrongsNumber);
@@ -79,34 +82,19 @@ export const AppProvider = ({children}) => {
             if (!idToDeclensionMap[curWordId]) {
               idToDeclensionMap[curWordId] = []
             }
-            if (!strongsToDeclensionsToIdsMap[curStrongsNumber]) {
-              strongsToDeclensionsToIdsMap[curStrongsNumber] = {}
+            if (!strongsToDeclensionsToWordsMap[curStrongsNumber]) {
+              strongsToDeclensionsToWordsMap[curStrongsNumber] = {}
             }
-            if (!strongsToDeclensionsToIdsMap[curStrongsNumber][declension]) {
-              strongsToDeclensionsToIdsMap[curStrongsNumber][declension] = []
+            if (!strongsToDeclensionsToWordsMap[curStrongsNumber][declension]) {
+              strongsToDeclensionsToWordsMap[curStrongsNumber][declension] = []
             }
             if (curWordGreek === curGreekFromDeclension) {
-              strongsToDeclensionsToIdsMap[curStrongsNumber][declension].push(word)
-              // strongsToDeclensionsToIdsMap[curStrongsNumber][declension].push(curWordId)
-              // strongsToDeclensionsToIdsMap[curStrongsNumber][declension].push(curWordGreek)
+              strongsToDeclensionsToWordsMap[curStrongsNumber][declension].push(word)
             }
             // console.log(curPossibleDeclensions[declension].greek)
           })
-          // console.log(curStrongsNumber)
-          if (!strongToIdMap[curStrongsNumber]) {
-            strongToIdMap[curStrongsNumber] = []
-          }
-          
-          strongToIdMap[curStrongsNumber].push(word.id)
-
-          if (!idToAddressMap[curWordId]) {
-            idToAddressMap[curWordId] = word.BookChapterVerseWord
-          }
-          // idToAddressMap[curWordId].push(word)
         })
-        setIdToAddressMap(idToAddressMap);
-        setStrongToIdMap(strongToIdMap);
-        setStrongsToDeclensionsToIdsMap(strongsToDeclensionsToIdsMap)
+        setStrongsToDeclensionsToWordsMap(strongsToDeclensionsToWordsMap)
 
         setOpenGNTData(wordGNTData);
         setRMACDescriptions(rmacDescriptions);
@@ -120,7 +108,7 @@ export const AppProvider = ({children}) => {
     fetchData();
   }, []);
 
-  const setCurrentIndex = (idx, newDisplayWords=displayWords, newTestWordIndices=testWordIndices) => {
+  const setCurrentIndex = (idx: number, newDisplayWords=displayWords, newTestWordIndices=testWordIndices) => {
     if (idx === null || idx === undefined || isNaN(idx) || idx < 0 || idx >= newDisplayWords.length) {
       return;
     }
@@ -178,7 +166,7 @@ export const AppProvider = ({children}) => {
 
   // Handle Keyboard Navigation and Space Key for Toggle
   useEffect(() => {
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: { key: string; target: HTMLElement; preventDefault: () => void; }) => {
       if (e.key === 'ArrowRight') {
         goRight();
       } else if (e.key === 'ArrowLeft') {
@@ -208,7 +196,10 @@ export const AppProvider = ({children}) => {
       }
     };
 
+    // TODO (Caleb): verify this later.. 
+    // @ts-ignore
     window.addEventListener('keydown', handleKeyDown);
+    // @ts-ignore
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [displayWords.length, defaultShowAnswer, currentIndex, testWordIndices, correctLog]);
 
@@ -250,30 +241,11 @@ export const AppProvider = ({children}) => {
     console.log('correctLog:', correctLog);
     console.log('correctLog at currentIndex:', correctLog[currentIndex]);
     console.log('showAnswer:', showAnswer);
-
-
-    // const strongToIdMap = {}
-    // const idToAddressMap = {}
-    // openGNTData.map(word => {
-    //   const curStrongsNumber = word.StrongsNumber
-    //   const curWordId = word.id;
-    //   if (!strongToIdMap[curStrongsNumber]) {
-    //     strongToIdMap[curStrongsNumber] = []
-    //   }
-    //   strongToIdMap[curStrongsNumber].push(word.id)
-    //   if (!idToAddressMap[curWordId]) {
-    //     idToAddressMap[curWordId] = word.BookChapterVerseWord
-    //   }
-    // })
-
-
-    console.log('strongToIdMap:', strongToIdMap);
-    console.log('idToAddressMap:', idToAddressMap);
     console.log('openGNTData:', openGNTData)
   }
 
   // Function to determine which words to test
-  const determineTestWords = (words) => {
+  const determineTestWords = (words : WordData[]) => {
     // If no testers are selected, clear the test word indices
     if (selectedTesters.length === 0) {
       setTestWordIndices(new Set());
@@ -281,7 +253,7 @@ export const AppProvider = ({children}) => {
     }
 
     // Create a set to store the indices of words that should be tested
-    const testIndices = new Set();
+    const testIndices = new Set<number>();
 
     // Iterate over each word in the words array
     words.forEach((word, index) => {
@@ -319,8 +291,12 @@ export const AppProvider = ({children}) => {
 
   const startLearning = () => {
     // create a list for each chunk (aka wordGroup) in studyChunks
-    const studyChunkLists = {};
-    const initialWordGroupsToTest = [];
+    const studyChunkLists : Record<string, StudyChunk[]> = {};
+    const initialWordGroupsToTest : string[] = [];
+    if (!studyChunks) {
+      // handle undefined studyChunks
+      return;
+    }
     for (const [, studyChunksForTester] of Object.entries(studyChunks)) {
       if (studyChunksForTester) {
         // Check each study chunk under this unit
@@ -338,6 +314,7 @@ export const AppProvider = ({children}) => {
       const wordsToTest = openGNTData.filter(word => studyChunkID === word.StudyChunkID);
       // shuffle the wordsToTest
       wordsToTest.sort(() => Math.random() - 0.5);
+      // TODO (Paul-check): .... 
       studyChunkList.push(...wordsToTest);
     }
     // Use either getSmartWordsToTest or getWordsToTest on the list of chunk names (wordGroups) and the userProgress, to get the wordsToTest
@@ -378,7 +355,7 @@ export const AppProvider = ({children}) => {
     setCorrectLog(new Array(temporaryDisplayWords.length).fill(null));
   };
 
-  const markWord = (index, isCorrect) => {
+  const markWord = (index : number, isCorrect : boolean) => {
     if (
       displayWords.length === 0
       || (readingMode === "unit" && currentIndex === displayWords.length - 1)
@@ -395,7 +372,7 @@ export const AppProvider = ({children}) => {
     const newUserProgress = {...userProgress};
     const word = displayWords[index];
     const studyChunkID = word.StudyChunkID;
-    let latterValues = [];
+    let latterValues : boolean[] = [];
     if (alreadyMarked && Array.isArray(newUserProgress[studyChunkID])) {
       // get the index of the last value that was marked as oldMarkValue
       const lastIndex = newUserProgress[studyChunkID].lastIndexOf(oldMarkValue);
@@ -419,16 +396,14 @@ export const AppProvider = ({children}) => {
     setUserProgress(newUserProgress);
   };
 
-  const onBookSelect = (selected) => {
-    console.log('currentBook:', currentBook)
-    console.log('selecting book:', selected)
+  const onBookSelect = (selected : BookOption) => {
     if (selected && selected.value) {
       console.log('about to set book to:', selected)
       setCurrentBook(selected);
     } else {
-      setCurrentBook(null);
+      setCurrentBook(undefined);
     }
-    setCurrentChapter(null);
+    setCurrentChapter(undefined);
     setSelectedTesters([]);
     setCurrentIndex(0);
     setDisplayWords([]);
@@ -436,10 +411,11 @@ export const AppProvider = ({children}) => {
     setShowAnswer(defaultShowAnswer);
   }
 
-  const onChapterSelect = (selected) => {
-    console.log('selecting chapter:', selected)
-    console.log('currentBook:', currentBook)
-
+  const onChapterSelect = (selected : ChapterOption) => {
+    if (!currentBook) {
+      // TODO: Handle when book is not selected and selecting chapter here.
+      return false;
+    }
     if (selected) {
       const temporaryCurrentChapter = selected;
       // console.log(openGNTData);
@@ -452,6 +428,7 @@ export const AppProvider = ({children}) => {
         if (!bookChapterVerseWord) {
           return false;
         }
+        
         // Extract chapter info from 'OpenTextWord_KEY'
         // Example Key: "〔40.1.1.w1〕" where 40 = Matthew
         return bookChapterVerseWord.book === currentBook.value && bookChapterVerseWord.chapter === temporaryCurrentChapter.value;
@@ -466,20 +443,11 @@ export const AppProvider = ({children}) => {
       });
       setSelectedTesters(selectedTesters); // trigger callback to update testers
     } else {
-      setCurrentChapter(null);
+      setCurrentChapter(undefined);
     }
   };
 
-  const moveToBookChapterVerseWord = (bookChapterVerseWord) => {
-    for (let i = 0; i < displayWords.length; i++) {
-      if (displayWords[i].BookChapterVerseWord === bookChapterVerseWord) {
-        setCurrentIndex(i);
-        return;
-      }
-    }
-  }
-
-  const onVerseSelect = (selected) => {
+  const onVerseSelect = (selected: VerseOption) => {
     console.log('selecting verse:', selected)
     console.log('currentBook:', currentBook)
 
@@ -495,7 +463,7 @@ export const AppProvider = ({children}) => {
     }
   }
 
-  const setBookChapterVerse = (targetBookChapterVerseWord) => {
+  const setBookChapterVerseWord = (targetBookChapterVerseWord : BookChapterVerseWord) => {
     const targetBookLabel = "templabel"
     const targetBookValue = targetBookChapterVerseWord.book
 
@@ -540,18 +508,13 @@ export const AppProvider = ({children}) => {
       }
   }
 
-  const onTesterSelect = (selected) => {
+  const onTesterSelect = (selected: Tester[]) => {
     setSelectedTesters(selected);
   };
 
-  const onSetDefaultShowAnswer = (shouldShow) => {
+  const onSetDefaultShowAnswer = (shouldShow : boolean) => {
     setDefaultShowAnswer(shouldShow);
   }
-
-  const handleSettingsClick = () => {
-    setHelpOpen(false);
-    setSettingsOpen((value) => (!value));
-  };
 
 
   // pull this out into getGreekVerse in bibleUtils.
@@ -567,21 +530,40 @@ export const AppProvider = ({children}) => {
     navigator.clipboard.writeText(currentVerse);
   }
 
+  const handleSettingsClick = () => {
+    setHelpOpen(false);
+    setChartsOpen(false);
+    setSettingsOpen((value) => (!value));
+  };
+
   const handleHelpClick = () => {
     setSettingsOpen(false);
+    setChartsOpen(false);
     setHelpOpen((value) => (!value));
   };
 
-  const handleCheckboxShowAnswer = (event) => {
+  const handleChartsClick = () => {
+    setSettingsOpen(false);
+    setHelpOpen(false);
+    setChartsOpen((value) => (!value));
+  };
+
+  const handleCheckboxShowAnswer = (event: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = event.target.checked;
     setShowAnswerChecked(isChecked);  // Update the state
     onSetDefaultShowAnswer(isChecked);  // Call the callback with the updated value
   };
 
-  const handleChangeReadingMode = (event) => {
-    const newReadingMode = event.target.value;
-    restartLearning();
-    setReadingMode(newReadingMode);
+  const handleChangeReadingMode = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value;
+    switch (value) {
+      case "chapter":
+        setReadingMode(value);
+      case "unit":
+        setReadingMode(value);
+      default:
+        console.error("tried to set reading mode to something other than chapter or unit");
+    }
   };
 
   const restartLearning = () => {
@@ -590,7 +572,7 @@ export const AppProvider = ({children}) => {
     setTestWordIndices(new Set());
   }
 
-  const handleSetSmartUnitLearning = (value) => {
+  const handleSetSmartUnitLearning = (value : boolean) => {
     setSmartUnitLearning(value);
     if (readingMode === 'unit') {
       restartLearning();
@@ -640,6 +622,8 @@ export const AppProvider = ({children}) => {
         setSettingsOpen,
         helpOpen,
         setHelpOpen,
+        chartsOpen,
+        setChartsOpen,
         wordInfoOpen,
         setWordInfoOpen,
         selectedBook,
@@ -669,6 +653,7 @@ export const AppProvider = ({children}) => {
         onTesterSelect,
         onSetDefaultShowAnswer,
         handleSettingsClick,
+        handleChartsClick,
         handleCopyClick,
         printDebug,
         handleHelpClick,
@@ -678,13 +663,8 @@ export const AppProvider = ({children}) => {
         nextTestWord,
         flipCard,
         restartLearning,
-        idToAddressMap,
-        currentWord,
-        currentStrongsAddresses,
-        moveToBookChapterVerseWord,
-        strongToIdMap,
-        strongsToDeclensionsToIdsMap,
-        setBookChapterVerse,
+        strongsToDeclensionsToWordsMap,
+        setBookChapterVerseWord,
       }}
     >
       {children}

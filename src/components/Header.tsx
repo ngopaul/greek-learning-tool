@@ -10,6 +10,9 @@ import {bibleBookAbbreviations, bibleBookNameToChapterCounts, bibleBookVerseCoun
 import {AppContext} from "../contexts/AppContext";
 import SettingsPopup from "./Header/SettingsPopup";
 import InfoPopup from "./Header/InfoPopup";
+import { VerseOption } from '../types/AppContextTypes';
+import ChartsPopup from "./Header/ChartsPopup";
+import TableChartIcon from '@mui/icons-material/TableChart';
 
 let bookOptions = [];
 let startValue = 40;
@@ -23,26 +26,30 @@ for (let i = 39; i < listOfBooks.length; i++) {
 
 const animatedComponents = makeAnimated();
 
+
+// TODO (Caleb): clean up the anys!!
 const customStyles = {
-  option: (provided) => ({
+  option: (provided: any) => ({
     ...provided, color: 'black',      // Customize text color
     padding: 10,         // Customize padding
-  }), singleValue: (provided) => ({
+  }), singleValue: (provided: any) => ({
     ...provided, color: 'black',      // Customize text color of the selected value
     fontSize: '1.0rem',  // Customize text size
-  }), placeholder: (provided) => ({
+  }), placeholder: (provided: any) => ({
     ...provided, color: 'grey',       // Customize placeholder text color
   }),
 };
 
 const Header = () => {
+  // Currently the 'selectedVerse' state is not reactive. Use this as temporary measure until 'selectedVerse' is reactive.
+  const [curSelectedVerse, setCurSelectedVerse] = React.useState<VerseOption>();
+  const context = useContext(AppContext);
+  if (!context) {
+    return null;
+  }
   const {
     displayWords,
     currentIndex,
-    idToAddressMap,
-    currentWord,
-    currentStrongsAddresses,
-    moveToBookChapterVerseWord,
     studyChunks,
     onBookSelect,
     onChapterSelect,
@@ -63,32 +70,16 @@ const Header = () => {
     printDebug,
     selectedVerse,
     handleHelpClick,
+    handleChartsClick,
     readingMode
-  } = useContext(AppContext);
-
-  const [strongsAddresses, setStrongsAddresses] = useState([]);
-
-  useEffect(() => {
-    console.log(displayWords)
-    // console.log(currentIndex)
-    if (!displayWords) {
-      const currentWord = displayWords[currentIndex]
-      const currentWordId = currentWord.id
+  } = context;
   
-      const strongsAddresses = idToAddressMap[currentWordId]
-      
-      console.log('strongsAddresses:', strongsAddresses)
-    }
-  }, [])
-  
-  
-
-  // Currently the 'selectedVerse' state is not reactive. Use this as temporary measure until 'selectedVerse' is reactive.
-  const [curSelectedVerse, setCurSelectedVerse] = React.useState();
+  type StudyChunkOption = {label: string, value: string}
 
   // Function to generate studyChunkOptions
-  const createStudyChunkOptions = (studyChunks) => {
-    let studyChunkOptions = [];
+  // TODO (Caleb): investigate this any.
+  const createStudyChunkOptions = (studyChunks: any): StudyChunkOption[] => {
+    let studyChunkOptions: StudyChunkOption[] = [];
 
     Object.keys(studyChunks).forEach(unit => {
       const label = `${unit}`;
@@ -117,10 +108,14 @@ const Header = () => {
                   <Select
                     options={bookOptions}
                     onChange={(selected) => {
+                      if (selected === null) {
+                        console.error("selected book is null somehow. investigate");
+                        return;
+                      }
                       setSelectedBook(selected.label.toLowerCase())
                       onBookSelect(selected);
-                      setSelectedChapter(null);
-                      setSelectedVerse(null);
+                      setSelectedChapter(undefined);
+                      setSelectedVerse(undefined);
                       let temporaryChapterOptions = [];
                       for (let i = 0; i < bibleBookNameToChapterCounts[selected.label.toLowerCase()]; ++i) {
                         temporaryChapterOptions.push({'value': i + 1, 'label': (i + 1).toString()});
@@ -138,11 +133,16 @@ const Header = () => {
                     value={selectedChapter}
                     options={chapterOptions}
                     onChange={(selected) => {
-                      setSelectedChapter(selected);
+                      //TODO Caleb: replicate this pattern in other places.
+                      setSelectedChapter(selected === null ? undefined : selected);
                       onChapterSelect(selected);
-                      setSelectedVerse(null);
+                      setSelectedVerse(undefined);
                       if (selected && selected.value) {
                         let temporaryVerseOptions = [];
+                        if (selectedBook === undefined) {
+                          console.error("selectedBook is undefined somehow. inestigate this")
+                          return;
+                        }
                         // bibleBookVerseCounts maps lowercase bible book names to a list of verses in each chapter
                         const verseCount = bibleBookVerseCounts[selectedBook.toLowerCase()][selected.value - 1];
                         for (let i = 0; i < verseCount; ++i) {
@@ -163,25 +163,13 @@ const Header = () => {
                     value={selectedVerse}
                     options={verseOptions}
                     onChange={(selected) => {
+                      if (!selected) {
+                        console.error("verse dropdown onchange is undefined somehow. investigate");
+                        return;
+                      }
                       setSelectedVerse(selected);
                       setCurSelectedVerse(selected);
                       onVerseSelect(selected);
-                    }}
-                    placeholder="Verse (optional)"
-                    styles={customStyles}
-                    isClearable
-                  />
-                </Box>
-                {/* strongs Dropdown */}
-                <Box sx={{flexGrow: 1, mx: 1}}>
-                  <Select
-                    value={selectedVerse}
-                    options={currentStrongsAddresses}
-                    onChange={(selected) => {
-                      // setSelectedVerse(selected);
-                      // setCurSelectedVerse(selected);
-                      // onVerseSelect(selected);
-                      moveToBookChapterVerseWord(selected)
                     }}
                     placeholder="Verse (optional)"
                     styles={customStyles}
@@ -197,8 +185,7 @@ const Header = () => {
                 {/* print debug */}
               <IconButton edge="start" color="inherit" aria-label="home" onClick={() => {
                 printDebug(); 
-                console.log('currentWord:', currentWord);
-                console.log('currentStrongsAddresses:', currentStrongsAddresses)}}>
+                }}>
                 <BugReport/>
               </IconButton>
               </>): null}
@@ -220,6 +207,10 @@ const Header = () => {
               />
             </Box>
           </Box>
+          {/* Charts Button */}
+          <IconButton color="inherit" aria-label="charts" onClick={handleChartsClick}>
+            <TableChartIcon/>
+          </IconButton>
           {/* Info Button */}
           <IconButton edge="end" color="inherit" aria-label="info" onClick={handleHelpClick}>
             <QuestionMarkIcon/>
@@ -232,6 +223,9 @@ const Header = () => {
 
       {/* Info Popup */}
       <InfoPopup/>
+
+      {/* Charts Popup */}
+      <ChartsPopup/>
     </>);
 };
 

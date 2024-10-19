@@ -2,9 +2,11 @@ import {Box, Paper, Typography, useMediaQuery, useTheme} from "@mui/material";
 import Popup from "./Popup";
 import React, {useContext} from "react";
 import {AppContext} from "../contexts/AppContext";
-import strongsGreekDictionary from "../utils/strongs-greek-dictionary.js";
 import {bibleNumberToBook, getGreekVerse} from "../utils/bibleUtils";
-
+// TODO (Caleb): check this later... 
+// @ts-ignore
+import strongsGreekDictionary from "../utils/strongs-greek-dictionary";
+import { WordData } from "../types/AppContextTypes";
 
 /*
  * Display the strongsMapping information about the current word
@@ -16,11 +18,16 @@ import {bibleNumberToBook, getGreekVerse} from "../utils/bibleUtils";
  * 5. maybe dynamically calculate the declension/group? TODO
  */
 const WordInfoPopup = () => {
-  const { wordInfoOpen, setWordInfoOpen, currentIndex, displayWords, strongsMapping, RMACDescriptions, strongToIdMap, strongsToDeclensionsToIdsMap, setBookChapterVerse, openGNTData } = useContext(AppContext);
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const context = useContext(AppContext);
+  if (!context) {
+    return null;
+  }
+  const { wordInfoOpen, setWordInfoOpen, currentIndex, displayWords, strongsMapping, RMACDescriptions, strongsToDeclensionsToWordsMap, setBookChapterVerseWord, openGNTData }= context;
+  
 
-  const [expandedDeclensions, setExpandedDeclensions] = React.useState({})
+  const [expandedDeclensions, setExpandedDeclensions] = React.useState<{index: number, words: WordData[]}>()
 
   const currentWord = displayWords[currentIndex];
   if (!currentWord) {
@@ -36,6 +43,8 @@ const WordInfoPopup = () => {
   const possibleDeclensions = strongsMapping[currentStrongs];
   let strongsEntry = strongsGreekDictionary[currentStrongs];
   if (!strongsEntry) {
+    console.log("No strongs entry for " + currentStrongs + " word: ");
+    console.log(currentWord);
     strongsEntry = {};
   }
 
@@ -53,42 +62,42 @@ const WordInfoPopup = () => {
         Meaning: {currentWord.Meaning}
       </Typography>
       <Typography variant="body1">
-        Strong's Definition: {strongsGreekDictionary[currentStrongs]["strongs_def"] ? strongsGreekDictionary[currentStrongs]["strongs_def"] : "[none]"}
+        Strong's Definition: {strongsEntry["strongs_def"] ? strongsEntry["strongs_def"] : "[none]"}
       </Typography>
       <Typography variant="body1">
-        Derivation: {strongsGreekDictionary[currentStrongs]["derivation"] ? strongsGreekDictionary[currentStrongs]["derivation"] : "[none]"}
+        Derivation: {strongsEntry["derivation"] ? strongsEntry["derivation"] : "[none]"}
       </Typography>
       <hr/>
       <Box sx={{"my": 1}}>
         {
+          // TODO (Caleb): find type for strongsMapping
           (Object.keys(possibleDeclensions).map((declension, index) => (
             <>
           <Box key={"word-declension-" + index} sx={{py: 1}} 
               onClick={() => {
-                console.log('strong to id:', strongToIdMap)
                 console.log('currentWord:', currentWord)
                 console.log('strongsMapping', strongsMapping)
                 console.log('possibleDeclensions', possibleDeclensions)
                 console.log("strong to declension to id")
-                console.log(strongsToDeclensionsToIdsMap)
-                console.log(strongsToDeclensionsToIdsMap[currentStrongs])
-                console.log(strongsToDeclensionsToIdsMap[currentStrongs][declension])
+                console.log(strongsToDeclensionsToWordsMap)
+                console.log(strongsToDeclensionsToWordsMap[currentStrongs])
+                console.log(strongsToDeclensionsToWordsMap[currentStrongs][declension])
                 console.log('biblenumbertobook:', bibleNumberToBook)
 
 
-                if (expandedDeclensions.index === index) {
+                if (expandedDeclensions && expandedDeclensions.index === index) {
                   console.log("click on the oopen one so should close")
-                  setExpandedDeclensions({})
+                  setExpandedDeclensions(undefined)
                   return;
                 }
                 
                 console.log('setting expandedDeclensions', {
                   index: index,
-                  words: strongsToDeclensionsToIdsMap[currentStrongs][declension],
+                  words: strongsToDeclensionsToWordsMap[currentStrongs][declension],
                 })
                 setExpandedDeclensions({
                   index: index,
-                  words: strongsToDeclensionsToIdsMap[currentStrongs][declension],
+                  words: strongsToDeclensionsToWordsMap[currentStrongs][declension],
                 })
               }}
           >
@@ -98,15 +107,15 @@ const WordInfoPopup = () => {
             
             
           </Box>
-          {expandedDeclensions.index === index ? (
+          {expandedDeclensions && expandedDeclensions.index === index ? (
             expandedDeclensions.words.map(word => 
             (
                 <Typography variant="body1" sx={{flex: 1, textAlign: 'left'}}
                 onClick={() => {
                   console.log("need to go to:", word.BookChapterVerseWord.verse)
                   // moveToBookChapterVerseWord(word.BookChapterVerseWord)
-                  setExpandedDeclensions({})
-                  setBookChapterVerse(word.BookChapterVerseWord)
+                  setExpandedDeclensions(undefined)
+                  setBookChapterVerseWord(word.BookChapterVerseWord)
                   setWordInfoOpen(false)
           console.log('book number:',word.BookChapterVerseWord.book)
                 }}
