@@ -18,6 +18,7 @@ import { WordData } from "../types/AppContextTypes";
  * 5. maybe dynamically calculate the declension/group? TODO
  */
 const WordInfoPopup = () => {
+  const [expandedDeclensions, setExpandedDeclensions] = React.useState<{index: number, words: WordData[]}>()
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const context = useContext(AppContext);
@@ -27,7 +28,6 @@ const WordInfoPopup = () => {
   const { wordInfoOpen, setWordInfoOpen, currentIndex, displayWords, strongsMapping, RMACDescriptions, strongsToDeclensionsToWordsMap, setBookChapterVerseWord, openGNTData }= context;
   
 
-  const [expandedDeclensions, setExpandedDeclensions] = React.useState<{index: number, words: WordData[]}>()
 
   const currentWord = displayWords[currentIndex];
   if (!currentWord) {

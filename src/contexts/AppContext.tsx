@@ -49,6 +49,7 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
   const [showAnswerChecked, setShowAnswerChecked] = useState(true);
   const [startedTesting, setStartedTesting] = useState(false);
   const [loadProgress, setLoadProgress] = useState(0);
+  // TODO (Caleb) :Move this to data loader
   const [strongsToDeclensionsToWordsMap, setStrongsToDeclensionsToWordsMap] = useState<Record<string, Record<string, WordData[]>>>({})
 
   const currentWord = displayWords[currentIndex]
@@ -69,31 +70,26 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
 
         const getDeclensionFromStrongsNum = (strongsNum) => strongsMapping[strongsNum];
 
-        const idToDeclensionMap = {}
-        const strongsToDeclensionsToWordsMap = {}
+        const strongsToDeclensionsToWordsMapInit = {}
         wordGNTData.map(word => {
           const curStrongsNumber = word.StrongsNumber
           const curPossibleDeclensions = getDeclensionFromStrongsNum(curStrongsNumber);
-          const curWordId = word.id;
           const curWordGreek = word.Greek;
 
           Object.keys(curPossibleDeclensions).map((declension, _) => {
             const curGreekFromDeclension = curPossibleDeclensions[declension].greek
-            if (!idToDeclensionMap[curWordId]) {
-              idToDeclensionMap[curWordId] = []
+            if (!strongsToDeclensionsToWordsMapInit[curStrongsNumber]) {
+              strongsToDeclensionsToWordsMapInit[curStrongsNumber] = {}
             }
-            if (!strongsToDeclensionsToWordsMap[curStrongsNumber]) {
-              strongsToDeclensionsToWordsMap[curStrongsNumber] = {}
-            }
-            if (!strongsToDeclensionsToWordsMap[curStrongsNumber][declension]) {
-              strongsToDeclensionsToWordsMap[curStrongsNumber][declension] = []
+            if (!strongsToDeclensionsToWordsMapInit[curStrongsNumber][declension]) {
+              strongsToDeclensionsToWordsMapInit[curStrongsNumber][declension] = []
             }
             if (curWordGreek === curGreekFromDeclension) {
-              strongsToDeclensionsToWordsMap[curStrongsNumber][declension].push(word)
+              strongsToDeclensionsToWordsMapInit[curStrongsNumber][declension].push(word)
             }
           })
         })
-        setStrongsToDeclensionsToWordsMap(strongsToDeclensionsToWordsMap)
+        setStrongsToDeclensionsToWordsMap(strongsToDeclensionsToWordsMapInit)
 
         setOpenGNTData(wordGNTData);
         setRMACDescriptions(rmacDescriptions);
