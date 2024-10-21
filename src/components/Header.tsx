@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import {AppBar, Box, IconButton, Toolbar } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { ContentCopy, BugReport } from '@mui/icons-material';
@@ -48,8 +48,6 @@ const Header = () => {
     return null;
   }
   const {
-    displayWords,
-    currentIndex,
     studyChunks,
     onBookSelect,
     onChapterSelect,
@@ -73,7 +71,9 @@ const Header = () => {
     handleChartsClick,
     readingMode
   } = context;
+
   
+
   type StudyChunkOption = {label: string, value: string}
 
   // Function to generate studyChunkOptions
@@ -183,9 +183,7 @@ const Header = () => {
                   <ContentCopy/>
                 </IconButton>
                 {/* print debug */}
-              <IconButton edge="start" color="inherit" aria-label="home" onClick={() => {
-                printDebug(); 
-                }}>
+              <IconButton edge="start" color="inherit" aria-label="home" onClick={printDebug}>
                 <BugReport/>
               </IconButton>
               </>): null}
