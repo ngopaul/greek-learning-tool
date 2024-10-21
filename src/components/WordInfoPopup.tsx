@@ -2,11 +2,9 @@ import {Box, Paper, Typography, useMediaQuery, useTheme} from "@mui/material";
 import Popup from "./Popup";
 import React, {useContext} from "react";
 import {AppContext} from "../contexts/AppContext";
-import {bibleNumberToBook, getGreekVerse} from "../utils/bibleUtils";
 // TODO (Caleb): check this later... 
 // @ts-ignore
 import strongsGreekDictionary from "../utils/strongs-greek-dictionary";
-import { WordData } from "../types/AppContextTypes";
 
 /*
  * Display the strongsMapping information about the current word
@@ -18,16 +16,15 @@ import { WordData } from "../types/AppContextTypes";
  * 5. maybe dynamically calculate the declension/group? TODO
  */
 const WordInfoPopup = () => {
-  const [expandedDeclensions, setExpandedDeclensions] = React.useState<{index: number, words: WordData[]}>()
+
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const context = useContext(AppContext);
   if (!context) {
     return null;
   }
-  const { wordInfoOpen, setWordInfoOpen, currentIndex, displayWords, strongsMapping, RMACDescriptions, strongsToDeclensionsToWordsMap, setBookChapterVerseWord, openGNTData }= context;
+  const { wordInfoOpen, setWordInfoOpen, currentIndex, displayWords, strongsMapping, RMACDescriptions } = context;
   
-
 
   const currentWord = displayWords[currentIndex];
   if (!currentWord) {
@@ -70,50 +67,12 @@ const WordInfoPopup = () => {
       <hr/>
       <Box sx={{"my": 1}}>
         {
-          // TODO (Caleb): find type for strongsMapping
           (Object.keys(possibleDeclensions).map((declension, index) => (
-            <>
-          <Box key={"word-declension-" + index} sx={{py: 1}} 
-              onClick={() => {
-                if (expandedDeclensions && expandedDeclensions.index === index) {
-                  console.log("click on the oopen one so should close")
-                  setExpandedDeclensions(undefined)
-                  return;
-                }
-                setExpandedDeclensions({
-                  index: index,
-                  words: strongsToDeclensionsToWordsMap[currentStrongs][declension],
-                })
-              }}
-          >
+          <Box key={"word-declension-" + index} sx={{py: 1}}>
             <Typography variant="body1" sx={{flex: 1, textAlign: 'center'}}>
               {RMACDescriptions[declension]}: {possibleDeclensions[declension].greek} ({possibleDeclensions[declension].count})
             </Typography>
-            
-            
-          </Box>
-          {expandedDeclensions && expandedDeclensions.index === index ? (
-            expandedDeclensions.words.map(word => 
-            (
-                <Typography variant="body1" sx={{flex: 1, textAlign: 'left'}}
-                onClick={() => {
-                  setExpandedDeclensions(undefined)
-                  setBookChapterVerseWord(word.BookChapterVerseWord)
-                  setWordInfoOpen(false)
-          console.log('book number:',word.BookChapterVerseWord.book)
-                }}
-                >
-            {word.Greek} | {bibleNumberToBook[word.BookChapterVerseWord.book]} {word.BookChapterVerseWord.chapter}:{word.BookChapterVerseWord.verse} |  <span color="blue" style={{color:"gray"}}>
-            {getGreekVerse(word.BookChapterVerseWord, openGNTData)}
-            </span>
-          </Typography>
-              )
-            )
-          ) 
-          : null
-        }
-        </>
-        )))
+          </Box>)))
         }
       </Box>
     </Popup>
