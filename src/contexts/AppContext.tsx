@@ -2,7 +2,7 @@
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { loadDataVersions, loadOpenGNTData, loadRMACDescriptions, loadStudyChunks } from '../utils/dataLoader';
 import { getSmartChunksToTest, getChunksToTest } from '../utils/getTestWords';
-import { AppContextType, BookOption, ChapterOption, CurrentChapter, Tester, VerseOption, WordData } from '../types/AppContextTypes';
+import { AppContextType, BookChapterVerseWord, BookOption, ChapterOption, CurrentChapter, Tester, VerseOption, WordData } from '../types/AppContextTypes';
 import { StudyChunk } from '../types/dataLoaderTypes';
 
 
@@ -49,6 +49,10 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
   const [showAnswerChecked, setShowAnswerChecked] = useState(true);
   const [startedTesting, setStartedTesting] = useState(false);
   const [loadProgress, setLoadProgress] = useState(0);
+  // TODO (Caleb) :Move this to data loader
+  const [strongsToDeclensionsToWordsMap, setStrongsToDeclensionsToWordsMap] = useState<Record<string, Record<string, WordData[]>>>({})
+
+  const currentWord = displayWords[currentIndex]
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,6 +67,30 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
         const wordGNTData = gntData[0];
         const strongsMapping = gntData[1];
         setStrongsMapping(strongsMapping);
+
+        const getDeclensionFromStrongsNum = (strongsNum) => strongsMapping[strongsNum];
+
+        const strongsToDeclensionsToWordsMapInit = {}
+        wordGNTData.map(word => {
+          const curStrongsNumber = word.StrongsNumber
+          const curPossibleDeclensions = getDeclensionFromStrongsNum(curStrongsNumber);
+          const curWordGreek = word.Greek;
+
+          Object.keys(curPossibleDeclensions).map((declension, _) => {
+            const curGreekFromDeclension = curPossibleDeclensions[declension].greek
+            if (!strongsToDeclensionsToWordsMapInit[curStrongsNumber]) {
+              strongsToDeclensionsToWordsMapInit[curStrongsNumber] = {}
+            }
+            if (!strongsToDeclensionsToWordsMapInit[curStrongsNumber][declension]) {
+              strongsToDeclensionsToWordsMapInit[curStrongsNumber][declension] = []
+            }
+            if (curWordGreek === curGreekFromDeclension) {
+              strongsToDeclensionsToWordsMapInit[curStrongsNumber][declension].push(word)
+            }
+          })
+        })
+        setStrongsToDeclensionsToWordsMap(strongsToDeclensionsToWordsMapInit)
+
         setOpenGNTData(wordGNTData);
         setRMACDescriptions(rmacDescriptions);
         setStudyChunks(chunks);
@@ -173,7 +201,6 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
   useEffect(() => {
     if (currentChapter && currentChapter.data) {
       setDisplayWords(currentChapter.data);
-      setCurrentIndex(0);
     }
   }, [currentBook, currentChapter]);
 
@@ -207,6 +234,7 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     console.log('correctLog:', correctLog);
     console.log('correctLog at currentIndex:', correctLog[currentIndex]);
     console.log('showAnswer:', showAnswer);
+    console.log('openGNTData:', openGNTData)
   }
 
   // Function to determine which words to test
@@ -411,7 +439,7 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     }
   };
 
-  const onVerseSelect = (selected : VerseOption) => {
+  const onVerseSelect = (selected: VerseOption) => {
     if (!selected) {
       return;
     }
@@ -423,7 +451,52 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     }
   }
 
-  const onTesterSelect = (selected : Tester[]) => {
+  const setBookChapterVerseWord = (targetBookChapterVerseWord : BookChapterVerseWord) => {
+    const targetBookLabel = "templabel"
+    const targetBookValue = targetBookChapterVerseWord.book
+
+    const targetChapterLabel = "tempChapterLabel"
+    const targetChapterValue = targetBookChapterVerseWord.chapter
+
+    const targetVerseValue = targetBookChapterVerseWord.verse
+
+    const targetWordValue = targetBookChapterVerseWord.word
+
+    //book
+    setCurrentBook({label: targetBookLabel, value: targetBookValue})
+
+    //chapter
+      const curChapterData = openGNTData.filter((item) => {
+        if (!item) {
+          return false;
+        }
+        const bookChapterVerseWord = item.BookChapterVerseWord;
+        if (!bookChapterVerseWord) {
+          return false;
+        }
+        // Extract chapter info from 'OpenTextWord_KEY'
+        // Example Key: "〔40.1.1.w1〕" where 40 = Matthew
+        return bookChapterVerseWord.book === targetBookValue && bookChapterVerseWord.chapter === targetChapterValue;
+      });
+      setCurrentChapter({
+        bookName: targetBookLabel,
+        bookValue: targetBookValue,
+        chapterName: targetChapterLabel,
+        chapterValue: targetChapterValue,
+        data: curChapterData
+      });
+      setSelectedTesters(selectedTesters); // trigger callback to update testers
+
+      //verse
+      for (let i = 0; i < curChapterData.length; i++) {
+        if (curChapterData[i].BookChapterVerseWord.verse === targetVerseValue && curChapterData[i].BookChapterVerseWord.word === targetWordValue) {
+          setCurrentIndex(i);
+          return;
+        }
+      }
+  }
+
+  const onTesterSelect = (selected: Tester[]) => {
     setSelectedTesters(selected);
   };
 
@@ -431,6 +504,8 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     setDefaultShowAnswer(shouldShow);
   }
 
+
+  // pull this out into getGreekVerse in bibleUtils.
   const handleCopyClick = () => {
     const currentWord = displayWords[currentIndex];
     const { book, chapter, verse } = currentWord.BookChapterVerseWord;
@@ -576,6 +651,8 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
         nextTestWord,
         flipCard,
         restartLearning,
+        strongsToDeclensionsToWordsMap,
+        setBookChapterVerseWord,
       }}
     >
       {children}

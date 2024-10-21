@@ -23,6 +23,7 @@ export interface WordData {
   Meaning: string;
   displayIndex: number | null;
   StrongsNumber: string; // This name is confusing because it's a string.
+  id: string;
 }
 
 export interface ChapterOption {
@@ -132,4 +133,6 @@ export interface AppContextType {
   chartsOpen: boolean;
   setChartsOpen: (chartsOpen: boolean) => void;
   handleChartsClick: () => void;
+  strongsToDeclensionsToWordsMap : Record<string, Record<string, WordData[]>>;
+  setBookChapterVerseWord : (targetBookChapterVerseWord: BookChapterVerseWord) => void;
 }

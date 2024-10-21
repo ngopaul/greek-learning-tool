@@ -3,6 +3,7 @@
  * @description Functions for working with the Bible, verses, chapters, etc.
  */
 
+import { BookChapterVerseWord, WordData } from "../types/AppContextTypes";
 import { bookNameToChapterCounts } from "./constants";
 
 export const bibleBookAbbreviations: Record<string, string>= {
@@ -506,6 +507,8 @@ const bibleBookToNumber : Record<string, number> = {
   "Revelation": 66
 };
 
+export const bibleNumberToBook = Object.fromEntries(Array.from(Object.entries(bibleBookToNumber), ([book, number]) => [number, book]));
+
 export const bibleBookNameToChapterCounts: Record<string, number> = {
   "genesis": 50,
   "exodus": 40,
@@ -887,4 +890,15 @@ export function parseVerseReferences(input : string) : [string, [number, number,
   parsedVerses = [...new Set(parsedVerses)];
 
   return parsedVerses;
+}
+
+
+export const getGreekVerse = (targetBookChapterVerseWord: BookChapterVerseWord, openGNTData : WordData[]) => {
+  const { book, chapter, verse } = targetBookChapterVerseWord;
+  const wordsInChapter = openGNTData.filter(word =>
+    word.BookChapterVerseWord.book === book &&
+    word.BookChapterVerseWord.chapter === chapter &&
+    word.BookChapterVerseWord.verse === verse
+  );
+  return wordsInChapter.map(wordData => wordData.Greek).join(" ");
 }
