@@ -377,7 +377,7 @@ const parseStudyChunkID = (studyChunks : Record<string, StudyChunk[]>, greek : s
     }
   }
   // TODO (Caleb) (Paul-check): verify that this should never be possible. this used to return null.
-  throw Error("could not get studyChunkID");
+  console.error("could not get studyChunkID in parseStudyChunkID: ", {studyChunks, greek, morphology});
 }
 
 /*
