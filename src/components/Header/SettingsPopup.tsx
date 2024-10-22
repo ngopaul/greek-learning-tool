@@ -3,13 +3,16 @@ import Popup from "../Popup";
 import React, {useContext} from "react";
 import {AppContext} from "../../contexts/AppContext";
 import grey from "@mui/material/colors/grey";
+import { settingsOpenAtom } from "../../atoms/headerAtoms";
+import { useAtom } from "jotai";
 
 const SettingsPopup = () => {
+  const [settingsOpen, setSettingsOpen] = useAtom(settingsOpenAtom);
   const context = useContext(AppContext);
   if (!context) {
     return null;
   }
-  const { settingsOpen, setSettingsOpen, showAnswerChecked, readingMode, handleCheckboxShowAnswer,
+  const { showAnswerChecked, readingMode, handleCheckboxShowAnswer,
     handleChangeReadingMode, smartUnitLearning, handleSetSmartUnitLearning, restartLearning, showEnglishInContext,
     setShowEnglishInContext, testingMode, setTestingMode} = context;
 

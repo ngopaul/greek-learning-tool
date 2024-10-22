@@ -4,8 +4,11 @@ import Popup from "../Popup";
 import React, {useContext} from "react";
 import {AppContext} from "../../contexts/AppContext";
 import grey from "@mui/material/colors/grey";
+import { helpOpenAtom } from "../../atoms/headerAtoms";
+import { useAtom } from "jotai";
 
 const InfoPopup = () => {
+  const [helpOpen, setHelpOpen] = useAtom(helpOpenAtom);
   const theme = useTheme();
   const probablyNoKeyboard = useMediaQuery(theme.breakpoints.down('md'));
   const context = useContext(AppContext);
@@ -13,7 +16,7 @@ const InfoPopup = () => {
     return null;
   }
   const {
-    helpOpen, setHelpOpen, testWordIndices, currentIndex, selectedTesters
+   testWordIndices, currentIndex, selectedTesters
   } = context;
 
   return (<Popup open={helpOpen} onClose={() => setHelpOpen(false)} title="Help">

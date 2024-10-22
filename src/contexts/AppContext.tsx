@@ -40,9 +40,9 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
   const [testingMode, setTestingMode] = useState<"morphology" | "meaning">('morphology'); // 'morphology' or 'meaning'
   const [smartUnitLearning, setSmartUnitLearning] = useState(true);
   const [correctLog, setCorrectLog] = useState<{index: number, correct: boolean}[]>([]); // List of { index: number, correct: boolean } // TODO (Caleb): pull out
-  const [settingsOpen, setSettingsOpen] = useState(false);
-  const [helpOpen, setHelpOpen] = useState(false);
-  const [chartsOpen, setChartsOpen] = useState(false);
+  // const [settingsOpen, setSettingsOpen] = useState(false);
+  // const [helpOpen, setHelpOpen] = useState(false);
+  // const [chartsOpen, setChartsOpen] = useState(false);
   const [wordInfoOpen, setWordInfoOpen] = useState(false);
   const [selectedBook, setSelectedBook] = useState();
   const [chapterOptions, setChapterOptions] = useState([]);
@@ -448,24 +448,6 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     navigator.clipboard.writeText(currentVerse);
   }
 
-  const handleSettingsClick = () => {
-    setHelpOpen(false);
-    setChartsOpen(false);
-    setSettingsOpen((value) => (!value));
-  };
-
-  const handleHelpClick = () => {
-    setSettingsOpen(false);
-    setChartsOpen(false);
-    setHelpOpen((value) => (!value));
-  };
-
-  const handleChartsClick = () => {
-    setSettingsOpen(false);
-    setHelpOpen(false);
-    setChartsOpen((value) => (!value));
-  };
-
   const handleCheckboxShowAnswer = (event: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = event.target.checked;
     setShowAnswerChecked(isChecked);  // Update the state
@@ -519,8 +501,6 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
         setLoading,
         currentIndex,
         setCurrentIndex,
-        // displayWords,
-        // setDisplayWords,
         testWordIndices,
         setTestWordIndices,
         showAnswer,
@@ -536,12 +516,6 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
         handleSetSmartUnitLearning,
         correctLog,
         setCorrectLog,
-        settingsOpen,
-        setSettingsOpen,
-        helpOpen,
-        setHelpOpen,
-        chartsOpen,
-        setChartsOpen,
         wordInfoOpen,
         setWordInfoOpen,
         selectedBook,
@@ -570,11 +544,8 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
         onVerseSelect,
         onTesterSelect,
         onSetDefaultShowAnswer,
-        handleSettingsClick,
-        handleChartsClick,
         handleCopyClick,
         printDebug,
-        handleHelpClick,
         goRight,
         goLeft,
         previousTestWord,
