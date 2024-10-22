@@ -69,7 +69,7 @@ export interface AppContextType {
   RMACDescriptions: Record<string, string>;
   loading: boolean;
   currentIndex: number;
-  displayWords: WordData[];
+  // displayWords: WordData[];
   testWordIndices: Set<number>;
   showAnswer: boolean;
   defaultShowAnswer: boolean;

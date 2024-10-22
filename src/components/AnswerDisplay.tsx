@@ -3,13 +3,16 @@ import {AppContext} from "../contexts/AppContext";
 import MeaningDisplay from "./MeaningDisplay";
 import MorphologyDisplay from "./MorphologyDisplay";
 import {Box, Paper} from '@mui/material';
+import { useAtom } from "jotai";
+import { displayWordsAtom } from "../atoms/bibleDisplayAtoms";
 
 const AnswerDisplay = () => {
+  const [displayWords] = useAtom(displayWordsAtom)
   const context = useContext(AppContext);
   if (!context) {
     return null;
   }
-  const {displayWords, currentIndex, testingMode, flipCard} = context;
+  const {currentIndex, testingMode, flipCard} = context;
 
   if (displayWords.length === 0) {
     return null;

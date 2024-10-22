@@ -13,7 +13,7 @@ const InfoPopup = () => {
     return null;
   }
   const {
-    helpOpen, setHelpOpen, testWordIndices, currentIndex, displayWords, selectedTesters
+    helpOpen, setHelpOpen, testWordIndices, currentIndex, selectedTesters
   } = context;
 
   return (<Popup open={helpOpen} onClose={() => setHelpOpen(false)} title="Help">

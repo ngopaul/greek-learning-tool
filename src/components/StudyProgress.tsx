@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {Typography, Box} from '@mui/material';
 import {AppContext} from "../contexts/AppContext";
 import LinearProgress from '@mui/material/LinearProgress';
+import { useAtom } from 'jotai';
+import { displayWordsAtom } from '../atoms/bibleDisplayAtoms';
 
 type Props = {
   value: number
@@ -32,11 +34,13 @@ LinearProgressWithLabel.propTypes = {
 };
 
 const StudyProgress = () => {
+  const [displayWords] = useAtom(displayWordsAtom)
+
   const context = useContext(AppContext);
   if (!context) {
     return null;
   }
-  const { readingMode, currentIndex, displayWords } = context;
+  const { readingMode, currentIndex } = context;
 
   if (readingMode === 'chapter') {
     return null;

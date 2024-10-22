@@ -7,13 +7,17 @@ import CancelIcon from '@mui/icons-material/Cancel';
 
 import {useContext} from "react";
 import {AppContext} from "../contexts/AppContext";
+import { useAtom } from "jotai";
+import { displayWordsAtom } from "../atoms/bibleDisplayAtoms";
 
 const CorrectIncorrectController = () => {
+  const [displayWords] = useAtom(displayWordsAtom)
+
   const context = useContext(AppContext);
   if (!context) {
     return null;
   }
-  const { displayWords, currentIndex, readingMode, markWord, correctLog, testWordIndices} = context;
+  const {  currentIndex, readingMode, markWord, correctLog, testWordIndices} = context;
 
   if (displayWords.length === 0) {
     return null;

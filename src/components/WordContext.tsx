@@ -2,13 +2,17 @@ import React from "react";
 import { useContext } from "react";
 import { Box, Typography } from "@mui/material";
 import { AppContext } from "../contexts/AppContext";
+import { useAtom } from "jotai";
+import { displayWordsAtom } from "../atoms/bibleDisplayAtoms";
 
 const WordContext = () => {
+  const [displayWords] = useAtom(displayWordsAtom)
+
   const context = useContext(AppContext);
   if (!context) {
     return null;
   }
-  const { displayWords, currentIndex, openGNTData, testWordIndices, setCurrentIndex,
+  const {  currentIndex, openGNTData, testWordIndices, setCurrentIndex,
     showEnglishInContext, showAnswer } = context;
 
   // If there are no display words, or the current index is invalid, return null

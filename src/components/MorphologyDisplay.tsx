@@ -1,13 +1,17 @@
 import React, {useContext} from 'react';
 import {Box, Typography} from '@mui/material';
 import {AppContext} from "../contexts/AppContext";
+import { useAtom } from 'jotai';
+import { displayWordsAtom } from '../atoms/bibleDisplayAtoms';
 
 const MorphologyDisplay = () => {
+  const [displayWords] = useAtom(displayWordsAtom)
+
   const context = useContext(AppContext);
   if (!context) {
     return null;
   }
-  const {currentIndex, displayWords, showAnswer, RMACDescriptions, flipCard} = context;
+  const {currentIndex, showAnswer, RMACDescriptions, flipCard} = context;
 
   if (displayWords.length === 0) {
     return null;

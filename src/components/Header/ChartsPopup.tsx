@@ -4,15 +4,19 @@ import Popup from "../Popup";
 import React, {useContext} from "react";
 import {AppContext} from "../../contexts/AppContext";
 import grey from "@mui/material/colors/grey";
+import { useAtom } from "jotai";
+import { displayWordsAtom } from "../../atoms/bibleDisplayAtoms";
 
 const ChartsPopup = () => {
+  const [displayWords] = useAtom(displayWordsAtom)
+
   const theme = useTheme();
   const context = useContext(AppContext);
   if (!context) {
     return null;
   }
   const {
-    chartsOpen, setChartsOpen, testWordIndices, currentIndex, displayWords, selectedTesters
+    chartsOpen, setChartsOpen, testWordIndices, currentIndex, selectedTesters
   } = context;
   
 
