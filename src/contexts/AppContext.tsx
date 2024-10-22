@@ -30,7 +30,6 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
   const [RMACDescriptions, setRMACDescriptions] = useState({});
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndexRaw] = useState(0);
-  // const [displayWords, setDisplayWords] = useState<WordData[]>([]);
   const [testWordIndices, setTestWordIndices] = useState<Set<number>>(new Set());
   const [showAnswer, setShowAnswer] = useState(true);
   const [defaultShowAnswer, setDefaultShowAnswer] = useState(true);
@@ -40,9 +39,6 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
   const [testingMode, setTestingMode] = useState<"morphology" | "meaning">('morphology'); // 'morphology' or 'meaning'
   const [smartUnitLearning, setSmartUnitLearning] = useState(true);
   const [correctLog, setCorrectLog] = useState<{index: number, correct: boolean}[]>([]); // List of { index: number, correct: boolean } // TODO (Caleb): pull out
-  // const [settingsOpen, setSettingsOpen] = useState(false);
-  // const [helpOpen, setHelpOpen] = useState(false);
-  // const [chartsOpen, setChartsOpen] = useState(false);
   const [wordInfoOpen, setWordInfoOpen] = useState(false);
   const [selectedBook, setSelectedBook] = useState();
   const [chapterOptions, setChapterOptions] = useState([]);
