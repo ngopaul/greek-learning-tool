@@ -13,7 +13,7 @@ export interface MappedDataEntry {
     Morphology: string;
     English: string;
     Meaning: string;
-    StudyChunkID: string;
+    StudyChunkID?: string;
     StrongsNumber: string;
 }
   

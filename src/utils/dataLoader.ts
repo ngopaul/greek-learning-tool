@@ -116,9 +116,6 @@ export const loadOpenGNTData = async (studyChunks: Record<string, StudyChunk[]>,
 
             const studyChunkID = parseStudyChunkID(studyChunks, greek, morphology);
 
-            if (!studyChunkID) {
-              console.error("studyChunkID is undefined. Not pushing into datamap")
-            } else {
               mappedData.push({
                 BookChapterVerseWord: bookChapterVerseWord,
                 Greek: greek,
@@ -128,7 +125,6 @@ export const loadOpenGNTData = async (studyChunks: Record<string, StudyChunk[]>,
                 StudyChunkID: studyChunkID,
                 StrongsNumber: strongsNumber
               });
-            }
 
             
 
