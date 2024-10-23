@@ -1,13 +1,18 @@
 import {Typography} from '@mui/material';
 import React, {useContext} from "react";
 import {AppContext} from "../contexts/AppContext";
+import { useAtom } from "jotai";
+import { displayWordsAtom } from "../atoms/bibleDisplayAtoms";
 
 const MeaningDisplay = () => {
+  const [displayWords] = useAtom(displayWordsAtom);
+
+
   const context = useContext(AppContext);
   if (!context) {
       return null;
     }
-  const {displayWords, currentIndex, showAnswer, flipCard} = context;
+  const {currentIndex, showAnswer, flipCard} = context;
 
   if (displayWords.length === 0) {
     return null;

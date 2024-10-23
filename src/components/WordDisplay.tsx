@@ -11,8 +11,12 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import grey from "@mui/material/colors/grey";
+import { useAtom } from 'jotai';
+import { displayWordsAtom } from '../atoms/bibleDisplayAtoms';
 
 const WordDisplay = () => {
+  const [displayWords] = useAtom(displayWordsAtom)
+
   const [mainWordHovered, setMainWordHovered] = useState(false);
   const theme = useTheme();
   const isProbablyAPhone = useMediaQuery(theme.breakpoints.down('sm'));
@@ -21,7 +25,7 @@ const WordDisplay = () => {
   if (!context) {
     return null;
   }
-  const { displayWords, currentIndex, showAnswer, goLeft, goRight, flipCard,
+  const {  currentIndex, showAnswer, goLeft, goRight, flipCard,
   readingMode, selectedTesters, startLearning, setWordInfoOpen, correctLog } = context;
   
 

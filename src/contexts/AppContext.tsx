@@ -4,6 +4,9 @@ import { loadDataVersions, loadOpenGNTData, loadRMACDescriptions, loadStudyChunk
 import { getSmartChunksToTest, getChunksToTest } from '../utils/getTestWords';
 import { AppContextType, BookOption, ChapterOption, CurrentChapter, Tester, VerseOption, WordData } from '../types/AppContextTypes';
 import { StudyChunk } from '../types/dataLoaderTypes';
+import { useAtom } from 'jotai';
+import { startTestingAtom } from '../atoms/testingAtoms';
+import { displayWordsAtom } from '../atoms/bibleDisplayAtoms';
 
 
 
@@ -27,7 +30,6 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
   const [RMACDescriptions, setRMACDescriptions] = useState({});
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndexRaw] = useState(0);
-  const [displayWords, setDisplayWords] = useState<WordData[]>([]);
   const [testWordIndices, setTestWordIndices] = useState<Set<number>>(new Set());
   const [showAnswer, setShowAnswer] = useState(true);
   const [defaultShowAnswer, setDefaultShowAnswer] = useState(true);
@@ -37,9 +39,6 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
   const [testingMode, setTestingMode] = useState<"morphology" | "meaning">('morphology'); // 'morphology' or 'meaning'
   const [smartUnitLearning, setSmartUnitLearning] = useState(true);
   const [correctLog, setCorrectLog] = useState<{index: number, correct: boolean}[]>([]); // List of { index: number, correct: boolean } // TODO (Caleb): pull out
-  const [settingsOpen, setSettingsOpen] = useState(false);
-  const [helpOpen, setHelpOpen] = useState(false);
-  const [chartsOpen, setChartsOpen] = useState(false);
   const [wordInfoOpen, setWordInfoOpen] = useState(false);
   const [selectedBook, setSelectedBook] = useState();
   const [chapterOptions, setChapterOptions] = useState([]);
@@ -47,8 +46,10 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
   const [verseOptions, setVerseOptions] = useState([]);
   const [selectedVerse, setSelectedVerse] = useState(null);
   const [showAnswerChecked, setShowAnswerChecked] = useState(true);
-  const [startedTesting, setStartedTesting] = useState(false);
   const [loadProgress, setLoadProgress] = useState(0);
+
+  const [startedTesting, setStartedTesting] = useAtom(startTestingAtom);
+  const [displayWords, setDisplayWords] = useAtom(displayWordsAtom);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -443,24 +444,6 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     navigator.clipboard.writeText(currentVerse);
   }
 
-  const handleSettingsClick = () => {
-    setHelpOpen(false);
-    setChartsOpen(false);
-    setSettingsOpen((value) => (!value));
-  };
-
-  const handleHelpClick = () => {
-    setSettingsOpen(false);
-    setChartsOpen(false);
-    setHelpOpen((value) => (!value));
-  };
-
-  const handleChartsClick = () => {
-    setSettingsOpen(false);
-    setHelpOpen(false);
-    setChartsOpen((value) => (!value));
-  };
-
   const handleCheckboxShowAnswer = (event: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = event.target.checked;
     setShowAnswerChecked(isChecked);  // Update the state
@@ -514,8 +497,6 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
         setLoading,
         currentIndex,
         setCurrentIndex,
-        displayWords,
-        setDisplayWords,
         testWordIndices,
         setTestWordIndices,
         showAnswer,
@@ -531,12 +512,6 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
         handleSetSmartUnitLearning,
         correctLog,
         setCorrectLog,
-        settingsOpen,
-        setSettingsOpen,
-        helpOpen,
-        setHelpOpen,
-        chartsOpen,
-        setChartsOpen,
         wordInfoOpen,
         setWordInfoOpen,
         selectedBook,
@@ -565,11 +540,8 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
         onVerseSelect,
         onTesterSelect,
         onSetDefaultShowAnswer,
-        handleSettingsClick,
-        handleChartsClick,
         handleCopyClick,
         printDebug,
-        handleHelpClick,
         goRight,
         goLeft,
         previousTestWord,

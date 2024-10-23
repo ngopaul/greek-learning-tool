@@ -5,6 +5,8 @@ import {AppContext} from "../contexts/AppContext";
 // TODO (Caleb): check this later... 
 // @ts-ignore
 import strongsGreekDictionary from "../utils/strongs-greek-dictionary";
+import { useAtom } from "jotai";
+import { displayWordsAtom } from "../atoms/bibleDisplayAtoms";
 
 /*
  * Display the strongsMapping information about the current word
@@ -16,6 +18,7 @@ import strongsGreekDictionary from "../utils/strongs-greek-dictionary";
  * 5. maybe dynamically calculate the declension/group? TODO
  */
 const WordInfoPopup = () => {
+  const [displayWords] = useAtom(displayWordsAtom)
 
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -23,7 +26,7 @@ const WordInfoPopup = () => {
   if (!context) {
     return null;
   }
-  const { wordInfoOpen, setWordInfoOpen, currentIndex, displayWords, strongsMapping, RMACDescriptions } = context;
+  const { wordInfoOpen, setWordInfoOpen, currentIndex, strongsMapping, RMACDescriptions } = context;
   
 
   const currentWord = displayWords[currentIndex];

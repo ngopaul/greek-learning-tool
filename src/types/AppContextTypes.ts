@@ -69,7 +69,6 @@ export interface AppContextType {
   RMACDescriptions: Record<string, string>;
   loading: boolean;
   currentIndex: number;
-  displayWords: WordData[];
   testWordIndices: Set<number>;
   showAnswer: boolean;
   defaultShowAnswer: boolean;
@@ -81,10 +80,6 @@ export interface AppContextType {
   setTestingMode: (testingMode: "morphology" | "meaning") => void;
   smartUnitLearning: boolean; // TODO: rename bool
   correctLog: (boolean | null)[];
-  settingsOpen: boolean; // TODO: rename bool
-  setSettingsOpen: (settinsOpen: boolean) => void;
-  helpOpen: boolean; // TOOD: rename bool "isHelpOpen"
-  setHelpOpen: (helpOpen: boolean) => void;
   wordInfoOpen: boolean; // TODO: rename bool
   selectedBook?: string;
   setSelectedBook: (selectedBook: string) => void;
@@ -117,9 +112,7 @@ export interface AppContextType {
   onVerseSelect: (selected: any) => void;
   onTesterSelect: (testers: MultiValue<unknown>) => void;
   onSetDefaultShowAnswer: (shouldShow: boolean) => void;
-  handleSettingsClick: () => void;
   handleCopyClick: () => void;
-  handleHelpClick: () => void;
   handleCheckboxShowAnswer: (
     event: React.ChangeEvent<HTMLInputElement>
   ) => void;
@@ -129,7 +122,4 @@ export interface AppContextType {
   restartLearning: () => void;
   handleSetSmartUnitLearning: (value: boolean) => void;
   printDebug: () => void;
-  chartsOpen: boolean;
-  setChartsOpen: (chartsOpen: boolean) => void;
-  handleChartsClick: () => void;
 }

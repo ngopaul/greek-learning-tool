@@ -10,11 +10,12 @@ import {bibleBookAbbreviations, bibleBookNameToChapterCounts, bibleBookVerseCoun
 import {AppContext} from "../contexts/AppContext";
 import SettingsPopup from "./Header/SettingsPopup";
 import InfoPopup from "./Header/InfoPopup";
-import { VerseOption } from '../types/AppContextTypes';
+import { BookOption, VerseOption } from '../types/AppContextTypes';
 import ChartsPopup from "./Header/ChartsPopup";
 import TableChartIcon from '@mui/icons-material/TableChart';
+import { useHeader } from './useHeader';
 
-let bookOptions = [];
+let bookOptions : BookOption[] = [];
 let startValue = 40;
 
 for (let i = 39; i < listOfBooks.length; i++) {
@@ -43,6 +44,7 @@ const customStyles = {
 const Header = () => {
   // Currently the 'selectedVerse' state is not reactive. Use this as temporary measure until 'selectedVerse' is reactive.
   const [curSelectedVerse, setCurSelectedVerse] = React.useState<VerseOption>();
+  const [handleSettingsClick, handleHelpClick, handleChartsClick] = useHeader();
   const context = useContext(AppContext);
   if (!context) {
     return null;
@@ -63,12 +65,9 @@ const Header = () => {
     setVerseOptions,
     setSelectedVerse,
     setSelectedTesters,
-    handleSettingsClick,
     handleCopyClick,
     printDebug,
     selectedVerse,
-    handleHelpClick,
-    handleChartsClick,
     readingMode
   } = context;
 
