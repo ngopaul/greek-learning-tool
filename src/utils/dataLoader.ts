@@ -1,7 +1,7 @@
-import Papa from 'papaparse';
+import Papa, { ParseError } from 'papaparse';
 // import { createHash } from 'crypto-browserify';
 import Dexie from 'dexie';
-import { MappedDataEntry, RMACResults, StudyChunk, StudyChunkCSVResult } from '../types/dataLoaderTypes';
+import { MappedDataEntry, MorphologyRecord, RMACResults, StudyChunk, StudyChunkCSVResult } from '../types/dataLoaderTypes';
 
 // Initialize Dexie database
 const db = new Dexie('OpenGNTDataDB');
@@ -61,8 +61,10 @@ export const loadDataVersions = async () => {
  *  English: the english meaning of the word
  *  BookChapterVerseWord: returns that object (with those fields, all of them being integers)
  */
-// TODO (Caleb): any...
-export const loadOpenGNTData = async (studyChunks: Record<string, StudyChunk[]>, needToUpdateFiles: boolean, setLoadProgress : React.Dispatch<React.SetStateAction<number>>): Promise<any> => {
+export const loadOpenGNTData = async (
+  studyChunks: Record<string, StudyChunk[]>, 
+  needToUpdateFiles: boolean, setLoadProgress : React.Dispatch<React.SetStateAction<number>>): 
+  Promise<[MappedDataEntry[],Record<string, MorphologyRecord> ]> => {
   console.log("Loading OpenGNT data");
   // if sameHash is true, then load the data from IndexedDB
   if (!needToUpdateFiles) {
@@ -87,14 +89,14 @@ export const loadOpenGNTData = async (studyChunks: Record<string, StudyChunk[]>,
         let sizeBeforeUpdate = totalWords / 100;
         let currentSizeBeforeUpdate = 0;
         const mappedData : MappedDataEntry[] = [];
-        const strongsMapping: Record<string, Record<string, any>> = {};
+        const strongsMapping: Record<string, MorphologyRecord> = {};
 
         // Instead of using map, loop asynchronously to allow state updates
         let previousWordIdx = 0;
         let currentBook = 40;
         let currentChapter = 1;
         let currentVerse = 1;
-        for (let item of results.data) {
+        for (let item of results.data as Record<string, string>[]) {
           const greekBreakdown  = item["〔OGNTk｜OGNTu｜OGNTa｜lexeme｜rmac｜sn〕"];
           const tbessg = item["〔TBESG｜IT｜LT｜ST｜Español〕"];
           const bookChapterVerse = item["〔Book｜Chapter｜Verse〕"];
@@ -164,9 +166,7 @@ export const loadOpenGNTData = async (studyChunks: Record<string, StudyChunk[]>,
         await saveToIndexedDB(mappedData);
         localStorage.setItem('strongs_mapping', JSON.stringify(strongsMapping));
         resolve([mappedData, strongsMapping]);
-        // TOOD (Caleb): any...
-      }, error: (err: any) => {
-        reject(err);
+      }, error: (err: ParseError) => {        reject(err);
       },
     });
   });
@@ -232,8 +232,7 @@ export const loadStudyChunks = async (needToUpdateFiles: boolean): Promise<Recor
 
         localStorage.setItem('study_chunks', JSON.stringify(unitDict));
         resolve(unitDict);
-        // TODO (Caleb): any...
-      }, error: (err : any) => {
+      }, error: (err : ParseError) => {
         reject(err);
       },
     });
@@ -258,8 +257,7 @@ export const loadRMACDescriptions = async (): Promise<Record<string, string[]>> 
           }
         });
         resolve(rmacDict);  // Resolve the dictionary as the final result
-        // TODO (Caleb): any...
-      }, error: (err: any) => {
+      }, error: (err: ParseError) => {
         reject(err);  // Handle parsing errors
       },
     });
