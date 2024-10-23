@@ -10,12 +10,12 @@ import {bibleBookAbbreviations, bibleBookNameToChapterCounts, bibleBookVerseCoun
 import {AppContext} from "../contexts/AppContext";
 import SettingsPopup from "./Header/SettingsPopup";
 import InfoPopup from "./Header/InfoPopup";
-import { VerseOption } from '../types/AppContextTypes';
+import { BookOption, VerseOption } from '../types/AppContextTypes';
 import ChartsPopup from "./Header/ChartsPopup";
 import TableChartIcon from '@mui/icons-material/TableChart';
 import { useHeader } from './useHeader';
 
-let bookOptions = [];
+let bookOptions : BookOption[] = [];
 let startValue = 40;
 
 for (let i = 39; i < listOfBooks.length; i++) {
