@@ -1,4 +1,4 @@
-// @ts-nocheck
+@ts-nocheck
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { loadDataVersions, loadOpenGNTData, loadRMACDescriptions, loadStudyChunks } from '../utils/dataLoader';
 import { getSmartChunksToTest, getChunksToTest } from '../utils/getTestWords';
@@ -7,6 +7,7 @@ import { StudyChunk } from '../types/dataLoaderTypes';
 import { useAtom } from 'jotai';
 import { startTestingAtom } from '../atoms/testingAtoms';
 import { displayWordsAtom } from '../atoms/bibleDisplayAtoms';
+import { useNavigation } from '../components/useNavigation';
 
 
 
@@ -19,8 +20,9 @@ interface AppProviderProps {
 
 // Create the provider component
 export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
-  const [currentBook, setCurrentBook] = useState<BookOption>();
-  const [currentChapter, setCurrentChapter] = useState<CurrentChapter>();
+  const {currentBook, currentChapter, currentIndex, selectedBook, chapterOptions, selectedChapter, verseOptions, selectedVerse, goLeft, goRight, setCurrentIndexAndProcess} = useNavigation();
+
+
   const [selectedTesters, setSelectedTesters] = useState<Tester[]>([]);
   const [gotNewData, setGotNewData] = useState(false);
   const [openGNTData, setOpenGNTData] = useState<WordData[]>([]);
@@ -29,7 +31,6 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
   const [studyChunks, setStudyChunks] = useState<Record<string, StudyChunk[]>>();
   const [RMACDescriptions, setRMACDescriptions] = useState({});
   const [loading, setLoading] = useState(true);
-  const [currentIndex, setCurrentIndexRaw] = useState(0);
   const [testWordIndices, setTestWordIndices] = useState<Set<number>>(new Set());
   const [showAnswer, setShowAnswer] = useState(true);
   const [defaultShowAnswer, setDefaultShowAnswer] = useState(true);
@@ -40,11 +41,7 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
   const [smartUnitLearning, setSmartUnitLearning] = useState(true);
   const [correctLog, setCorrectLog] = useState<{index: number, correct: boolean}[]>([]); // List of { index: number, correct: boolean } // TODO (Caleb): pull out
   const [wordInfoOpen, setWordInfoOpen] = useState(false);
-  const [selectedBook, setSelectedBook] = useState();
-  const [chapterOptions, setChapterOptions] = useState([]);
-  const [selectedChapter, setSelectedChapter] = useState();
-  const [verseOptions, setVerseOptions] = useState([]);
-  const [selectedVerse, setSelectedVerse] = useState(null);
+  
   const [showAnswerChecked, setShowAnswerChecked] = useState(true);
   const [loadProgress, setLoadProgress] = useState(0);
 
@@ -76,29 +73,9 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     fetchData();
   }, []);
 
-  const setCurrentIndex = (idx: number, newDisplayWords=displayWords, newTestWordIndices=testWordIndices) => {
-    if (idx === null || idx === undefined || isNaN(idx) || idx < 0 || idx >= newDisplayWords.length) {
-      return;
-    }
-    setCurrentIndexRaw(idx);
-    if (newTestWordIndices.has(idx)) {
-      setShowAnswer(false);
-    } else if (readingMode === "chapter") {
-      setShowAnswer(defaultShowAnswer);
-    } else if (readingMode === "unit" && idx !== displayWords.length) {
-      setShowAnswer(defaultShowAnswer);
-    } else {
-      setShowAnswer(true);
-    }
-  }
+  
 
-  const goLeft = () => {
-    setCurrentIndex(Math.max(currentIndex - 1, 0));
-  }
-
-  const goRight = () => {
-    setCurrentIndex(Math.min(currentIndex + 1, displayWords.length - 1));
-  }
+  
 
   const previousTestWord = () => {
     // find the closest previous word that is in the testWordIndices
@@ -108,7 +85,7 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     for (let i = currentIndex - 1; i > 0; i--) {
       if (testWordIndices.has(i)) {
         const newIndex = Math.max(i, 0);
-        setCurrentIndex(newIndex);
+        setCurrentIndexAndProcess(newIndex);
         break;
       }
     }
@@ -122,7 +99,7 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     for (let i = currentIndex + 1; i < displayWords.length; i++) {
       if (testWordIndices.has(i)) {
         const newIndex = Math.min(i, displayWords.length - 1)
-        setCurrentIndex(newIndex);
+        setCurrentIndexAndProcess(newIndex);
         break;
       }
     }
@@ -174,7 +151,7 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
   useEffect(() => {
     if (currentChapter && currentChapter.data) {
       setDisplayWords(currentChapter.data);
-      setCurrentIndex(0);
+      setCurrentIndexAndProcess(0);
     }
   }, [currentBook, currentChapter]);
 
@@ -314,7 +291,7 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     setDisplayWords(temporaryDisplayWords);
     const temporaryTestWordIndices = new Set(Array.from(Array(temporaryDisplayWords.length).keys()))
     setTestWordIndices(temporaryTestWordIndices);
-    setCurrentIndex(0, temporaryDisplayWords, temporaryTestWordIndices);
+    setCurrentIndexAndProcess(0, temporaryDisplayWords, temporaryTestWordIndices);
     setStartedTesting(true);
     // correctLog is a list of booleans the length of displayWords, initialized to null
     // it is used to keep track of whether the user got each word correct or not
