@@ -61,7 +61,7 @@ const chapter4_1 : SimpleTableData= [
 const chapter4_2 : SimpleTableData= [
   {title: '1st Declension Feminine Nouns (Plur.)', numColumns: 4},
   ['', 'Normal Base', 'ε, ι, ρ base', 'Mixed Base'],
-  ['Nominative', 'ἡ ...αι', 'ἡ ...αι', 'ἡ ...αι'],
+  ['Nominative', 'αἱ ...αι', 'αἱ ...αι', 'αἱ ...αι'],
   ['Genitive', 'τῶν ...ων', 'τῶν ...ων', 'τῶν ...ων'],
   ['Dative', 'ταῖς ...αις', 'ταῖς ...αις', 'ταῖς ...αις'],
   ['Accusative', 'τὰς ...ας', 'τὰς ...ας', 'τὰς ...ας'],
@@ -71,7 +71,7 @@ const chapter4_2 : SimpleTableData= [
 const chapter4_3 : SimpleTableData= [
   {title: '1st Declension Masculine Nouns', numColumns: 4},
   ['', 'Normal Base (Sing.)', 'ε, ι, ρ base (Sing.)', 'All Plurals'],
-  ['Nominative', 'ὁ ...ης', 'ὁ ...ας', 'οἱ ...αι'],
+  ['Nominative', 'οἱ ...ης', 'οἱ ...ας', 'οἱ ...αι'],
   ['Genitive', 'τοῦ ...ου', 'τοῦ ...ου', 'τῶν ...ων'],
   ['Dative', 'τῷ ...ῃ', 'τῷ ...ᾳ', 'τοῖς ...αις'],
   ['Accusative', 'τὸν ...ῃν', 'τὸν ...αν', 'τοὺς ...ας'],
