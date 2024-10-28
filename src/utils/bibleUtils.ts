@@ -773,7 +773,6 @@ export function standardizeBookName(book: string) {
  * Returns:
  * - An array of verse strings in the format "<book> <chapter>:<verse>"
 */
-// TODO (Caleb): I dont think this is being used rn.
 export function parseVerseReferences(input : string) : [string, [number, number, number]][] {
   // no bible verse is more than 176
   input = input.replace(/\d+/g, match => {

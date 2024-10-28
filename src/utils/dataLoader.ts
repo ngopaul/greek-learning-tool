@@ -3,25 +3,30 @@ import Papa, { LocalFile, ParseError } from 'papaparse';
 import Dexie from 'dexie';
 import { MappedDataEntry, MorphologyRecord, RMACResults, StudyChunk, StudyChunkCSVResult } from '../types/dataLoaderTypes';
 
-// Initialize Dexie database
-const db = new Dexie('OpenGNTDataDB');
-db.version(1).stores({
-  words: '++id, BookChapterVerseWord, Greek, Morphology, English, StudyChunkID, StrongsNumber', // Define schema
-});
+// Extend Dexie to add type definitions for the database schema
+class OpenGNTDataDB extends Dexie {
+  words!: Dexie.Table<MappedDataEntry, number>; // Define the 'words' table with type
+
+  constructor() {
+    super('OpenGNTDataDB');
+    this.version(1).stores({
+      words: '++id, BookChapterVerseWord, Greek, Morphology, English, StudyChunkID, StrongsNumber',
+    });
+  }
+}
+
+// Initialize the database
+const db = new OpenGNTDataDB();
 
 // Function to save data to IndexedDB
 const saveToIndexedDB = async (data : MappedDataEntry[]) => {
-  // TODO (Caleb): see why these are errors... they weren't erros when it was javascript.
-  // @ts-ignore
+  // ERROR: Property 'words' does not exist on type 'Dexie'.ts(2339)
   await db.words.clear(); // Clear old data
-  // @ts-ignore
   await db.words.bulkAdd(data); // Add new data
 };
 
 // Function to load data from IndexedDB
 const loadFromIndexedDB = async () => {
-  // TODO (Caleb): see why these are errors... they weren't erros when it was javascript.
-  // @ts-ignore
   return await db.words.toArray(); // Retrieve all stored data
 };
 
@@ -69,10 +74,10 @@ export const loadOpenGNTData = async (
   // if sameHash is true, then load the data from IndexedDB
   if (!needToUpdateFiles) {
     const storedData = await loadFromIndexedDB();
-    if (storedData && storedData.length > 0) {
+    const strongs_mapping : Record<string, MorphologyRecord> = JSON.parse(localStorage.getItem('strongs_mapping') ?? "");
+    if (storedData && storedData.length > 0 && strongs_mapping) {
       setLoadProgress(100);
-      // TODO (Caleb): modified to add ?? "" to catch null. Verify if its ok.
-      return [storedData, JSON.parse(localStorage.getItem('strongs_mapping') ?? "")];
+      return [storedData, strongs_mapping];
     }
   }
   // otherwise, load the data from the server
@@ -106,8 +111,13 @@ export const loadOpenGNTData = async (
             const [rootMeaning, english] = parseEnglishMeaning(tbessg);
             const bookChapterVerseWord = parseBookChapterVerseWord(previousWordIdx, bookChapterVerse, currentBook, currentChapter, currentVerse);
             if (!bookChapterVerseWord) {
-              // TODO (Caleb): verify this is correct error throwing.
-              throw Error("bookChapterVerseWord was null in loadOpenGNT");
+              console.error(
+                `Skipping entry due to missing bookChapterVerseWord. 
+                Item: ${JSON.stringify(item)}, 
+                Current Book: ${currentBook}, 
+                Chapter: ${currentChapter}, Verse: ${currentVerse}`
+              );
+              continue;
             }
             currentBook = bookChapterVerseWord.book;
             currentChapter = bookChapterVerseWord.chapter;
@@ -353,8 +363,7 @@ const parseStudyChunkID = (studyChunks : Record<string, StudyChunk[]>, greek : s
     if (studyChunksForTester) {
       // Check each study chunk under this unit
       for (const chunk of studyChunksForTester) {
-        // TODO (Caleb): remove the casting! "as StudyCHunk"
-        const {studyChunkID, morphologies, endings} = chunk as StudyChunk;
+        const {studyChunkID, morphologies, endings} = chunk;
 
         // Check if the word's morphology is in the list of morphologies
         const morphologyMatches = morphologies.includes(morphology);
