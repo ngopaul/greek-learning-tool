@@ -9,17 +9,19 @@ import { useAtom } from "jotai";
 import TableChartIcon from '@mui/icons-material/TableChart';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { useNavigation } from "../useNavigation";
 
 const InfoPopup = () => {
   const [helpOpen, setHelpOpen] = useAtom(helpOpenAtom);
   const theme = useTheme();
   const probablyNoKeyboard = useMediaQuery(theme.breakpoints.down('md'));
   const context = useContext(AppContext);
+  const {currentIndex} = useNavigation();
   if (!context) {
     return null;
   }
   const {
-   testWordIndices, currentIndex, selectedTesters
+   testWordIndices, selectedTesters
   } = context;
 
   return (<Popup open={helpOpen} onClose={() => setHelpOpen(false)} title="Help">

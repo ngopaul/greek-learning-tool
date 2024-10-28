@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {AppBar, Box, IconButton, Toolbar } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { ContentCopy, BugReport } from '@mui/icons-material';
@@ -10,10 +10,11 @@ import {bibleBookAbbreviations, bibleBookNameToChapterCounts, bibleBookVerseCoun
 import {AppContext} from "../contexts/AppContext";
 import SettingsPopup from "./Header/SettingsPopup";
 import InfoPopup from "./Header/InfoPopup";
-import { BookOption, VerseOption } from '../types/AppContextTypes';
+import { BookOption, ChapterOption, VerseOption } from '../types/AppContextTypes';
 import ChartsPopup from "./Header/ChartsPopup";
 import TableChartIcon from '@mui/icons-material/TableChart';
 import { useHeader } from './useHeader';
+import { useNavigation } from './useNavigation';
 
 let bookOptions : BookOption[] = [];
 let startValue = 40;
@@ -45,29 +46,31 @@ const Header = () => {
   // Currently the 'selectedVerse' state is not reactive. Use this as temporary measure until 'selectedVerse' is reactive.
   const [curSelectedVerse, setCurSelectedVerse] = React.useState<VerseOption>();
   const [handleSettingsClick, handleHelpClick, handleChartsClick] = useHeader();
+  const {
+    onVerseSelect,
+    onBookSelect,
+    onChapterSelect,
+  
+  } = useNavigation();
+  const [selectedBook, setSelectedBook] = useState<string>();
+  const [selectedChapter, setSelectedChapter] = useState<ChapterOption>();
+  const [selectedVerse, setSelectedVerse] = useState<VerseOption>();
+  const [chapterOptions, setChapterOptions] = useState<ChapterOption[]>([]);
+  const [verseOptions, setVerseOptions] = useState<VerseOption[]>([]);
+
+
+
+
   const context = useContext(AppContext);
   if (!context) {
     return null;
   }
   const {
     studyChunks,
-    onBookSelect,
-    onChapterSelect,
-    onVerseSelect,
     onTesterSelect,
-    selectedBook,
-    setSelectedBook,
-    chapterOptions,
-    setChapterOptions,
-    selectedChapter,
-    setSelectedChapter,
-    verseOptions,
-    setVerseOptions,
-    setSelectedVerse,
     setSelectedTesters,
     handleCopyClick,
     printDebug,
-    selectedVerse,
     readingMode
   } = context;
 
@@ -132,6 +135,10 @@ const Header = () => {
                     value={selectedChapter}
                     options={chapterOptions}
                     onChange={(selected) => {
+                      if (!selected) {
+                        console.error("chapter dropdown onchange is undefined somehow. investigate");
+                        return;
+                      }
                       //TODO Caleb: replicate this pattern in other places.
                       setSelectedChapter(selected === null ? undefined : selected);
                       onChapterSelect(selected);
