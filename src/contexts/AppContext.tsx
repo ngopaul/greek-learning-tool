@@ -79,11 +79,6 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
   }, []);
 
   useEffect(() => {
-    console.log("AppContext: currentChapter change", currentChapter)
-  }, [currentChapter])
-
-  useEffect(() => {
-    console.log("found change in testers", readingMode, currentChapter, currentChapter?.data)
     if (readingMode === 'chapter' && currentChapter && currentChapter.data) {
       console.log("calling determineTestwords")
       setCorrectLog(new Array(currentChapter.data.length).fill(null));
@@ -183,9 +178,6 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     console.log('displayWords:', displayWords);
     console.log('testWordIndices:', testWordIndices);
     console.log('selectedTesters:', selectedTesters);
-    // console.log('selectedBook:', selectedBook);
-    // console.log('selectedChapter:', selectedChapter);
-    // console.log('selectedVerse:', selectedVerse);
     console.log('selectedTesters:', selectedTesters);
     console.log('currentWord', displayWords[currentIndex]);
     console.log('correctLog:', correctLog);

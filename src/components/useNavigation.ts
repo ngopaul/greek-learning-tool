@@ -42,14 +42,6 @@ export const useNavigation = () => {
     }
   }, [currentBook, currentChapter]);
 
-  useEffect(() => {
-    console.log("currentChapter change", currentChapter)
-  }, [currentChapter])
-
-  useEffect(() => {
-    console.log("currentIndex chagned to:", currentIndex)
-  }, [currentIndex])
-
   const goLeft = () => {
     setCurrentIndexAndProcess(Math.max(currentIndex - 1, 0));
   };
@@ -108,8 +100,6 @@ export const useNavigation = () => {
     }
     if (selected) {
       const temporaryCurrentChapter = selected;
-      // console.log(openGNTData);
-      // console.log(currentBook.value, temporaryCurrentChapter.value);
       const filteredData = openGNTData.filter((item) => {
         if (!item) {
           return false;
@@ -126,7 +116,6 @@ export const useNavigation = () => {
           bookChapterVerseWord.chapter === temporaryCurrentChapter.value
         );
       });
-      // console.log(filteredData);
       setCurrentChapter({
         bookName: currentBook.label,
         bookValue: currentBook.value,
