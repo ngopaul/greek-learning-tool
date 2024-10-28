@@ -13,6 +13,7 @@ import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import grey from "@mui/material/colors/grey";
 import { useAtom } from 'jotai';
 import { displayWordsAtom } from '../atoms/bibleDisplayAtoms';
+import { useNavigation } from './useNavigation';
 
 const WordDisplay = () => {
   const [displayWords] = useAtom(displayWordsAtom)
@@ -21,11 +22,13 @@ const WordDisplay = () => {
   const theme = useTheme();
   const isProbablyAPhone = useMediaQuery(theme.breakpoints.down('sm'));
   const isProbablyAPhoneOrTablet = useMediaQuery(theme.breakpoints.down('md'));
+  const {currentIndex , goLeft, goRight} = useNavigation();
+
   const context = useContext(AppContext);
   if (!context) {
     return null;
   }
-  const {  currentIndex, showAnswer, goLeft, goRight, flipCard,
+  const {  showAnswer, flipCard,
   readingMode, selectedTesters, startLearning, setWordInfoOpen, correctLog } = context;
   
 

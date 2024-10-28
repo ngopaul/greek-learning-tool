@@ -7,6 +7,7 @@ import {AppContext} from "../contexts/AppContext";
 import strongsGreekDictionary from "../utils/strongs-greek-dictionary";
 import { useAtom } from "jotai";
 import { displayWordsAtom } from "../atoms/bibleDisplayAtoms";
+import { useNavigation } from "./useNavigation";
 
 /*
  * Display the strongsMapping information about the current word
@@ -22,11 +23,13 @@ const WordInfoPopup = () => {
 
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const {currentIndex} = useNavigation();
+
   const context = useContext(AppContext);
   if (!context) {
     return null;
   }
-  const { wordInfoOpen, setWordInfoOpen, currentIndex, strongsMapping, RMACDescriptions } = context;
+  const { wordInfoOpen, setWordInfoOpen, strongsMapping, RMACDescriptions } = context;
   
 
   const currentWord = displayWords[currentIndex];
