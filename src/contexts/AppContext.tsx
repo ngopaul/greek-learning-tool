@@ -79,7 +79,13 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
   }, []);
 
   useEffect(() => {
+    console.log("AppContext: currentChapter change", currentChapter)
+  }, [currentChapter])
+
+  useEffect(() => {
+    console.log("found change in testers", readingMode, currentChapter, currentChapter?.data)
     if (readingMode === 'chapter' && currentChapter && currentChapter.data) {
+      console.log("calling determineTestwords")
       setCorrectLog(new Array(currentChapter.data.length).fill(null));
       determineTestWords(displayWords);
     }
@@ -392,10 +398,6 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
 
   return (<AppContext.Provider
       value={{
-        // currentBook,
-        // setCurrentBook,
-        // currentChapter,
-        // setCurrentChapter,
         selectedTesters,
         setSelectedTesters,
         gotNewData,
@@ -410,8 +412,6 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
         setRMACDescriptions,
         loading,
         setLoading,
-        currentIndex,
-        // setCurrentIndex,
         testWordIndices,
         setTestWordIndices,
         showAnswer,
@@ -429,15 +429,6 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
         setCorrectLog,
         wordInfoOpen,
         setWordInfoOpen,
-        // selectedBook,
-        // setSelectedBook,
-        // chapterOptions,
-        // setChapterOptions,
-        // selectedChapter,
-        // setSelectedChapter,
-        // verseOptions,
-        // setVerseOptions,
-        // setSelectedVerse,
         showAnswerChecked,
         setShowAnswerChecked,
         showEnglishInContext,
@@ -450,15 +441,10 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
         handleChangeReadingMode,
         startLearning,
         markWord,
-        // onBookSelect,
-        // onChapterSelect,
-        // onVerseSelect,
         onTesterSelect,
         onSetDefaultShowAnswer,
         handleCopyClick,
         printDebug,
-        // goRight,
-        // goLeft,
         previousTestWord,
         nextTestWord,
         flipCard,

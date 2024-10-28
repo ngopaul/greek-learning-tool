@@ -10,13 +10,28 @@ const WordContext = () => {
   const [displayWords] = useAtom(displayWordsAtom)
   const {currentIndex, setCurrentIndexAndProcess} = useNavigation();
 
+  React.useEffect(() => {
+    console.log("changed")
+    console.log({displayWords, currentIndex})
+  }, [displayWords, currentIndex])
+
+  
+
 
   const context = useContext(AppContext);
+  React.useEffect(() => {
+    if (context) {
+    console.log("test word indices")
+    console.log(context.testWordIndices)
+    }
+  }, [context])
   if (!context) {
     return null;
   }
   const {  openGNTData, testWordIndices, 
     showEnglishInContext, showAnswer } = context;
+
+    
 
   // If there are no display words, or the current index is invalid, return null
   if (displayWords.length === 0 || !displayWords[currentIndex]) {
@@ -59,7 +74,17 @@ const WordContext = () => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1, flexWrap: 'wrap', marginTop: "20px" }}>
-      {wordsInChapter.map((word, index) => (
+      {wordsInChapter.map((word, index) => { 
+        if ((testWordIndices.has(word.displayIndex as number) && currentIndex !== word.displayIndex)
+          || (currentIndex === word.displayIndex && !showAnswer)) {
+        console.log("found bad")
+        console.log("show answer:", showAnswer)
+        console.log(word, index)
+            console.log((testWordIndices.has(word.displayIndex as number) && currentIndex !== word.displayIndex))
+            console.log((currentIndex === word.displayIndex && !showAnswer))
+        }
+        
+        return (
         <Box
           key={index}
           sx={{
@@ -95,7 +120,8 @@ const WordContext = () => {
             ) : null
           }
         </Box>
-      ))}
+      )
+      })}
     </Box>
   );
 };

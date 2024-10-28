@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   BookOption,
   ChapterOption,
-  CurrentChapter,
   VerseOption,
 } from "../types/AppContextTypes";
 import { useAtom } from "jotai";
 import {
+  currentBookAtom,
+  currentChapterAtom,
+  currentIndexAtom,
   defaultShowAnswerAtom,
   displayWordsAtom,
   openGNTDataAtom,
@@ -18,6 +20,10 @@ import {
 
 export const useNavigation = () => {
   const [displayWords, setDisplayWords] = useAtom(displayWordsAtom);
+  const [currentIndex, setCurrentIndex] = useAtom(currentIndexAtom);
+  const [currentChapter, setCurrentChapter] = useAtom(currentChapterAtom);
+  const [currentBook, setCurrentBook] = useAtom(currentBookAtom);
+
   //temporary
   const [showAnswer, setShowAnswer] = useAtom(showAnswerAtom);
   const [defaultShowAnswer, setDefaultShowAnswer] = useAtom(
@@ -27,15 +33,7 @@ export const useNavigation = () => {
   const [selectedTesters, setSelectedTesters] = useAtom(selectedTestersAtom);
   const [testWordIndices, setTestWordIndices] = useAtom(testWordIndicesAtom);
   const [readingMode, setReadingMode] = useAtom(readingModeAtom);
-
-  const [currentBook, setCurrentBook] = useState<BookOption>();
-  const [currentChapter, setCurrentChapter] = useState<CurrentChapter>();
-  const [currentIndex, setCurrentIndexRaw] = useState(0);
-  const [selectedBook, setSelectedBook] = useState<string>();
-  const [chapterOptions, setChapterOptions] = useState<ChapterOption[]>([]);
-  const [selectedChapter, setSelectedChapter] = useState<ChapterOption>();
-  const [verseOptions, setVerseOptions] = useState<VerseOption[]>([]);
-  const [selectedVerse, setSelectedVerse] = useState<VerseOption>();
+  
 
   useEffect(() => {
     if (currentChapter && currentChapter.data) {
@@ -44,12 +42,13 @@ export const useNavigation = () => {
     }
   }, [currentBook, currentChapter]);
 
-  // useEffect(() => {
-  //   if (readingMode === 'chapter' && currentChapter && currentChapter.data) {
-  //     setCorrectLog(new Array(currentChapter.data.length).fill(null));
-  //     determineTestWords(displayWords);
-  //   }
-  // }, [selectedTesters, displayWords]);
+  useEffect(() => {
+    console.log("currentChapter change", currentChapter)
+  }, [currentChapter])
+
+  useEffect(() => {
+    console.log("currentIndex chagned to:", currentIndex)
+  }, [currentIndex])
 
   const goLeft = () => {
     setCurrentIndexAndProcess(Math.max(currentIndex - 1, 0));
@@ -76,7 +75,7 @@ export const useNavigation = () => {
     ) {
       return;
     }
-    setCurrentIndexRaw(idx);
+    setCurrentIndex(idx);
     if (newTestWordIndices.has(idx)) {
       setShowAnswer(false);
     } else if (readingMode === "chapter") {
@@ -156,17 +155,7 @@ export const useNavigation = () => {
   return {
     currentChapter,
     currentIndex,
-    selectedBook,
-    setSelectedBook,
     onChapterSelect,
-    chapterOptions,
-    setChapterOptions,
-    selectedChapter,
-    setSelectedChapter,
-    verseOptions,
-    setVerseOptions,
-    selectedVerse,
-    setSelectedVerse,
     goLeft,
     goRight,
     setCurrentIndexAndProcess,

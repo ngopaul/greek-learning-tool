@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {AppBar, Box, IconButton, Toolbar } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { ContentCopy, BugReport } from '@mui/icons-material';
@@ -10,7 +10,7 @@ import {bibleBookAbbreviations, bibleBookNameToChapterCounts, bibleBookVerseCoun
 import {AppContext} from "../contexts/AppContext";
 import SettingsPopup from "./Header/SettingsPopup";
 import InfoPopup from "./Header/InfoPopup";
-import { BookOption, VerseOption } from '../types/AppContextTypes';
+import { BookOption, ChapterOption, VerseOption } from '../types/AppContextTypes';
 import ChartsPopup from "./Header/ChartsPopup";
 import TableChartIcon from '@mui/icons-material/TableChart';
 import { useHeader } from './useHeader';
@@ -46,23 +46,21 @@ const Header = () => {
   // Currently the 'selectedVerse' state is not reactive. Use this as temporary measure until 'selectedVerse' is reactive.
   const [curSelectedVerse, setCurSelectedVerse] = React.useState<VerseOption>();
   const [handleSettingsClick, handleHelpClick, handleChartsClick] = useHeader();
-  const {selectedBook, chapterOptions,
-    setChapterOptions,
-
-    selectedChapter,
-    setSelectedChapter,
-    verseOptions,
-    setVerseOptions,
+  const {
     onVerseSelect,
     onBookSelect,
-
-    setSelectedBook,
-    
-    selectedVerse,
     onChapterSelect,
-    setSelectedVerse,
   
   } = useNavigation();
+  const [selectedBook, setSelectedBook] = useState<string>();
+  const [selectedChapter, setSelectedChapter] = useState<ChapterOption>();
+  const [selectedVerse, setSelectedVerse] = useState<VerseOption>();
+  const [chapterOptions, setChapterOptions] = useState<ChapterOption[]>([]);
+  const [verseOptions, setVerseOptions] = useState<VerseOption[]>([]);
+
+
+
+
   const context = useContext(AppContext);
   if (!context) {
     return null;
