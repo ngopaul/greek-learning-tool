@@ -6,6 +6,9 @@ import {AppContext} from "../../contexts/AppContext";
 import grey from "@mui/material/colors/grey";
 import { helpOpenAtom } from "../../atoms/headerAtoms";
 import { useAtom } from "jotai";
+import TableChartIcon from '@mui/icons-material/TableChart';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { useNavigation } from "../useNavigation";
 
 const InfoPopup = () => {
@@ -76,19 +79,22 @@ const InfoPopup = () => {
           <ul>
             <li>
               <Typography variant="subtitle2">
-                Select a tester, then click the chart button. Use the show/hide button to hide a table and test your
-                memory!
+                Select a Book, Chapter, Verse, and Textbook Unit. Read through the Bible and learn how the grammar from that
+                Textbook Unit is used in the Bible! The version of the Greek New Testament used is OpenGNT, which is extremely
+                similar to the Nestle-Aland 28th edition.
               </Typography>
             </li>
             <li>
               <Typography variant="subtitle2">
-                Select a book, chapter, verse, and tester. Read through the Bible and learn how the grammar from that
-                chapter is used in the Bible!
+                Select a Textbook Unit, then click the chart button <TableChartIcon/>. 
+                Use the show/hide buttons <VisibilityIcon/> or click on the grammar to test your memory!
               </Typography>
             </li>
             <li>
-              <Typography variant="subtitle2">Select a tester, then go to "Settings {">"} Reading Mode: Unit Learning".
-                Start testing yourself on grammar to see if you can identify the declination/conjugation/morphology!
+              <Typography variant="subtitle2">Select a tester, then go to "Settings <SettingsIcon/> {">"} 
+                Reading Mode: Unit Learning".
+                The app will test you on grammar to see if you can identify the declination/conjugation/morphology!
+                It uses a smart algorithm to maximize your learning.
               </Typography>
             </li>
           </ul>

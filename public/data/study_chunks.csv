@@ -1,122 +1,122 @@
 unit,name,morphologies,endings
-Chapter 2,ω verbs Active 1st Person Singular,V-PAI-1S,ω
-Chapter 2,ω verbs Active 2nd Person Singular,V-PAI-2S,εις
-Chapter 2,ω verbs Active 3rd Person Singular,V-PAI-3S,ει
-Chapter 2,ω verbs Active 1nd Person Plural,V-PAI-1P,ομεν
-Chapter 2,ω verbs Active 2nd Person Plural,V-PAI-2P,ετε
-Chapter 2,ω verbs Active 3rd Person Plural,V-PAI-3P,ουσιν
-Chapter 2,ω verbs Active Infinitive,V-PAN,ειν
-Chapter 2,ω verbs Middle/Passive 1st Person Singular,V-PEI-1S|V-PMI-1S|V-PPI-1S|V-PNI-1S,ομαι
-Chapter 2,ω verbs Middle/Passive 2nd Person Singular,V-PMI-2S|V-PPI-2S|V-PNI-2S,ῃ|ει
-Chapter 2,ω verbs Middle/Passive 3rd Person Singular,V-PEI-3S|V-PMI-3S|V-PPI-3S|V-PNI-3S,εται
-Chapter 2,ω verbs Middle/Passive 1st Person Plural,V-PEI-1P|V-PMI-1P|V-PPI-1P|V-PNI-1P,όμεθα
-Chapter 2,ω verbs Middle/Passive 2nd Person Plural,V-PEI-2P|V-PMI-2P|V-PPI-2P|V-PNI-2P,εσθε
-Chapter 2,ω verbs Middle/Passive 3rd Person Plural,V-PEI-3P|V-PMI-3P|V-PPI-3P|V-PNI-3P,ονται
-Chapter 2,ω verbs Middle/Passive Infinitive,V-PEN|V-PNN,εσθαι
-Chapter 2,εἰμι 1st Person Singular,V-PAI-1S,εἰμι|εἰμὶ
-Chapter 2,εἰμι 2nd Person Singular,V-PAI-2S,εἶ
-Chapter 2,εἰμι 3rd Person Singular,V-PAI-3S,ἐστίν|ἐστί|ἐστιν|ἔστιν
-Chapter 2,εἰμι 1st Person Plural,V-PAI-1P,ἐσμέν
-Chapter 2,εἰμι 2nd Person Plural,V-PAI-2P,ἐστέ
-Chapter 2,εἰμι 3rd Person Plural,V-PAI-3P,εἰσί|εἰσίν
-Chapter 2,εἰμι Infinitive,V-PAN,εἶναι
-Chapter 3,Definite Article Nominative Singular Masculine,T-NSM,ὁ
-Chapter 3,2nd Declension Noun Nominative Singular Masculine,N-NSM|N-NSM-C|N-NSM-L|N-NSM-LG|N-NSM-P|N-NSM-PG|N-NSM-T,ος
-Chapter 3,Definite Article Genitive Singular Masculine,T-GSM,τοῦ
-Chapter 3,2nd Declension Noun Genitive Singular Masculine,N-GSM|N-GSM-L|N-GSM-LG|N-GSM-P|N-GSM-PG|N-GSM-T,ου
-Chapter 3,Definite Article Dative Singular Masculine,T-DSM,τῷ
-Chapter 3,2nd Declension Noun Dative Singular Masculine,N-DSM|N-DSM-L|N-DSM-LG|N-DSM-P|N-DSM-T,ῳ
-Chapter 3,Definite Article Accusative Singular Masculine,T-ASM,τὸν
-Chapter 3,2nd Declension Noun Accusative Singular Masculine,N-ASM|N-ASM-C|N-ASM-L|N-ASM-LG|N-ASM-P|N-ASM-S|N-ASM-T,ον
-Chapter 3,2nd Declension Noun Vocative Singular Masculine,N-VSM|N-VSM-L|N-VSM-P|N-VSM-T,ε
-Chapter 3,Definite Article Nominative Plural Masculine,T-NPM,οἱ
-Chapter 3,2nd Declension Noun Nominative Plural Masculine,N-NPM|N-NPM-L|N-NPM-LG|N-NPM-P|N-NPM-PG|N-NPM-S|N-NPM-T,οι
-Chapter 3,Definite Article Genitive Plural Masculine,T-GPM,τῶν
-Chapter 3,2nd Declension Noun Genitive Plural Masculine,N-GPM|N-GPM-L|N-GPM-LG|N-GPM-PG|N-GPM-T,ων
-Chapter 3,Definite Article Dative Plural Masculine,T-DPM,τοῖς
-Chapter 3,2nd Declension Noun Dative Plural Masculine,N-DPM|N-DPM-L|N-DPM-LG|N-DPM-S|N-DPM-T,οις
-Chapter 3,Definite Article Accusative Plural Masculine,T-APM,τοὺς
-Chapter 3,2nd Declension Noun Accusative Plural Masculine,N-APM|N-APM-L|N-APM-LG|N-APM-P|N-APM-PG|N-APM-T,ους
-Chapter 3,2nd Declension Noun Vocative Plural Masculine,N-VPM|N-VPM-LG|N-VPM-PG|N-VPM-T,οι
-Chapter 3,Definite Article Nominative Singular Neuter,T-NSN,τὸ
-Chapter 3,2nd Declension Noun Nominative Singular Neuter,N-NSN|N-NSN-C|N-NSN-L|N-NSN-LI|N-NSN-T,ον
-Chapter 3,Definite Article Genitive Singular Neuter,T-GSN,τοῦ
-Chapter 3,2nd Declension Noun Genitive Singular Neuter,N-GSN|N-GSN-L,ου
-Chapter 3,Definite Article Dative Singular Neuter,T-DSN,τῷ
-Chapter 3,2nd Declension Noun Dative Singular Neuter,N-DSN|N-DSN-L,ῳ
-Chapter 3,Definite Article Accusative Singular Neuter,T-ASN,τὸ
-Chapter 3,2nd Declension Noun Accusative Singular Neuter,N-ASN|N-ASN-L,ον
-Chapter 3,2nd Declension Noun Vocative Singular Neuter,N-VSN,ον
-Chapter 3,Definite Article Nominative Plural Neuter,T-NPN,τὰ
-Chapter 3,2nd Declension Noun Nominative Plural Neuter,N-NPN|N-NPN-L|N-NPN-T,α
-Chapter 3,Definite Article Genitive Plural Neuter,T-GPN,τῶν
-Chapter 3,2nd Declension Noun Genitive Plural Neuter,N-GPN|N-GPN-L,ων
-Chapter 3,Definite Article Dative Plural Neuter,T-DPN,τοῖς
-Chapter 3,2nd Declension Noun Dative Plural Neuter,N-DPN|N-DPN-L,οις
-Chapter 3,Definite Article Accusative Plural Neuter,T-APN,τὰ
-Chapter 3,2nd Declension Noun Accusative Plural Neuter,N-APN|N-APN-C|N-APN-L|N-APN-S,α
-Chapter 3,2nd Declension Noun Vocative Plural Neuter,N-VPN,α
-Chapter 4,1st Declension Noun Nominative Singular Feminine (mixed base),N-NSF|N-NSF-L|N-NSF-LG|N-NSF-P|N-NSF-T,![ιερ]α
-Chapter 4,1st Declension Noun Accusative Singular Feminine (mixed base),N-ASF|N-ASF-C|N-ASF-L|N-ASF-P|N-ASF-S|N-ASF-T,![ιερ]αν
-Chapter 4,1st Declension Noun Vocative Singular Feminine (mixed base),N-VSF|N-VSF-L|N-VSF-P,![ιερ]α
-Chapter 4,1st Declension Noun Nominative Singular Feminine (normal base),N-NSF|N-NSF-L|N-NSF-LG|N-NSF-P|N-NSF-T,η
-Chapter 4,1st Declension Noun Genitive Singular Feminine (normal/mixed base),N-GSF|N-GSF-L|N-GSF-LG|N-GSF-P|N-GSF-T,ης
-Chapter 4,1st Declension Noun Dative Singular Feminine (normal/mixed base),N-DSF|N-DSF-L|N-DSF-LG|N-DSF-P|N-DSF-T,ῃ
-Chapter 4,1st Declension Noun Accusative Singular Feminine (normal base),N-ASF|N-ASF-C|N-ASF-L|N-ASF-P|N-ASF-S|N-ASF-T,ην
-Chapter 4,1st Declension Noun Vocative Singular Feminine (normal base),N-VSF|N-VSF-L|N-VSF-P,η
-Chapter 4,1st Declension Noun Nominative Singular Feminine (ε/ι/ρ base),N-NSF|N-NSF-L|N-NSF-LG|N-NSF-P|N-NSF-T,ια|ρα|εα
-Chapter 4,1st Declension Noun Genitive Singular Feminine (ε/ι/ρ base),N-GSF|N-GSF-L|N-GSF-LG|N-GSF-P|N-GSF-T,ιας|ρας|εας
-Chapter 4,1st Declension Noun Dative Singular Feminine (ε/ι/ρ base),N-DSF|N-DSF-L|N-DSF-LG|N-DSF-P|N-DSF-T,ιᾳ|ρᾳ|εᾳ
-Chapter 4,1st Declension Noun Accusative Singular Feminine (ε/ι/ρ base),N-ASF|N-ASF-C|N-ASF-L|N-ASF-P|N-ASF-S|N-ASF-T,ιαν|ραν|εαν
-Chapter 4,1st Declension Noun Vocative Singular Feminine (ε/ι/ρ base),N-VSF|N-VSF-L|N-VSF-P,ια|ρα|εα
-Chapter 4,1st Declension Noun Nominative Plural Feminine (all bases),N-NPF,αι
-Chapter 4,1st Declension Noun Genitive Plural Feminine (all bases),N-GPF|N-GPF-L|N-GPF-LG,ων
-Chapter 4,1st Declension Noun Dative Plural Feminine (all bases),N-DPF|N-DPF-L,αις
-Chapter 4,1st Declension Noun Accusative Plural Feminine (all bases),N-APF|N-APF-C|N-APF-L|N-APF-S,ας
-Chapter 4,1st Declension Noun Vocative Plural Feminine (all bases),N-VPF,αι
-Chapter 4,1st Declension Noun Nominative Singular Masculine (normal base),N-NSM|N-NSM-C|N-NSM-L|N-NSM-LG|N-NSM-P|N-NSM-PG|N-NSM-T,ης
-Chapter 4,1st Declension Noun Genitive Singular Masculine (normal base),N-GSM|N-GSM-L|N-GSM-LG|N-GSM-P|N-GSM-PG|N-GSM-T,ου
-Chapter 4,1st Declension Noun Dative Singular Masculine (normal base),N-DSM|N-DSM-L|N-DSM-LG|N-DSM-P|N-DSM-T,ῃ
-Chapter 4,1st Declension Noun Accusative Singular Masculine (normal base),N-ASM|N-ASM-L|N-ASM-LG|N-ASM-P|N-ASM-S|N-ASM-T,ην
-Chapter 4,1st Declension Noun Vocative Singular Masculine (normal base),N-VSM|N-VSM-L|N-VSM-P|N-VSM-T,α
-Chapter 4,1st Declension Noun Nominative Singular Masculine (ε/ι/ρ base),N-NSM|N-NSM-C|N-NSM-L|N-NSM-LG|N-NSM-P|N-NSM-PG|N-NSM-T,ιας|ρας|εας
-Chapter 4,1st Declension Noun Genitive Singular Masculine (ε/ι/ρ base),N-GSM|N-GSM-L|N-GSM-LG|N-GSM-P|N-GSM-PG|N-GSM-T,ιου|ρου|εου
-Chapter 4,1st Declension Noun Dative Singular Masculine (ε/ι/ρ base),N-DSM|N-DSM-L|N-DSM-LG|N-DSM-P|N-DSM-T,ιᾳ|ρᾳ|εᾳ
-Chapter 4,1st Declension Noun Accusative Singular Masculine (ε/ι/ρ base),N-ASM|N-ASM-L|N-ASM-LG|N-ASM-P|N-ASM-S|N-ASM-T,ιαν|ραν|εαν
-Chapter 4,1st Declension Noun Vocative Singular Masculine (ε/ι/ρ base),N-VSM|N-VSM-L|N-VSM-P|N-VSM-T,ια|ρα|εα
-Chapter 4,1st Declension Noun Nominative Plural Masculine (normal base),N-NPM|N-NPM-L|N-NPM-LG|N-NPM-PG|N-NPM-S|N-NPM-T,αι
-Chapter 4,1st Declension Noun Genitive Plural Masculine (normal base),N-GPM|N-GPM-L|N-GPM-LG|N-GPM-PG|N-GPM-T,ων
-Chapter 4,1st Declension Noun Dative Plural Masculine (normal base),N-DPM|N-DPM-L|N-DPM-LG|N-DPM-S|N-DPM-T,αις
-Chapter 4,1st Declension Noun Accusative Plural Masculine (normal base),N-APM|N-APM-L|N-APM-LG|N-APM-P|N-APM-PG|N-APM-T,ας
-Chapter 4,1st Declension Noun Vocative Plural Masculine (normal base),N-VPM|N-VPM-LG|N-VPM-PG|N-VPM-T,αι
-Chapter 4,1st Declension Noun Nominative Plural Masculine (ε/ι/ρ base),N-NPM|N-NPM-L|N-NPM-LG|N-NPM-PG|N-NPM-S|N-NPM-T,ιαι|εαι|ραι
-Chapter 4,1st Declension Noun Genitive Plural Masculine (ε/ι/ρ base),N-GPM|N-GPM-L|N-GPM-LG|N-GPM-PG|N-GPM-T,ιον|εον|ρον
-Chapter 4,1st Declension Noun Dative Plural Masculine (ε/ι/ρ base),N-DPM|N-DPM-L|N-DPM-LG|N-DPM-S|N-DPM-T,ιαις|εαις|ραις
-Chapter 4,1st Declension Noun Accusative Plural Masculine (ε/ι/ρ base),N-APM|N-APM-L|N-APM-LG|N-APM-P|N-APM-PG|N-APM-T,ιας|εας|ρας
-Chapter 4,1st Declension Noun Vocative Plural Masculine (ε/ι/ρ base),N-VPM|N-VPM-LG|N-VPM-PG|N-VPM-T,ιαι|εαι|ραι
-Chapter 4,Definite Article Nominative Singular Feminine,T-NSF,ἡ
-Chapter 4,Definite Article Genitive Singular Feminine,T-GSF,τῆς
-Chapter 4,Definite Article Dative Singular Feminine,T-DSF,τῇ
-Chapter 4,Definite Article Accusative Singular Feminine,T-ASF,τὴν|τήν
-Chapter 4,Definite Article Nominative Plural Feminine,T-NPF,αἰ
-Chapter 4,Definite Article Genitive Plural Feminine,T-GPF,τῶν
-Chapter 4,Definite Article Dative Plural Feminine,T-DPF,ταῖς
-Chapter 4,Definite Article Accusative Plural Feminine,T-APF,τὰς|τάς
-Chapter 5,ω verbs Active 1st Person Singular,V-IAI-1S,ον
-Chapter 5,ω verbs Active 2nd Person Singular,V-IAI-2S,ες
-Chapter 5,ω verbs Active 3rd Person Singular,V-IAI-3S,ε|εν
-Chapter 5,ω verbs Active 1st Person Plural,V-IAI-1P,ομεν
-Chapter 5,ω verbs Active 2nd Person Plural,V-IAI-2P,ετε
-Chapter 5,ω verbs Active 3rd Person Plural,V-IAI-3P,ον
-Chapter 5,ω verbs Middle/Passive 1st Person Singular,V-IMI-1S|V-IPI-1S|V-INI-1S,ομην
-Chapter 5,ω verbs Middle/Passive 2nd Person Singular,V-IMI-2S|V-IPI-2S|V-INI-2S,ου
-Chapter 5,ω verbs Middle/Passive 3rd Person Singular,V-IMI-3S|V-IPI-3S|V-INI-3S|V-IEI-3S,ετο
-Chapter 5,ω verbs Middle/Passive 1st Person Plural,V-IMI-1P|V-IPI-1P|V-INI-1P,ομεθα
-Chapter 5,ω verbs Middle/Passive 2nd Person Plural,V-IMI-2P|V-IPI-2P|V-INI-2P,εσθε
-Chapter 5,ω verbs Middle/Passive 3rd Person Plural,V-IMI-3P|V-IPI-3P|V-INI-3P|V-IDI-3P,οντο
-Chapter 5,εἰμι Imperfect 1st Person Singular,V-IMI-1S,ἤμην
-Chapter 5,εἰμι Imperfect 2nd Person Singular,V-IAI-2S|V-IMI-2S,ἦς|ἦσθα
-Chapter 5,εἰμι Imperfect 3rd Person Singular,V-IAI-3S,ἦν
-Chapter 5,εἰμι Imperfect 1st Person Plural,V-IAI-1P,ἦμεν|ἦμεθα
-Chapter 5,εἰμι Imperfect 2nd Person Plural,V-IAI-2P,ἦτε
-Chapter 5,εἰμι Imperfect 3rd Person Plural,V-IAI-3P,ἦσαν
+Unit 2,ω verbs Active 1st Person Singular,V-PAI-1S,ω
+Unit 2,ω verbs Active 2nd Person Singular,V-PAI-2S,εις
+Unit 2,ω verbs Active 3rd Person Singular,V-PAI-3S,ει
+Unit 2,ω verbs Active 1nd Person Plural,V-PAI-1P,ομεν
+Unit 2,ω verbs Active 2nd Person Plural,V-PAI-2P,ετε
+Unit 2,ω verbs Active 3rd Person Plural,V-PAI-3P,ουσιν
+Unit 2,ω verbs Active Infinitive,V-PAN,ειν
+Unit 2,ω verbs Middle/Passive 1st Person Singular,V-PEI-1S|V-PMI-1S|V-PPI-1S|V-PNI-1S,ομαι
+Unit 2,ω verbs Middle/Passive 2nd Person Singular,V-PMI-2S|V-PPI-2S|V-PNI-2S,ῃ|ει
+Unit 2,ω verbs Middle/Passive 3rd Person Singular,V-PEI-3S|V-PMI-3S|V-PPI-3S|V-PNI-3S,εται
+Unit 2,ω verbs Middle/Passive 1st Person Plural,V-PEI-1P|V-PMI-1P|V-PPI-1P|V-PNI-1P,όμεθα
+Unit 2,ω verbs Middle/Passive 2nd Person Plural,V-PEI-2P|V-PMI-2P|V-PPI-2P|V-PNI-2P,εσθε
+Unit 2,ω verbs Middle/Passive 3rd Person Plural,V-PEI-3P|V-PMI-3P|V-PPI-3P|V-PNI-3P,ονται
+Unit 2,ω verbs Middle/Passive Infinitive,V-PEN|V-PNN,εσθαι
+Unit 2,εἰμι 1st Person Singular,V-PAI-1S,εἰμι|εἰμὶ
+Unit 2,εἰμι 2nd Person Singular,V-PAI-2S,εἶ
+Unit 2,εἰμι 3rd Person Singular,V-PAI-3S,ἐστίν|ἐστί|ἐστιν|ἔστιν
+Unit 2,εἰμι 1st Person Plural,V-PAI-1P,ἐσμέν
+Unit 2,εἰμι 2nd Person Plural,V-PAI-2P,ἐστέ
+Unit 2,εἰμι 3rd Person Plural,V-PAI-3P,εἰσί|εἰσίν
+Unit 2,εἰμι Infinitive,V-PAN,εἶναι
+Unit 3,Definite Article Nominative Singular Masculine,T-NSM,ὁ
+Unit 3,2nd Declension Noun Nominative Singular Masculine,N-NSM|N-NSM-C|N-NSM-L|N-NSM-LG|N-NSM-P|N-NSM-PG|N-NSM-T,ος
+Unit 3,Definite Article Genitive Singular Masculine,T-GSM,τοῦ
+Unit 3,2nd Declension Noun Genitive Singular Masculine,N-GSM|N-GSM-L|N-GSM-LG|N-GSM-P|N-GSM-PG|N-GSM-T,ου
+Unit 3,Definite Article Dative Singular Masculine,T-DSM,τῷ
+Unit 3,2nd Declension Noun Dative Singular Masculine,N-DSM|N-DSM-L|N-DSM-LG|N-DSM-P|N-DSM-T,ῳ
+Unit 3,Definite Article Accusative Singular Masculine,T-ASM,τὸν
+Unit 3,2nd Declension Noun Accusative Singular Masculine,N-ASM|N-ASM-C|N-ASM-L|N-ASM-LG|N-ASM-P|N-ASM-S|N-ASM-T,ον
+Unit 3,2nd Declension Noun Vocative Singular Masculine,N-VSM|N-VSM-L|N-VSM-P|N-VSM-T,ε
+Unit 3,Definite Article Nominative Plural Masculine,T-NPM,οἱ
+Unit 3,2nd Declension Noun Nominative Plural Masculine,N-NPM|N-NPM-L|N-NPM-LG|N-NPM-P|N-NPM-PG|N-NPM-S|N-NPM-T,οι
+Unit 3,Definite Article Genitive Plural Masculine,T-GPM,τῶν
+Unit 3,2nd Declension Noun Genitive Plural Masculine,N-GPM|N-GPM-L|N-GPM-LG|N-GPM-PG|N-GPM-T,ων
+Unit 3,Definite Article Dative Plural Masculine,T-DPM,τοῖς
+Unit 3,2nd Declension Noun Dative Plural Masculine,N-DPM|N-DPM-L|N-DPM-LG|N-DPM-S|N-DPM-T,οις
+Unit 3,Definite Article Accusative Plural Masculine,T-APM,τοὺς
+Unit 3,2nd Declension Noun Accusative Plural Masculine,N-APM|N-APM-L|N-APM-LG|N-APM-P|N-APM-PG|N-APM-T,ους
+Unit 3,2nd Declension Noun Vocative Plural Masculine,N-VPM|N-VPM-LG|N-VPM-PG|N-VPM-T,οι
+Unit 3,Definite Article Nominative Singular Neuter,T-NSN,τὸ
+Unit 3,2nd Declension Noun Nominative Singular Neuter,N-NSN|N-NSN-C|N-NSN-L|N-NSN-LI|N-NSN-T,ον
+Unit 3,Definite Article Genitive Singular Neuter,T-GSN,τοῦ
+Unit 3,2nd Declension Noun Genitive Singular Neuter,N-GSN|N-GSN-L,ου
+Unit 3,Definite Article Dative Singular Neuter,T-DSN,τῷ
+Unit 3,2nd Declension Noun Dative Singular Neuter,N-DSN|N-DSN-L,ῳ
+Unit 3,Definite Article Accusative Singular Neuter,T-ASN,τὸ
+Unit 3,2nd Declension Noun Accusative Singular Neuter,N-ASN|N-ASN-L,ον
+Unit 3,2nd Declension Noun Vocative Singular Neuter,N-VSN,ον
+Unit 3,Definite Article Nominative Plural Neuter,T-NPN,τὰ
+Unit 3,2nd Declension Noun Nominative Plural Neuter,N-NPN|N-NPN-L|N-NPN-T,α
+Unit 3,Definite Article Genitive Plural Neuter,T-GPN,τῶν
+Unit 3,2nd Declension Noun Genitive Plural Neuter,N-GPN|N-GPN-L,ων
+Unit 3,Definite Article Dative Plural Neuter,T-DPN,τοῖς
+Unit 3,2nd Declension Noun Dative Plural Neuter,N-DPN|N-DPN-L,οις
+Unit 3,Definite Article Accusative Plural Neuter,T-APN,τὰ
+Unit 3,2nd Declension Noun Accusative Plural Neuter,N-APN|N-APN-C|N-APN-L|N-APN-S,α
+Unit 3,2nd Declension Noun Vocative Plural Neuter,N-VPN,α
+Unit 4,1st Declension Noun Nominative Singular Feminine (mixed base),N-NSF|N-NSF-L|N-NSF-LG|N-NSF-P|N-NSF-T,![ιερ]α
+Unit 4,1st Declension Noun Accusative Singular Feminine (mixed base),N-ASF|N-ASF-C|N-ASF-L|N-ASF-P|N-ASF-S|N-ASF-T,![ιερ]αν
+Unit 4,1st Declension Noun Vocative Singular Feminine (mixed base),N-VSF|N-VSF-L|N-VSF-P,![ιερ]α
+Unit 4,1st Declension Noun Nominative Singular Feminine (normal base),N-NSF|N-NSF-L|N-NSF-LG|N-NSF-P|N-NSF-T,η
+Unit 4,1st Declension Noun Genitive Singular Feminine (normal/mixed base),N-GSF|N-GSF-L|N-GSF-LG|N-GSF-P|N-GSF-T,ης
+Unit 4,1st Declension Noun Dative Singular Feminine (normal/mixed base),N-DSF|N-DSF-L|N-DSF-LG|N-DSF-P|N-DSF-T,ῃ
+Unit 4,1st Declension Noun Accusative Singular Feminine (normal base),N-ASF|N-ASF-C|N-ASF-L|N-ASF-P|N-ASF-S|N-ASF-T,ην
+Unit 4,1st Declension Noun Vocative Singular Feminine (normal base),N-VSF|N-VSF-L|N-VSF-P,η
+Unit 4,1st Declension Noun Nominative Singular Feminine (ε/ι/ρ base),N-NSF|N-NSF-L|N-NSF-LG|N-NSF-P|N-NSF-T,ια|ρα|εα
+Unit 4,1st Declension Noun Genitive Singular Feminine (ε/ι/ρ base),N-GSF|N-GSF-L|N-GSF-LG|N-GSF-P|N-GSF-T,ιας|ρας|εας
+Unit 4,1st Declension Noun Dative Singular Feminine (ε/ι/ρ base),N-DSF|N-DSF-L|N-DSF-LG|N-DSF-P|N-DSF-T,ιᾳ|ρᾳ|εᾳ
+Unit 4,1st Declension Noun Accusative Singular Feminine (ε/ι/ρ base),N-ASF|N-ASF-C|N-ASF-L|N-ASF-P|N-ASF-S|N-ASF-T,ιαν|ραν|εαν
+Unit 4,1st Declension Noun Vocative Singular Feminine (ε/ι/ρ base),N-VSF|N-VSF-L|N-VSF-P,ια|ρα|εα
+Unit 4,1st Declension Noun Nominative Plural Feminine (all bases),N-NPF,αι
+Unit 4,1st Declension Noun Genitive Plural Feminine (all bases),N-GPF|N-GPF-L|N-GPF-LG,ων
+Unit 4,1st Declension Noun Dative Plural Feminine (all bases),N-DPF|N-DPF-L,αις
+Unit 4,1st Declension Noun Accusative Plural Feminine (all bases),N-APF|N-APF-C|N-APF-L|N-APF-S,ας
+Unit 4,1st Declension Noun Vocative Plural Feminine (all bases),N-VPF,αι
+Unit 4,1st Declension Noun Nominative Singular Masculine (normal base),N-NSM|N-NSM-C|N-NSM-L|N-NSM-LG|N-NSM-P|N-NSM-PG|N-NSM-T,ης
+Unit 4,1st Declension Noun Genitive Singular Masculine (normal base),N-GSM|N-GSM-L|N-GSM-LG|N-GSM-P|N-GSM-PG|N-GSM-T,ου
+Unit 4,1st Declension Noun Dative Singular Masculine (normal base),N-DSM|N-DSM-L|N-DSM-LG|N-DSM-P|N-DSM-T,ῃ
+Unit 4,1st Declension Noun Accusative Singular Masculine (normal base),N-ASM|N-ASM-L|N-ASM-LG|N-ASM-P|N-ASM-S|N-ASM-T,ην
+Unit 4,1st Declension Noun Vocative Singular Masculine (normal base),N-VSM|N-VSM-L|N-VSM-P|N-VSM-T,α
+Unit 4,1st Declension Noun Nominative Singular Masculine (ε/ι/ρ base),N-NSM|N-NSM-C|N-NSM-L|N-NSM-LG|N-NSM-P|N-NSM-PG|N-NSM-T,ιας|ρας|εας
+Unit 4,1st Declension Noun Genitive Singular Masculine (ε/ι/ρ base),N-GSM|N-GSM-L|N-GSM-LG|N-GSM-P|N-GSM-PG|N-GSM-T,ιου|ρου|εου
+Unit 4,1st Declension Noun Dative Singular Masculine (ε/ι/ρ base),N-DSM|N-DSM-L|N-DSM-LG|N-DSM-P|N-DSM-T,ιᾳ|ρᾳ|εᾳ
+Unit 4,1st Declension Noun Accusative Singular Masculine (ε/ι/ρ base),N-ASM|N-ASM-L|N-ASM-LG|N-ASM-P|N-ASM-S|N-ASM-T,ιαν|ραν|εαν
+Unit 4,1st Declension Noun Vocative Singular Masculine (ε/ι/ρ base),N-VSM|N-VSM-L|N-VSM-P|N-VSM-T,ια|ρα|εα
+Unit 4,1st Declension Noun Nominative Plural Masculine (normal base),N-NPM|N-NPM-L|N-NPM-LG|N-NPM-PG|N-NPM-S|N-NPM-T,αι
+Unit 4,1st Declension Noun Genitive Plural Masculine (normal base),N-GPM|N-GPM-L|N-GPM-LG|N-GPM-PG|N-GPM-T,ων
+Unit 4,1st Declension Noun Dative Plural Masculine (normal base),N-DPM|N-DPM-L|N-DPM-LG|N-DPM-S|N-DPM-T,αις
+Unit 4,1st Declension Noun Accusative Plural Masculine (normal base),N-APM|N-APM-L|N-APM-LG|N-APM-P|N-APM-PG|N-APM-T,ας
+Unit 4,1st Declension Noun Vocative Plural Masculine (normal base),N-VPM|N-VPM-LG|N-VPM-PG|N-VPM-T,αι
+Unit 4,1st Declension Noun Nominative Plural Masculine (ε/ι/ρ base),N-NPM|N-NPM-L|N-NPM-LG|N-NPM-PG|N-NPM-S|N-NPM-T,ιαι|εαι|ραι
+Unit 4,1st Declension Noun Genitive Plural Masculine (ε/ι/ρ base),N-GPM|N-GPM-L|N-GPM-LG|N-GPM-PG|N-GPM-T,ιον|εον|ρον
+Unit 4,1st Declension Noun Dative Plural Masculine (ε/ι/ρ base),N-DPM|N-DPM-L|N-DPM-LG|N-DPM-S|N-DPM-T,ιαις|εαις|ραις
+Unit 4,1st Declension Noun Accusative Plural Masculine (ε/ι/ρ base),N-APM|N-APM-L|N-APM-LG|N-APM-P|N-APM-PG|N-APM-T,ιας|εας|ρας
+Unit 4,1st Declension Noun Vocative Plural Masculine (ε/ι/ρ base),N-VPM|N-VPM-LG|N-VPM-PG|N-VPM-T,ιαι|εαι|ραι
+Unit 4,Definite Article Nominative Singular Feminine,T-NSF,ἡ
+Unit 4,Definite Article Genitive Singular Feminine,T-GSF,τῆς
+Unit 4,Definite Article Dative Singular Feminine,T-DSF,τῇ
+Unit 4,Definite Article Accusative Singular Feminine,T-ASF,τὴν|τήν
+Unit 4,Definite Article Nominative Plural Feminine,T-NPF,αἰ
+Unit 4,Definite Article Genitive Plural Feminine,T-GPF,τῶν
+Unit 4,Definite Article Dative Plural Feminine,T-DPF,ταῖς
+Unit 4,Definite Article Accusative Plural Feminine,T-APF,τὰς|τάς
+Unit 5,ω verbs Active 1st Person Singular,V-IAI-1S,ον
+Unit 5,ω verbs Active 2nd Person Singular,V-IAI-2S,ες
+Unit 5,ω verbs Active 3rd Person Singular,V-IAI-3S,ε|εν
+Unit 5,ω verbs Active 1st Person Plural,V-IAI-1P,ομεν
+Unit 5,ω verbs Active 2nd Person Plural,V-IAI-2P,ετε
+Unit 5,ω verbs Active 3rd Person Plural,V-IAI-3P,ον
+Unit 5,ω verbs Middle/Passive 1st Person Singular,V-IMI-1S|V-IPI-1S|V-INI-1S,ομην
+Unit 5,ω verbs Middle/Passive 2nd Person Singular,V-IMI-2S|V-IPI-2S|V-INI-2S,ου
+Unit 5,ω verbs Middle/Passive 3rd Person Singular,V-IMI-3S|V-IPI-3S|V-INI-3S|V-IEI-3S,ετο
+Unit 5,ω verbs Middle/Passive 1st Person Plural,V-IMI-1P|V-IPI-1P|V-INI-1P,ομεθα
+Unit 5,ω verbs Middle/Passive 2nd Person Plural,V-IMI-2P|V-IPI-2P|V-INI-2P,εσθε
+Unit 5,ω verbs Middle/Passive 3rd Person Plural,V-IMI-3P|V-IPI-3P|V-INI-3P|V-IDI-3P,οντο
+Unit 5,εἰμι Imperfect 1st Person Singular,V-IMI-1S,ἤμην
+Unit 5,εἰμι Imperfect 2nd Person Singular,V-IAI-2S|V-IMI-2S,ἦς|ἦσθα
+Unit 5,εἰμι Imperfect 3rd Person Singular,V-IAI-3S,ἦν
+Unit 5,εἰμι Imperfect 1st Person Plural,V-IAI-1P,ἦμεν|ἦμεθα
+Unit 5,εἰμι Imperfect 2nd Person Plural,V-IAI-2P,ἦτε
+Unit 5,εἰμι Imperfect 3rd Person Plural,V-IAI-3P,ἦσαν
