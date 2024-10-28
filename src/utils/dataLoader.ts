@@ -1,27 +1,32 @@
-import Papa from 'papaparse';
+import Papa, { LocalFile, ParseError } from 'papaparse';
 // import { createHash } from 'crypto-browserify';
 import Dexie from 'dexie';
-import { MappedDataEntry, RMACResults, StudyChunk, StudyChunkCSVResult } from '../types/dataLoaderTypes';
+import { MappedDataEntry, MorphologyRecord, RMACResults, StudyChunk, StudyChunkCSVResult } from '../types/dataLoaderTypes';
 
-// Initialize Dexie database
-const db = new Dexie('OpenGNTDataDB');
-db.version(1).stores({
-  words: '++id, BookChapterVerseWord, Greek, Morphology, English, StudyChunkID, StrongsNumber', // Define schema
-});
+// Extend Dexie to add type definitions for the database schema
+class OpenGNTDataDB extends Dexie {
+  words!: Dexie.Table<MappedDataEntry, number>; // Define the 'words' table with type
+
+  constructor() {
+    super('OpenGNTDataDB');
+    this.version(1).stores({
+      words: '++id, BookChapterVerseWord, Greek, Morphology, English, StudyChunkID, StrongsNumber',
+    });
+  }
+}
+
+// Initialize the database
+const db = new OpenGNTDataDB();
 
 // Function to save data to IndexedDB
 const saveToIndexedDB = async (data : MappedDataEntry[]) => {
-  // TODO (Caleb): see why these are errors... they weren't erros when it was javascript.
-  // @ts-ignore
+  // ERROR: Property 'words' does not exist on type 'Dexie'.ts(2339)
   await db.words.clear(); // Clear old data
-  // @ts-ignore
   await db.words.bulkAdd(data); // Add new data
 };
 
 // Function to load data from IndexedDB
 const loadFromIndexedDB = async () => {
-  // TODO (Caleb): see why these are errors... they weren't erros when it was javascript.
-  // @ts-ignore
   return await db.words.toArray(); // Retrieve all stored data
 };
 
@@ -61,33 +66,33 @@ export const loadDataVersions = async () => {
  *  English: the english meaning of the word
  *  BookChapterVerseWord: returns that object (with those fields, all of them being integers)
  */
-// TODO (Caleb): any...
-export const loadOpenGNTData = async (studyChunks: Record<string, StudyChunk[]>, needToUpdateFiles: boolean, setLoadProgress : React.Dispatch<React.SetStateAction<number>>): Promise<any> => {
+export const loadOpenGNTData = async (
+  studyChunks: Record<string, StudyChunk[]>, 
+  needToUpdateFiles: boolean, setLoadProgress : React.Dispatch<React.SetStateAction<number>>): 
+  Promise<[MappedDataEntry[],Record<string, MorphologyRecord> ]> => {
   console.log("Loading OpenGNT data");
   // if sameHash is true, then load the data from IndexedDB
   if (!needToUpdateFiles) {
     const storedData = await loadFromIndexedDB();
-    if (storedData && storedData.length > 0) {
+    const strongs_mapping : Record<string, MorphologyRecord> = JSON.parse(localStorage.getItem('strongs_mapping') ?? "");
+    if (storedData && storedData.length > 0 && strongs_mapping) {
       setLoadProgress(100);
-      // TODO (Caleb): modified to add ?? "" to catch null. Verify if its ok.
-      return [storedData, JSON.parse(localStorage.getItem('strongs_mapping') ?? "")];
+      return [storedData, strongs_mapping];
     }
   }
   // otherwise, load the data from the server
   const response = await fetch('/data/OpenGNT_version3_3.csv');
   const csvData = await response.text();
-  return new Promise((resolve, reject) => {
-    Papa.parse(csvData, {
-      // TODO (Caleb): this ignore shoudlnt be here. we should write out the model for OpenGNT_version3_3
-      // @ts-ignore
-      header: true, complete: async (results) => {
-        // Map the necessary fields
+  return new Promise<[MappedDataEntry[], Record<string, MorphologyRecord>]>((resolve, reject) => {
+    Papa.parse<Record<string, string>>(csvData, {
+      header: true,
+      complete: async (results) => {
         const totalWords = results.data.length;
         let processedWords = 0;
         let sizeBeforeUpdate = totalWords / 100;
         let currentSizeBeforeUpdate = 0;
-        const mappedData : MappedDataEntry[] = [];
-        const strongsMapping: Record<string, Record<string, any>> = {};
+        const mappedData: MappedDataEntry[] = [];
+        const strongsMapping: Record<string, MorphologyRecord> = {};
 
         // Instead of using map, loop asynchronously to allow state updates
         let previousWordIdx = 0;
@@ -95,7 +100,7 @@ export const loadOpenGNTData = async (studyChunks: Record<string, StudyChunk[]>,
         let currentChapter = 1;
         let currentVerse = 1;
         for (let item of results.data) {
-          const greekBreakdown  = item["〔OGNTk｜OGNTu｜OGNTa｜lexeme｜rmac｜sn〕"];
+          const greekBreakdown = item["〔OGNTk｜OGNTu｜OGNTa｜lexeme｜rmac｜sn〕"];
           const tbessg = item["〔TBESG｜IT｜LT｜ST｜Español〕"];
           const bookChapterVerse = item["〔Book｜Chapter｜Verse〕"];
           if (greekBreakdown && tbessg && bookChapterVerse) {
@@ -106,8 +111,13 @@ export const loadOpenGNTData = async (studyChunks: Record<string, StudyChunk[]>,
             const [rootMeaning, english] = parseEnglishMeaning(tbessg);
             const bookChapterVerseWord = parseBookChapterVerseWord(previousWordIdx, bookChapterVerse, currentBook, currentChapter, currentVerse);
             if (!bookChapterVerseWord) {
-              // TODO (Caleb): verify this is correct error throwing.
-              throw Error("bookChapterVerseWord was null in loadOpenGNT");
+              console.error(
+                `Skipping entry due to missing bookChapterVerseWord. 
+                Item: ${JSON.stringify(item)}, 
+                Current Book: ${currentBook}, 
+                Chapter: ${currentChapter}, Verse: ${currentVerse}`
+              );
+              continue;
             }
             currentBook = bookChapterVerseWord.book;
             currentChapter = bookChapterVerseWord.chapter;
@@ -116,17 +126,15 @@ export const loadOpenGNTData = async (studyChunks: Record<string, StudyChunk[]>,
 
             const studyChunkID = parseStudyChunkID(studyChunks, greek, morphology);
 
-              mappedData.push({
-                BookChapterVerseWord: bookChapterVerseWord,
-                Greek: greek,
-                Morphology: morphology,
-                English: english,
-                Meaning: rootMeaning,
-                StudyChunkID: studyChunkID,
-                StrongsNumber: strongsNumber
-              });
-
-            
+            mappedData.push({
+              BookChapterVerseWord: bookChapterVerseWord,
+              Greek: greek,
+              Morphology: morphology,
+              English: english,
+              Meaning: rootMeaning,
+              StudyChunkID: studyChunkID,
+              StrongsNumber: strongsNumber
+            });
 
             if (strongsMapping[strongsNumber]) {
               if (strongsMapping[strongsNumber][morphology]) {
@@ -136,14 +144,14 @@ export const loadOpenGNTData = async (studyChunks: Record<string, StudyChunk[]>,
                 strongsMapping[strongsNumber][morphology] = {
                   greek: greek,
                   count: 1
-                }
+                };
               }
             } else {
               strongsMapping[strongsNumber] = {}
               strongsMapping[strongsNumber][morphology] = {
                 greek: greek,
                 count: 1
-              }
+              };
             }
 
             // Increment the processed words and update progress
@@ -164,14 +172,12 @@ export const loadOpenGNTData = async (studyChunks: Record<string, StudyChunk[]>,
         await saveToIndexedDB(mappedData);
         localStorage.setItem('strongs_mapping', JSON.stringify(strongsMapping));
         resolve([mappedData, strongsMapping]);
-        // TOOD (Caleb): any...
-      }, error: (err: any) => {
-        reject(err);
+      },
+      error: (error: Error, file?: LocalFile) => {
+        reject(error);
       },
     });
-  });
-};
-
+  });};
 
 
 
@@ -196,14 +202,15 @@ export const loadStudyChunks = async (needToUpdateFiles: boolean): Promise<Recor
     }
     return JSON.parse(localStorageStudyChunks);
   }
-  return new Promise((resolve, reject) => {
-    Papa.parse(csvData, {
-      header: true, complete: (results :StudyChunkCSVResult) => {
+  return new Promise<Record<string, StudyChunk[]>>((resolve, reject) => {
+    Papa.parse<{unit: string; name: string; morphologies: string; endings: string}>(csvData, {
+      header: true,
+      complete: (results: Papa.ParseResult<{unit: string; name: string; morphologies: string; endings: string}>) => {
         const data = results.data;
-        const unitDict : Record<string, StudyChunk[]>= {};
+        const unitDict: Record<string, StudyChunk[]> = {};
 
         data.forEach(row => {
-          const {unit, name, morphologies, endings} = row;
+          const { unit, name, morphologies, endings } = row;
           if (!row || !unit) {
             return;
           }
@@ -232,39 +239,37 @@ export const loadStudyChunks = async (needToUpdateFiles: boolean): Promise<Recor
 
         localStorage.setItem('study_chunks', JSON.stringify(unitDict));
         resolve(unitDict);
-        // TODO (Caleb): any...
-      }, error: (err : any) => {
-        reject(err);
+      },
+      error: (error: Error, file?: LocalFile) => {
+        reject(error);
       },
     });
-  });
-};
+  });};
 
 export const loadRMACDescriptions = async (): Promise<Record<string, string[]>> => {
   console.log("Loading RMAC descriptions");
   const response = await fetch('/data/OpenGNT_DictRMAC_English.tsv');
   const tsvData = await response.text();
 
-  return new Promise((resolve, reject) => {
-    Papa.parse(tsvData, {
+  return new Promise<Record<string, string[]>>((resolve, reject) => {
+    Papa.parse<{ RMAC: string; Description: string }>(tsvData, {
       header: true,        // Treat the first row as headers (RMAC, Description)
       delimiter: "\t",     // Tab-separated values (TSV)
-      complete: (results : RMACResults) => {
+      complete: (results) => {
         // Map the parsed data into a dictionary
         const rmacDict: Record<string, string[]> = {};
         results.data.forEach(row => {
           if (row.RMAC) {
-            rmacDict[row.RMAC] = row.Description;
+            rmacDict[row.RMAC] = [row.Description];
           }
         });
         resolve(rmacDict);  // Resolve the dictionary as the final result
-        // TODO (Caleb): any...
-      }, error: (err: any) => {
-        reject(err);  // Handle parsing errors
+      },
+      error: (error: Error, file?: LocalFile) => {
+        reject(error);
       },
     });
-  });
-}
+  });}
 
 // Implement parsing functions based on your data structure
 const parseGreekWord = (greekBreakdown: string) => {
@@ -358,8 +363,7 @@ const parseStudyChunkID = (studyChunks : Record<string, StudyChunk[]>, greek : s
     if (studyChunksForTester) {
       // Check each study chunk under this unit
       for (const chunk of studyChunksForTester) {
-        // TODO (Caleb): remove the casting! "as StudyCHunk"
-        const {studyChunkID, morphologies, endings} = chunk as StudyChunk;
+        const {studyChunkID, morphologies, endings} = chunk;
 
         // Check if the word's morphology is in the list of morphologies
         const morphologyMatches = morphologies.includes(morphology);
