@@ -12,10 +12,11 @@ import {
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
-export type SimpleTableData = [{
-  title: string;
-  numColumns: number;
-}, ...string[][]]
+export type SimpleTableData = [
+  { title: string; numColumns: number },
+  string[], // Header row
+  ...string[][] // Body rows
+];
 
 export type SimpleTableProps = {
   data: SimpleTableData
@@ -28,20 +29,21 @@ const SimpleTable = ({ data } : SimpleTableProps) => {
     setToggleAll((prev) => !prev); // Toggle between true and false
   };
 
-  const numberOfColumns = data[0].numColumns;
-  const header = [];
-  for (let i = 0; i < numberOfColumns; i++) {
-    header.push(
-      <TableCell padding="none" key={"header-" + i}><b>{data[1][i]}</b></TableCell>
-    );
-  }
-  const dummyArray = Array(numberOfColumns).fill(null);
+  const [meta, headers, ...rows] = data;
+  
+  const headerCells = headers.map((cell, index) => (
+    <TableCell padding="none" key={`header-${index}`}>
+      <b>{cell}</b>
+    </TableCell>
+  ));
+
+  const dummyArray = Array(meta.numColumns).fill(null);
 
   return (
     <TableContainer component={Paper} sx={{ maxWidth: '100%', margin: 'auto', mt: 1 }}>
       <Box display="flex" alignItems="center" justifyContent="center">
         <Typography variant="h6" component="div" sx={{ p: 0, textAlign: 'center', mr: 1 }}>
-          {data[0].title}
+          {meta.title}
         </Typography>
         <IconButton onClick={handleToggleAll} aria-label="toggle-all">
           {toggleAll ? <VisibilityOffIcon /> : <VisibilityIcon />}
@@ -49,25 +51,26 @@ const SimpleTable = ({ data } : SimpleTableProps) => {
       </Box>
       <Table size="small">
         <TableHead>
-          <TableRow>
-            {header}
-          </TableRow>
+          <TableRow>{headerCells}</TableRow>
         </TableHead>
         <TableBody>
-        {/** TODO (Caleb): casting row as string but there should be better way to solve this. */}
-          {data.slice(2).map((row, row_index) => (
-            <TableRow key={"row"+row_index}>
-              <TableCell padding="none"><b>{(row as string[])[0]}</b></TableCell>
-              {
-                dummyArray.map((_, col_index) => (
-                  (row as string[])[col_index + 1] ? (
-                    <TogglingTableCell value={(row as string[])[col_index + 1]} alternateValue={"?"} toggleAll={toggleAll} key={"cell-" + col_index}/>
-                  ) : (
-                    <TableCell padding="none" key={"cell-" + col_index}></TableCell>
-                  )
-
-                ))
-              }
+          {rows.map((row, rowIndex) => (
+            <TableRow key={`row-${rowIndex}`}>
+              <TableCell padding="none">
+                <b>{row[0]}</b>
+              </TableCell>
+              {dummyArray.map((_, colIndex) =>
+                row[colIndex + 1] ? (
+                  <TogglingTableCell
+                    value={row[colIndex + 1]}
+                    alternateValue="?"
+                    toggleAll={toggleAll}
+                    key={`cell-${colIndex}`}
+                  />
+                ) : (
+                  <TableCell padding="none" key={`cell-${colIndex}`}></TableCell>
+                )
+              )}
             </TableRow>
           ))}
         </TableBody>

@@ -22,7 +22,6 @@ export const getSmartChunksToTest = (wordGroups: string[], successes: Record<str
   const successPercentages = wordGroups.map((wordGroup) => {
     const successList = successes[wordGroup] || [];
     const totalAttempts = successList.length;
-    // TODO: (Caleb): modified from totalAttempts.length to totalAttempts. (because this didn't make sense and typscript error)
     if (totalAttempts > 0) {
       detectedStartedLearning = true;
     }
