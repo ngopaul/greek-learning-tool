@@ -7,6 +7,7 @@ import grey from "@mui/material/colors/grey";
 import { useAtom } from "jotai";
 import { displayWordsAtom } from "../../atoms/bibleDisplayAtoms";
 import { chartsOpenAtom } from "../../atoms/headerAtoms";
+import { useNavigation } from "../useNavigation";
 
 const ChartsPopup = () => {
   const [displayWords] = useAtom(displayWordsAtom)
@@ -14,10 +15,11 @@ const ChartsPopup = () => {
 
   const theme = useTheme();
   const context = useContext(AppContext);
+  const {currentIndex} = useNavigation();
   if (!context) {
     return null;
   }
-  const { testWordIndices, currentIndex, selectedTesters
+  const { testWordIndices, selectedTesters
   } = context;
   
 
@@ -31,7 +33,7 @@ const ChartsPopup = () => {
          ? = open or close this menu (showing a helpful chart when testing a unit)
          */}
       <Box>
-        {(testWordIndices.has(currentIndex)) ? (unitNameToTables[displayWords[currentIndex].StudyChunkID.split(" | ")[0]]) : (selectedTesters.length === 1 ? (unitNameToTables[selectedTesters[0].value]) : (
+        {testWordIndices && (testWordIndices.has(currentIndex)) ? (unitNameToTables[displayWords[currentIndex].StudyChunkID.split(" | ")[0]]) : (selectedTesters.length === 1 ? (unitNameToTables[selectedTesters[0].value]) : (
             <Typography variant="subtitle2" color={grey[800]}>
               When testing one unit, this area will show the grammar tables for the unit being tested.
               When testing multiple units at the same time, this will only show the relevant table on a tested word.

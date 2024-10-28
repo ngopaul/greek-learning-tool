@@ -53,12 +53,12 @@ export interface CurrentChapter {
 export interface AppContextType {
   strongsMapping: Record<string, any>; // TODO: need ot fix.
   setStrongsMapping: (strongsMapping: Record<string, any>) => void;
-  currentBook?: number;
-  setCurrentBook: (book: SetStateAction<undefined>) => void;
-  currentChapter?: CurrentChapter;
-  setCurrentChapter: (
-    chapter: SetStateAction<CurrentChapter | undefined>
-  ) => void;
+  // currentBook?: number;
+  // setCurrentBook: (book: SetStateAction<undefined>) => void;
+  // currentChapter?: CurrentChapter;
+  // setCurrentChapter: (
+  //   chapter: SetStateAction<CurrentChapter | undefined>
+  // ) => void;
   selectedTesters: any[]; //TODO:
   setSelectedTesters: (testers: MultiValue<unknown>) => void; //TODO
   gotNewData: boolean; //TODO change to hasgotnewdata, tracks whether or not the data is stale
@@ -68,7 +68,7 @@ export interface AppContextType {
   studyChunks: any[]; // TODO
   RMACDescriptions: Record<string, string>;
   loading: boolean;
-  currentIndex: number;
+  // currentIndex: number;
   testWordIndices: Set<number>;
   showAnswer: boolean;
   defaultShowAnswer: boolean;
@@ -81,35 +81,35 @@ export interface AppContextType {
   smartUnitLearning: boolean; // TODO: rename bool
   correctLog: (boolean | null)[];
   wordInfoOpen: boolean; // TODO: rename bool
-  selectedBook?: string;
-  setSelectedBook: (selectedBook: string) => void;
-  chapterOptions: ChapterOption[];
-  setChapterOptions: (chapterOptions: ChapterOption[]) => void;
-  selectedChapter?: ChapterOption;
-  setSelectedChapter: (selectedChapter?: ChapterOption) => void;
-  verseOptions: VerseOption[];
-  setVerseOptions: (verseOptions: VerseOption[]) => void;
-  selectedVerse: VerseOption;
-  setSelectedVerse: (selectedVerse?: VerseOption) => void;
+  // selectedBook?: string;
+  // setSelectedBook: (selectedBook: string) => void;
+  // chapterOptions: ChapterOption[];
+  // setChapterOptions: (chapterOptions: ChapterOption[]) => void;
+  // selectedChapter?: ChapterOption;
+  // setSelectedChapter: (selectedChapter?: ChapterOption) => void;
+  // verseOptions: VerseOption[];
+  // setVerseOptions: (verseOptions: VerseOption[]) => void;
+  // selectedVerse: VerseOption;
+  // setSelectedVerse: (selectedVerse?: VerseOption) => void;
   showAnswerChecked: boolean;
   startedTesting: boolean;
   loadProgress: number;
-  setCurrentIndex: (
-    idx: number,
-    newDisplayWords?: WordData[],
-    newTestWordIndices?: Set<number>
-  ) => void;
+  // setCurrentIndex: (
+  //   idx: number,
+  //   newDisplayWords?: WordData[],
+  //   newTestWordIndices?: Set<number>
+  // ) => void;
   setWordInfoOpen: (isWordInfoOpen: boolean) => void;
-  goLeft: () => void;
-  goRight: () => void;
+  // goLeft: () => void;
+  // goRight: () => void;
   previousTestWord: () => void;
   nextTestWord: () => void;
   flipCard: () => void;
   determineTestWords: (words: WordData[]) => void;
   markWord: (index: number, isCorrect: boolean) => void;
-  onBookSelect: (selected: BookOption) => void
-  onChapterSelect: (selected: any) => void;
-  onVerseSelect: (selected: any) => void;
+  // onBookSelect: (selected: BookOption) => void
+  // onChapterSelect: (selected: any) => void;
+  // onVerseSelect: (selected: any) => void;
   onTesterSelect: (testers: MultiValue<unknown>) => void;
   onSetDefaultShowAnswer: (shouldShow: boolean) => void;
   handleCopyClick: () => void;

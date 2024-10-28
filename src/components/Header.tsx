@@ -14,6 +14,7 @@ import { BookOption, VerseOption } from '../types/AppContextTypes';
 import ChartsPopup from "./Header/ChartsPopup";
 import TableChartIcon from '@mui/icons-material/TableChart';
 import { useHeader } from './useHeader';
+import { useNavigation } from './useNavigation';
 
 let bookOptions : BookOption[] = [];
 let startValue = 40;
@@ -45,29 +46,33 @@ const Header = () => {
   // Currently the 'selectedVerse' state is not reactive. Use this as temporary measure until 'selectedVerse' is reactive.
   const [curSelectedVerse, setCurSelectedVerse] = React.useState<VerseOption>();
   const [handleSettingsClick, handleHelpClick, handleChartsClick] = useHeader();
+  const {selectedBook, chapterOptions,
+    setChapterOptions,
+
+    selectedChapter,
+    setSelectedChapter,
+    verseOptions,
+    setVerseOptions,
+    onVerseSelect,
+    onBookSelect,
+
+    setSelectedBook,
+    
+    selectedVerse,
+    onChapterSelect,
+    setSelectedVerse,
+  
+  } = useNavigation();
   const context = useContext(AppContext);
   if (!context) {
     return null;
   }
   const {
     studyChunks,
-    onBookSelect,
-    onChapterSelect,
-    onVerseSelect,
     onTesterSelect,
-    selectedBook,
-    setSelectedBook,
-    chapterOptions,
-    setChapterOptions,
-    selectedChapter,
-    setSelectedChapter,
-    verseOptions,
-    setVerseOptions,
-    setSelectedVerse,
     setSelectedTesters,
     handleCopyClick,
     printDebug,
-    selectedVerse,
     readingMode
   } = context;
 
@@ -132,6 +137,10 @@ const Header = () => {
                     value={selectedChapter}
                     options={chapterOptions}
                     onChange={(selected) => {
+                      if (!selected) {
+                        console.error("chapter dropdown onchange is undefined somehow. investigate");
+                        return;
+                      }
                       //TODO Caleb: replicate this pattern in other places.
                       setSelectedChapter(selected === null ? undefined : selected);
                       onChapterSelect(selected);

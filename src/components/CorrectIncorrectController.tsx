@@ -9,15 +9,17 @@ import {useContext} from "react";
 import {AppContext} from "../contexts/AppContext";
 import { useAtom } from "jotai";
 import { displayWordsAtom } from "../atoms/bibleDisplayAtoms";
+import { useNavigation } from "./useNavigation";
 
 const CorrectIncorrectController = () => {
+  const {currentIndex} = useNavigation();
   const [displayWords] = useAtom(displayWordsAtom)
 
   const context = useContext(AppContext);
   if (!context) {
     return null;
   }
-  const {  currentIndex, readingMode, markWord, correctLog, testWordIndices} = context;
+  const {  readingMode, markWord, correctLog, testWordIndices} = context;
 
   if (displayWords.length === 0) {
     return null;

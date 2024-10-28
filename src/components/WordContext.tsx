@@ -4,15 +4,18 @@ import { Box, Typography } from "@mui/material";
 import { AppContext } from "../contexts/AppContext";
 import { useAtom } from "jotai";
 import { displayWordsAtom } from "../atoms/bibleDisplayAtoms";
+import { useNavigation } from "./useNavigation";
 
 const WordContext = () => {
   const [displayWords] = useAtom(displayWordsAtom)
+  const {currentIndex, setCurrentIndexAndProcess} = useNavigation();
+
 
   const context = useContext(AppContext);
   if (!context) {
     return null;
   }
-  const {  currentIndex, openGNTData, testWordIndices, setCurrentIndex,
+  const {  openGNTData, testWordIndices, 
     showEnglishInContext, showAnswer } = context;
 
   // If there are no display words, or the current index is invalid, return null
@@ -64,7 +67,7 @@ const WordContext = () => {
             color: word === currentWord ? 'red' : 'inherit',
           }}
           // TODO (Caleb): this needs to be fixed. this is bad
-          onClick={() => setCurrentIndex(word.displayIndex as number)}
+          onClick={() => setCurrentIndexAndProcess(word.displayIndex as number)}
         >
           {/* Greek and English word display */}
           <Box>

@@ -1,4 +1,4 @@
-@ts-nocheck
+// @ts-nocheck
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { loadDataVersions, loadOpenGNTData, loadRMACDescriptions, loadStudyChunks } from '../utils/dataLoader';
 import { getSmartChunksToTest, getChunksToTest } from '../utils/getTestWords';
@@ -6,7 +6,7 @@ import { AppContextType, BookOption, ChapterOption, CurrentChapter, Tester, Vers
 import { StudyChunk } from '../types/dataLoaderTypes';
 import { useAtom } from 'jotai';
 import { startTestingAtom } from '../atoms/testingAtoms';
-import { displayWordsAtom } from '../atoms/bibleDisplayAtoms';
+import { defaultShowAnswerAtom, displayWordsAtom, openGNTDataAtom, readingModeAtom, selectedTestersAtom, showAnswerAtom, testWordIndicesAtom } from '../atoms/bibleDisplayAtoms';
 import { useNavigation } from '../components/useNavigation';
 
 
@@ -20,23 +20,28 @@ interface AppProviderProps {
 
 // Create the provider component
 export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
-  const {currentBook, currentChapter, currentIndex, selectedBook, chapterOptions, selectedChapter, verseOptions, selectedVerse, goLeft, goRight, setCurrentIndexAndProcess} = useNavigation();
+  const { currentChapter, currentIndex, goLeft, goRight, setCurrentIndexAndProcess} = useNavigation();
 
 
-  const [selectedTesters, setSelectedTesters] = useState<Tester[]>([]);
+  // const [selectedTesters, setSelectedTesters] = useState<Tester[]>([]);
+  const [selectedTesters, setSelectedTesters] = useAtom(selectedTestersAtom);
   const [gotNewData, setGotNewData] = useState(false);
-  const [openGNTData, setOpenGNTData] = useState<WordData[]>([]);
+  // const [openGNTData, setOpenGNTData] = useState<WordData[]>([]);
+  const [openGNTData, setOpenGNTData] = useAtom(openGNTDataAtom);
   const [strongsMapping, setStrongsMapping] = useState({});
   // TODO (Caleb (Paul-check): verify removing [] in initi is safe
   const [studyChunks, setStudyChunks] = useState<Record<string, StudyChunk[]>>();
   const [RMACDescriptions, setRMACDescriptions] = useState({});
   const [loading, setLoading] = useState(true);
-  const [testWordIndices, setTestWordIndices] = useState<Set<number>>(new Set());
-  const [showAnswer, setShowAnswer] = useState(true);
-  const [defaultShowAnswer, setDefaultShowAnswer] = useState(true);
+  // const [testWordIndices, setTestWordIndices] = useState<Set<number>>(new Set());
+  const [testWordIndices, setTestWordIndices] = useAtom(testWordIndicesAtom);
+  // const [showAnswer, setShowAnswer] = useState(true);
+  const [showAnswer, setShowAnswer] = useAtom(showAnswerAtom);
+  // const [defaultShowAnswer, setDefaultShowAnswer] = useState(true);
+  const [defaultShowAnswer, setDefaultShowAnswer] = useAtom(defaultShowAnswerAtom);
   const [showEnglishInContext, setShowEnglishInContext] = useState(true);
   const [userProgress, setUserProgress] = useState<Record<string, boolean[]>>({});
-  const [readingMode, setReadingMode] = useState<"chapter" | "unit">('chapter'); // 'chapter' or 'unit'
+  const [readingMode, setReadingMode] = useAtom(readingModeAtom); 
   const [testingMode, setTestingMode] = useState<"morphology" | "meaning">('morphology'); // 'morphology' or 'meaning'
   const [smartUnitLearning, setSmartUnitLearning] = useState(true);
   const [correctLog, setCorrectLog] = useState<{index: number, correct: boolean}[]>([]); // List of { index: number, correct: boolean } // TODO (Caleb): pull out
@@ -72,6 +77,13 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (readingMode === 'chapter' && currentChapter && currentChapter.data) {
+      setCorrectLog(new Array(currentChapter.data.length).fill(null));
+      determineTestWords(displayWords);
+    }
+  }, [selectedTesters, displayWords]);
 
   
 
@@ -148,19 +160,7 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [displayWords.length, defaultShowAnswer, currentIndex, testWordIndices, correctLog]);
 
-  useEffect(() => {
-    if (currentChapter && currentChapter.data) {
-      setDisplayWords(currentChapter.data);
-      setCurrentIndexAndProcess(0);
-    }
-  }, [currentBook, currentChapter]);
-
-  useEffect(() => {
-    if (readingMode === 'chapter' && currentChapter && currentChapter.data) {
-      setCorrectLog(new Array(currentChapter.data.length).fill(null));
-      determineTestWords(displayWords);
-    }
-  }, [selectedTesters, displayWords]);
+  
 
   const printDebug = () => {
     const currentWord = displayWords[currentIndex];
@@ -177,9 +177,9 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     console.log('displayWords:', displayWords);
     console.log('testWordIndices:', testWordIndices);
     console.log('selectedTesters:', selectedTesters);
-    console.log('selectedBook:', selectedBook);
-    console.log('selectedChapter:', selectedChapter);
-    console.log('selectedVerse:', selectedVerse);
+    // console.log('selectedBook:', selectedBook);
+    // console.log('selectedChapter:', selectedChapter);
+    // console.log('selectedVerse:', selectedVerse);
     console.log('selectedTesters:', selectedTesters);
     console.log('currentWord', displayWords[currentIndex]);
     console.log('correctLog:', correctLog);
@@ -339,68 +339,6 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     setUserProgress(newUserProgress);
   };
 
-  const onBookSelect = (selected : BookOption) => {
-    if (selected && selected.value) {
-      setCurrentBook(selected);
-    } else {
-      setCurrentBook(undefined);
-    }
-    setCurrentChapter(undefined);
-    setSelectedTesters([]);
-    setCurrentIndex(0);
-    setDisplayWords([]);
-    setTestWordIndices(new Set());
-    setShowAnswer(defaultShowAnswer);
-  }
-
-  const onChapterSelect = (selected : ChapterOption) => {
-    if (!currentBook) {
-      // TODO: Handle when book is not selected and selecting chapter here.
-      return false;
-    }
-    if (selected) {
-      const temporaryCurrentChapter = selected;
-      // console.log(openGNTData);
-      // console.log(currentBook.value, temporaryCurrentChapter.value);
-      const filteredData = openGNTData.filter((item) => {
-        if (!item) {
-          return false;
-        }
-        const bookChapterVerseWord = item.BookChapterVerseWord;
-        if (!bookChapterVerseWord) {
-          return false;
-        }
-        
-        // Extract chapter info from 'OpenTextWord_KEY'
-        // Example Key: "〔40.1.1.w1〕" where 40 = Matthew
-        return bookChapterVerseWord.book === currentBook.value && bookChapterVerseWord.chapter === temporaryCurrentChapter.value;
-      });
-      // console.log(filteredData);
-      setCurrentChapter({
-        bookName: currentBook.label,
-        bookValue: currentBook.value,
-        chapterName: temporaryCurrentChapter.label,
-        chapterValue: temporaryCurrentChapter.value,
-        data: filteredData
-      });
-      setSelectedTesters(selectedTesters); // trigger callback to update testers
-    } else {
-      setCurrentChapter(undefined);
-    }
-  };
-
-  const onVerseSelect = (selected : VerseOption) => {
-    if (!selected) {
-      return;
-    }
-    for (let i = 0; i < displayWords.length; i++) {
-      if (displayWords[i].BookChapterVerseWord.verse === selected.value) {
-        setCurrentIndex(i);
-        return;
-      }
-    }
-  }
-
   const onTesterSelect = (selected : Tester[]) => {
     setSelectedTesters(selected);
   };
@@ -454,10 +392,10 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
 
   return (<AppContext.Provider
       value={{
-        currentBook,
-        setCurrentBook,
-        currentChapter,
-        setCurrentChapter,
+        // currentBook,
+        // setCurrentBook,
+        // currentChapter,
+        // setCurrentChapter,
         selectedTesters,
         setSelectedTesters,
         gotNewData,
@@ -473,7 +411,7 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
         loading,
         setLoading,
         currentIndex,
-        setCurrentIndex,
+        // setCurrentIndex,
         testWordIndices,
         setTestWordIndices,
         showAnswer,
@@ -491,15 +429,15 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
         setCorrectLog,
         wordInfoOpen,
         setWordInfoOpen,
-        selectedBook,
-        setSelectedBook,
-        chapterOptions,
-        setChapterOptions,
-        selectedChapter,
-        setSelectedChapter,
-        verseOptions,
-        setVerseOptions,
-        setSelectedVerse,
+        // selectedBook,
+        // setSelectedBook,
+        // chapterOptions,
+        // setChapterOptions,
+        // selectedChapter,
+        // setSelectedChapter,
+        // verseOptions,
+        // setVerseOptions,
+        // setSelectedVerse,
         showAnswerChecked,
         setShowAnswerChecked,
         showEnglishInContext,
@@ -512,15 +450,15 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
         handleChangeReadingMode,
         startLearning,
         markWord,
-        onBookSelect,
-        onChapterSelect,
-        onVerseSelect,
+        // onBookSelect,
+        // onChapterSelect,
+        // onVerseSelect,
         onTesterSelect,
         onSetDefaultShowAnswer,
         handleCopyClick,
         printDebug,
-        goRight,
-        goLeft,
+        // goRight,
+        // goLeft,
         previousTestWord,
         nextTestWord,
         flipCard,
