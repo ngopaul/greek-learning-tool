@@ -26,5 +26,5 @@ export const useHeader = () => {
         setChartsOpen((value) => (!value));
       };
 
-    return [handleSettingsClick, handleHelpClick, handleChartsClick]
+    return {handleSettingsClick, handleHelpClick, handleChartsClick}
 }

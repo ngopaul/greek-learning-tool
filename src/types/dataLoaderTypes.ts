@@ -12,6 +12,8 @@ export interface GNTDataEntry {
  */
 export type MorphologyRecord = Record<string, {greek: string, count: number}>;
   
+
+// This is WordData but without DisplayIndex. DisplayIndex is initialized in WordContex
 export interface MappedDataEntry {
     BookChapterVerseWord: BookChapterVerseWord;
     Greek: string;

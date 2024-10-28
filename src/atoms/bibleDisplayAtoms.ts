@@ -1,5 +1,6 @@
 import { atom } from 'jotai';
 import { BookOption, CurrentChapter, Tester, WordData } from '../types/AppContextTypes';
+import { MappedDataEntry } from '../types/dataLoaderTypes';
 
 // Atom to store the current lesson
 // export const currentLessonAtom = atom<string | null>(null);
@@ -24,10 +25,10 @@ export const currentChapterAtom = atom<CurrentChapter>();
 export const selectedTestersAtom = atom<Tester[]>([]);
 
 
-export const testWordIndicesAtom = atom<Set<number>>();
+export const testWordIndicesAtom = atom<Set<number>>(new Set<number>());
 
 // export const currentIndexAtom = atom<number>(0);
-export const openGNTDataAtom = atom<WordData[]>([]);
+export const openGNTDataAtom = atom<MappedDataEntry[]>([]);
 // export const startedTestingAtom = atom<boolean>(false);
 
 // remove this later

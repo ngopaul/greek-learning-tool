@@ -1,13 +1,14 @@
-// @ts-nocheck
+// @ts-ignore
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { loadDataVersions, loadOpenGNTData, loadRMACDescriptions, loadStudyChunks } from '../utils/dataLoader';
 import { getSmartChunksToTest, getChunksToTest } from '../utils/getTestWords';
-import { AppContextType, BookOption, ChapterOption, CurrentChapter, Tester, VerseOption, WordData } from '../types/AppContextTypes';
-import { StudyChunk } from '../types/dataLoaderTypes';
+import { AppContextType, Tester, WordData } from '../types/AppContextTypes';
+import { MappedDataEntry, StudyChunk } from '../types/dataLoaderTypes';
 import { useAtom } from 'jotai';
 import { startTestingAtom } from '../atoms/testingAtoms';
 import { defaultShowAnswerAtom, displayWordsAtom, openGNTDataAtom, readingModeAtom, selectedTestersAtom, showAnswerAtom, testWordIndicesAtom } from '../atoms/bibleDisplayAtoms';
 import { useNavigation } from '../components/useNavigation';
+import { useHeader } from '../components/useHeader';
 
 
 
@@ -21,6 +22,7 @@ interface AppProviderProps {
 // Create the provider component
 export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
   const { currentChapter, currentIndex, goLeft, goRight, setCurrentIndexAndProcess} = useNavigation();
+  const {handleSettingsClick, handleHelpClick} = useHeader();
 
 
   // const [selectedTesters, setSelectedTesters] = useState<Tester[]>([]);
@@ -44,7 +46,7 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
   const [readingMode, setReadingMode] = useAtom(readingModeAtom); 
   const [testingMode, setTestingMode] = useState<"morphology" | "meaning">('morphology'); // 'morphology' or 'meaning'
   const [smartUnitLearning, setSmartUnitLearning] = useState(true);
-  const [correctLog, setCorrectLog] = useState<{index: number, correct: boolean}[]>([]); // List of { index: number, correct: boolean } // TODO (Caleb): pull out
+  const [correctLog, setCorrectLog] = useState<boolean[]>([]); // List of { index: number, correct: boolean } // TODO (Caleb): pull out
   const [wordInfoOpen, setWordInfoOpen] = useState(false);
   
   const [showAnswerChecked, setShowAnswerChecked] = useState(true);
@@ -232,7 +234,7 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
 
   const startLearning = () => {
     // create a list for each chunk (aka wordGroup) in studyChunks
-    const studyChunkLists : Record<string, StudyChunk[]> = {};
+    const studyChunkLists : Record<string, MappedDataEntry[]> = {};
     const initialWordGroupsToTest : string[] = [];
     if (!studyChunks) {
       // handle undefined studyChunks
@@ -269,20 +271,24 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     }
     chunksToTest = chunksToTest.slice(0, 40);
     // Get the displayWords from the chunksToTest, popping the first word off the relevant chunk in studyChunkLists
-    const temporaryDisplayWords = [];
+    const temporaryDisplayWords : WordData[] = [];
     for (const chunkName of chunksToTest) {
       if (studyChunkLists[chunkName].length === 0) {
         console.log("No words left for: ", chunkName);
       } else {
-        const word = studyChunkLists[chunkName].shift();
+        // casting here because shift is only undefined when the list is empty, but we check above.
+        const word = (studyChunkLists[chunkName].shift() as WordData);
         temporaryDisplayWords.push(word);
       }
     }
     temporaryDisplayWords.push({
-      Greek: null,
-      Morphology: null,
-      English: null,
-      BookChapterVerseWord: null,
+      Greek: "finished round of testing",
+      Morphology: "finished round of testing",
+      English: "finished round of testing",
+      BookChapterVerseWord: {book: 0, chapter: 0, verse: 0, word: 0},
+      Meaning:"finished round of testing",
+      displayIndex: null,
+      StrongsNumber: "finished round of testing",
       StudyChunkID: "finished round of testing"
     })
     // Set currentIndex, displayWords, testWordIndices, showAnswer, correctLog
