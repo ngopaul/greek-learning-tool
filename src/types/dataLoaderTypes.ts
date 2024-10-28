@@ -6,6 +6,11 @@ export interface GNTDataEntry {
     English: string;
     BookChapterVerseWord: BookChapterVerseWord;
   }
+
+/**
+ * Represents a mapping of a morphology ID (string) to its corresponding Greek word and count.
+ */
+export type MorphologyRecord = Record<string, {greek: string, count: number}>;
   
 export interface MappedDataEntry {
     BookChapterVerseWord: BookChapterVerseWord;
