@@ -68,7 +68,15 @@ const WordContext = () => {
         >
           {/* Greek and English word display */}
           <Box>
-            <Typography variant="h6" align="center">{word.Greek}</Typography>
+            {
+              (// TODO (Caleb): this needs to be fixed. this is bad
+                (testWordIndices.has(word.displayIndex as number))
+              ) ? (
+                <Typography sx={{ textDecoration: 'underline' }} variant="h6" align="center">{word.Greek}</Typography>
+              ) : (
+                <Typography variant="h6" align="center">{word.Greek}</Typography>
+              )
+            }
           </Box>
           {
             showEnglishInContext ? (

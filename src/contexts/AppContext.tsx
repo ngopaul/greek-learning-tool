@@ -455,10 +455,13 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     switch (value) {
       case "chapter":
         setReadingMode(value);
+        break;
       case "unit":
         setReadingMode(value);
+        restartLearning();
+        break;
       default:
-        console.error("tried to set reading mode to something other than chapter or unit");
+        console.error("tried to set reading mode to something other than chapter or unit: ", value);
     }
   };
 

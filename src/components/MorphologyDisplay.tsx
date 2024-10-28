@@ -24,7 +24,8 @@ const MorphologyDisplay = () => {
   }
 
   // Split morphology into parts or show question marks
-  const morphologyDescription = RMACDescriptions[currentWord.Morphology];
+  // TODO get rid of this 0 when we fix the error with morphologyDescription being an array of strings
+  const morphologyDescription = RMACDescriptions[currentWord.Morphology][0];
   const morphParts = !showAnswer ? ['[click to flip]'] : morphologyDescription.split(', ');
 
   return (showAnswer ? (<> {(morphParts.map((part, index) => (<Box key={"morphology-banner-" + index} sx={{px: 1}}>

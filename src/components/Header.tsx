@@ -199,7 +199,7 @@ const Header = () => {
                   setSelectedTesters(selected);
                   onTesterSelect(selected);
                 }}
-                placeholder="Tester (optional)"
+                placeholder="Textbook Unit (optional)"
                 styles={customStyles}
               />
             </Box>

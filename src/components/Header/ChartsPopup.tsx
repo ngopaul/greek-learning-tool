@@ -33,8 +33,9 @@ const ChartsPopup = () => {
       <Box>
         {(testWordIndices.has(currentIndex)) ? (unitNameToTables[displayWords[currentIndex].StudyChunkID.split(" | ")[0]]) : (selectedTesters.length === 1 ? (unitNameToTables[selectedTesters[0].value]) : (
             <Typography variant="subtitle2" color={grey[800]}>
-              When testing one unit, this area will show the grammar tables for the unit being tested.
-              When testing multiple units at the same time, this will only show the relevant table on a tested word.
+              When you have selected one Textbook Unit, this area will show the grammar tables for that Textbook Unit.
+              When you have selected multiple Textbook Units at the same time, 
+              this area will ONLY show the relevant grammar tables on a word that is taught in one of the selected Textbook Units.
             </Typography>))}
       </Box>
     </Popup>)

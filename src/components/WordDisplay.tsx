@@ -33,7 +33,7 @@ const WordDisplay = () => {
     return (
       readingMode === "chapter" ? (
         <Box sx={{ textAlign: 'center', marginTop: '20%' }}>
-          <Typography variant="h6">Please select a book and chapter to begin.</Typography>
+          <Typography variant="h6">Please select a Book and Chapter to begin.</Typography>
         </Box>
       ) : (
         selectedTesters.length === 0 ? (

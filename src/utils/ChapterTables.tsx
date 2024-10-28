@@ -112,7 +112,7 @@ const chapter5_3 : SimpleTableData= [
 ]
 
 export const unitNameToTables: Record<string, ReactNode> = {
-  "Chapter 2": (<div>
+  "Unit 2": (<div>
     <div>
       <SimpleTable data={chapter2_1}/>
       <SimpleTable data={chapter2_2}/>
@@ -120,13 +120,13 @@ export const unitNameToTables: Record<string, ReactNode> = {
     </div>
   </div>
 ),
-  "Chapter 3": (
+  "Unit 3": (
     <div>
       <SimpleTable data={chapter3_1}/>
       <SimpleTable data={chapter3_2}/>
     </div>
   ),
-  "Chapter 4": (
+  "Unit 4": (
     <div>
       <SimpleTable data={chapter4_1}/>
       <SimpleTable data={chapter4_2}/>
@@ -134,7 +134,7 @@ export const unitNameToTables: Record<string, ReactNode> = {
       <SimpleTable data={chapter4_4}/>
     </div>
   ),
-  "Chapter 5": (
+  "Unit 5": (
     <div>
       <SimpleTable data={chapter5_1}/>
       <SimpleTable data={chapter5_2}/>
