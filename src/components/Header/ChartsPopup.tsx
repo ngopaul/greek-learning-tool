@@ -33,7 +33,7 @@ const ChartsPopup = () => {
          ? = open or close this menu (showing a helpful chart when testing a unit)
          */}
       <Box>
-        {testWordIndices && (testWordIndices.has(currentIndex)) ? (unitNameToTables[displayWords[currentIndex].StudyChunkID.split(" | ")[0]]) : (selectedTesters.length === 1 ? (unitNameToTables[selectedTesters[0].value]) : (
+        {testWordIndices && (testWordIndices.has(currentIndex) && displayWords[currentIndex] && displayWords[currentIndex].StudyChunkID) ? (unitNameToTables[displayWords[currentIndex].StudyChunkID.split(" | ")[0]]) : (selectedTesters.length === 1 ? (unitNameToTables[selectedTesters[0].value]) : (
             <Typography variant="subtitle2" color={grey[800]}>
               When you have selected one Textbook Unit, this area will show the grammar tables for that Textbook Unit.
               When you have selected multiple Textbook Units at the same time, 
