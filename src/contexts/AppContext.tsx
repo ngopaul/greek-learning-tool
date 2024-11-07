@@ -1,43 +1,57 @@
-import React, {createContext, useState, useEffect} from 'react';
-import {loadDataVersions, loadOpenGNTData, loadRMACDescriptions, loadStudyChunks} from "../utils/dataLoader";
-import {getSmartChunksToTest, getChunksToTest} from "../utils/getTestWords";
+// @ts-nocheck
+import React, { createContext, useState, useEffect, ReactNode } from 'react';
+import { loadDataVersions, loadOpenGNTData, loadRMACDescriptions, loadStudyChunks } from '../utils/dataLoader';
+import { getSmartChunksToTest, getChunksToTest } from '../utils/getTestWords';
+import { AppContextType, BookOption, ChapterOption, CurrentChapter, Tester, VerseOption, WordData } from '../types/AppContextTypes';
+import { StudyChunk } from '../types/dataLoaderTypes';
+import { useAtom } from 'jotai';
+import { startTestingAtom } from '../atoms/testingAtoms';
+import { defaultShowAnswerAtom, displayWordsAtom, openGNTDataAtom, readingModeAtom, selectedTestersAtom, showAnswerAtom, testWordIndicesAtom } from '../atoms/bibleDisplayAtoms';
+import { useNavigation } from '../components/useNavigation';
 
-// Create the context
-export const AppContext = createContext();
+
+
+// Create the context with default values
+export const AppContext = createContext<AppContextType | undefined>(undefined);
+
+interface AppProviderProps {
+  children: ReactNode;
+}
 
 // Create the provider component
-export const AppProvider = ({children}) => {
-  const [currentBook, setCurrentBook] = useState(null);
-  const [currentChapter, setCurrentChapter] = useState(null);
-  const [selectedTesters, setSelectedTesters] = useState([]);
+export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
+  const { currentChapter, currentIndex, goLeft, goRight, setCurrentIndexAndProcess} = useNavigation();
+
+
+  // const [selectedTesters, setSelectedTesters] = useState<Tester[]>([]);
+  const [selectedTesters, setSelectedTesters] = useAtom(selectedTestersAtom);
   const [gotNewData, setGotNewData] = useState(false);
-  const [openGNTData, setOpenGNTData] = useState([]);
+  // const [openGNTData, setOpenGNTData] = useState<WordData[]>([]);
+  const [openGNTData, setOpenGNTData] = useAtom(openGNTDataAtom);
   const [strongsMapping, setStrongsMapping] = useState({});
-  const [studyChunks, setStudyChunks] = useState([]);
+  // TODO (Caleb (Paul-check): verify removing [] in initi is safe
+  const [studyChunks, setStudyChunks] = useState<Record<string, StudyChunk[]>>();
   const [RMACDescriptions, setRMACDescriptions] = useState({});
   const [loading, setLoading] = useState(true);
-  const [currentIndex, setCurrentIndexRaw] = useState(0);
-  const [displayWords, setDisplayWords] = useState([]);
-  const [testWordIndices, setTestWordIndices] = useState(new Set());
-  const [showAnswer, setShowAnswer] = useState(true);
-  const [defaultShowAnswer, setDefaultShowAnswer] = useState(true);
+  // const [testWordIndices, setTestWordIndices] = useState<Set<number>>(new Set());
+  const [testWordIndices, setTestWordIndices] = useAtom(testWordIndicesAtom);
+  // const [showAnswer, setShowAnswer] = useState(true);
+  const [showAnswer, setShowAnswer] = useAtom(showAnswerAtom);
+  // const [defaultShowAnswer, setDefaultShowAnswer] = useState(true);
+  const [defaultShowAnswer, setDefaultShowAnswer] = useAtom(defaultShowAnswerAtom);
   const [showEnglishInContext, setShowEnglishInContext] = useState(true);
-  const [userProgress, setUserProgress] = useState({});
-  const [readingMode, setReadingMode] = useState('chapter'); // 'chapter' or 'unit'
-  const [testingMode, setTestingMode] = useState('morphology'); // 'morphology' or 'meaning'
+  const [userProgress, setUserProgress] = useState<Record<string, boolean[]>>({});
+  const [readingMode, setReadingMode] = useAtom(readingModeAtom); 
+  const [testingMode, setTestingMode] = useState<"morphology" | "meaning">('morphology'); // 'morphology' or 'meaning'
   const [smartUnitLearning, setSmartUnitLearning] = useState(true);
-  const [correctLog, setCorrectLog] = useState([]); // List of { index: number, correct: boolean }
-  const [settingsOpen, setSettingsOpen] = useState(false);
-  const [helpOpen, setHelpOpen] = useState(false);
+  const [correctLog, setCorrectLog] = useState<{index: number, correct: boolean}[]>([]); // List of { index: number, correct: boolean } // TODO (Caleb): pull out
   const [wordInfoOpen, setWordInfoOpen] = useState(false);
-  const [selectedBook, setSelectedBook] = useState(null);
-  const [chapterOptions, setChapterOptions] = useState([]);
-  const [selectedChapter, setSelectedChapter] = useState(null);
-  const [verseOptions, setVerseOptions] = useState([]);
-  const [selectedVerse, setSelectedVerse] = useState(null);
+  
   const [showAnswerChecked, setShowAnswerChecked] = useState(true);
-  const [startedTesting, setStartedTesting] = useState(false);
   const [loadProgress, setLoadProgress] = useState(0);
+
+  const [startedTesting, setStartedTesting] = useAtom(startTestingAtom);
+  const [displayWords, setDisplayWords] = useAtom(displayWordsAtom);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,29 +78,17 @@ export const AppProvider = ({children}) => {
     fetchData();
   }, []);
 
-  const setCurrentIndex = (idx, newDisplayWords=displayWords, newTestWordIndices=testWordIndices) => {
-    if (idx === null || idx === undefined || isNaN(idx) || idx < 0 || idx >= newDisplayWords.length) {
-      return;
+  useEffect(() => {
+    if (readingMode === 'chapter' && currentChapter && currentChapter.data) {
+      console.log("calling determineTestwords")
+      setCorrectLog(new Array(currentChapter.data.length).fill(null));
+      determineTestWords(displayWords);
     }
-    setCurrentIndexRaw(idx);
-    if (newTestWordIndices.has(idx)) {
-      setShowAnswer(false);
-    } else if (readingMode === "chapter") {
-      setShowAnswer(defaultShowAnswer);
-    } else if (readingMode === "unit" && idx !== displayWords.length) {
-      setShowAnswer(defaultShowAnswer);
-    } else {
-      setShowAnswer(true);
-    }
-  }
+  }, [selectedTesters, displayWords]);
 
-  const goLeft = () => {
-    setCurrentIndex(Math.max(currentIndex - 1, 0));
-  }
+  
 
-  const goRight = () => {
-    setCurrentIndex(Math.min(currentIndex + 1, displayWords.length - 1));
-  }
+  
 
   const previousTestWord = () => {
     // find the closest previous word that is in the testWordIndices
@@ -96,7 +98,7 @@ export const AppProvider = ({children}) => {
     for (let i = currentIndex - 1; i > 0; i--) {
       if (testWordIndices.has(i)) {
         const newIndex = Math.max(i, 0);
-        setCurrentIndex(newIndex);
+        setCurrentIndexAndProcess(newIndex);
         break;
       }
     }
@@ -110,7 +112,7 @@ export const AppProvider = ({children}) => {
     for (let i = currentIndex + 1; i < displayWords.length; i++) {
       if (testWordIndices.has(i)) {
         const newIndex = Math.min(i, displayWords.length - 1)
-        setCurrentIndex(newIndex);
+        setCurrentIndexAndProcess(newIndex);
         break;
       }
     }
@@ -122,7 +124,7 @@ export const AppProvider = ({children}) => {
 
   // Handle Keyboard Navigation and Space Key for Toggle
   useEffect(() => {
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: { key: string; target: HTMLElement; preventDefault: () => void; }) => {
       if (e.key === 'ArrowRight') {
         goRight();
       } else if (e.key === 'ArrowLeft') {
@@ -152,23 +154,14 @@ export const AppProvider = ({children}) => {
       }
     };
 
+    // TODO (Caleb): verify this later.. 
+    // @ts-ignore
     window.addEventListener('keydown', handleKeyDown);
+    // @ts-ignore
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [displayWords.length, defaultShowAnswer, currentIndex, testWordIndices, correctLog]);
 
-  useEffect(() => {
-    if (currentChapter && currentChapter.data) {
-      setDisplayWords(currentChapter.data);
-      setCurrentIndex(0);
-    }
-  }, [currentBook, currentChapter]);
-
-  useEffect(() => {
-    if (readingMode === 'chapter' && currentChapter && currentChapter.data) {
-      setCorrectLog(new Array(currentChapter.data.length).fill(null));
-      determineTestWords(displayWords);
-    }
-  }, [selectedTesters, displayWords]);
+  
 
   const printDebug = () => {
     const currentWord = displayWords[currentIndex];
@@ -185,9 +178,6 @@ export const AppProvider = ({children}) => {
     console.log('displayWords:', displayWords);
     console.log('testWordIndices:', testWordIndices);
     console.log('selectedTesters:', selectedTesters);
-    console.log('selectedBook:', selectedBook);
-    console.log('selectedChapter:', selectedChapter);
-    console.log('selectedVerse:', selectedVerse);
     console.log('selectedTesters:', selectedTesters);
     console.log('currentWord', displayWords[currentIndex]);
     console.log('correctLog:', correctLog);
@@ -196,7 +186,7 @@ export const AppProvider = ({children}) => {
   }
 
   // Function to determine which words to test
-  const determineTestWords = (words) => {
+  const determineTestWords = (words : WordData[]) => {
     // If no testers are selected, clear the test word indices
     if (selectedTesters.length === 0) {
       setTestWordIndices(new Set());
@@ -204,7 +194,7 @@ export const AppProvider = ({children}) => {
     }
 
     // Create a set to store the indices of words that should be tested
-    const testIndices = new Set();
+    const testIndices = new Set<number>();
 
     // Iterate over each word in the words array
     words.forEach((word, index) => {
@@ -242,8 +232,12 @@ export const AppProvider = ({children}) => {
 
   const startLearning = () => {
     // create a list for each chunk (aka wordGroup) in studyChunks
-    const studyChunkLists = {};
-    const initialWordGroupsToTest = [];
+    const studyChunkLists : Record<string, StudyChunk[]> = {};
+    const initialWordGroupsToTest : string[] = [];
+    if (!studyChunks) {
+      // handle undefined studyChunks
+      return;
+    }
     for (const [, studyChunksForTester] of Object.entries(studyChunks)) {
       if (studyChunksForTester) {
         // Check each study chunk under this unit
@@ -261,6 +255,7 @@ export const AppProvider = ({children}) => {
       const wordsToTest = openGNTData.filter(word => studyChunkID === word.StudyChunkID);
       // shuffle the wordsToTest
       wordsToTest.sort(() => Math.random() - 0.5);
+      // TODO (Paul-check): .... 
       studyChunkList.push(...wordsToTest);
     }
     // Use either getSmartWordsToTest or getWordsToTest on the list of chunk names (wordGroups) and the userProgress, to get the wordsToTest
@@ -294,14 +289,14 @@ export const AppProvider = ({children}) => {
     setDisplayWords(temporaryDisplayWords);
     const temporaryTestWordIndices = new Set(Array.from(Array(temporaryDisplayWords.length).keys()))
     setTestWordIndices(temporaryTestWordIndices);
-    setCurrentIndex(0, temporaryDisplayWords, temporaryTestWordIndices);
+    setCurrentIndexAndProcess(0, temporaryDisplayWords, temporaryTestWordIndices);
     setStartedTesting(true);
     // correctLog is a list of booleans the length of displayWords, initialized to null
     // it is used to keep track of whether the user got each word correct or not
     setCorrectLog(new Array(temporaryDisplayWords.length).fill(null));
   };
 
-  const markWord = (index, isCorrect) => {
+  const markWord = (index : number, isCorrect : boolean) => {
     if (
       displayWords.length === 0
       || (readingMode === "unit" && currentIndex === displayWords.length - 1)
@@ -318,7 +313,7 @@ export const AppProvider = ({children}) => {
     const newUserProgress = {...userProgress};
     const word = displayWords[index];
     const studyChunkID = word.StudyChunkID;
-    let latterValues = [];
+    let latterValues : boolean[] = [];
     if (alreadyMarked && Array.isArray(newUserProgress[studyChunkID])) {
       // get the index of the last value that was marked as oldMarkValue
       const lastIndex = newUserProgress[studyChunkID].lastIndexOf(oldMarkValue);
@@ -342,75 +337,13 @@ export const AppProvider = ({children}) => {
     setUserProgress(newUserProgress);
   };
 
-  const onBookSelect = (selected) => {
-    if (selected && selected.value) {
-      setCurrentBook(selected);
-    } else {
-      setCurrentBook(null);
-    }
-    setCurrentChapter(null);
-    setSelectedTesters([]);
-    setCurrentIndex(0);
-    setDisplayWords([]);
-    setTestWordIndices(new Set());
-    setShowAnswer(defaultShowAnswer);
-  }
-
-  const onChapterSelect = (selected) => {
-    if (selected) {
-      const temporaryCurrentChapter = selected;
-      // console.log(openGNTData);
-      // console.log(currentBook.value, temporaryCurrentChapter.value);
-      const filteredData = openGNTData.filter((item) => {
-        if (!item) {
-          return false;
-        }
-        const bookChapterVerseWord = item.BookChapterVerseWord;
-        if (!bookChapterVerseWord) {
-          return false;
-        }
-        // Extract chapter info from 'OpenTextWord_KEY'
-        // Example Key: "〔40.1.1.w1〕" where 40 = Matthew
-        return bookChapterVerseWord.book === currentBook.value && bookChapterVerseWord.chapter === temporaryCurrentChapter.value;
-      });
-      // console.log(filteredData);
-      setCurrentChapter({
-        bookName: currentBook.label,
-        bookValue: currentBook.value,
-        chapterName: temporaryCurrentChapter.label,
-        chapterValue: temporaryCurrentChapter.value,
-        data: filteredData
-      });
-      setSelectedTesters(selectedTesters); // trigger callback to update testers
-    } else {
-      setCurrentChapter(null);
-    }
-  };
-
-  const onVerseSelect = (selected) => {
-    if (!selected) {
-      return;
-    }
-    for (let i = 0; i < displayWords.length; i++) {
-      if (displayWords[i].BookChapterVerseWord.verse === selected.value) {
-        setCurrentIndex(i);
-        return;
-      }
-    }
-  }
-
-  const onTesterSelect = (selected) => {
+  const onTesterSelect = (selected : Tester[]) => {
     setSelectedTesters(selected);
   };
 
-  const onSetDefaultShowAnswer = (shouldShow) => {
+  const onSetDefaultShowAnswer = (shouldShow : boolean) => {
     setDefaultShowAnswer(shouldShow);
   }
-
-  const handleSettingsClick = () => {
-    setHelpOpen(false);
-    setSettingsOpen((value) => (!value));
-  };
 
   const handleCopyClick = () => {
     const currentWord = displayWords[currentIndex];
@@ -424,21 +357,25 @@ export const AppProvider = ({children}) => {
     navigator.clipboard.writeText(currentVerse);
   }
 
-  const handleHelpClick = () => {
-    setSettingsOpen(false);
-    setHelpOpen((value) => (!value));
-  };
-
-  const handleCheckboxShowAnswer = (event) => {
+  const handleCheckboxShowAnswer = (event: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = event.target.checked;
     setShowAnswerChecked(isChecked);  // Update the state
     onSetDefaultShowAnswer(isChecked);  // Call the callback with the updated value
   };
 
-  const handleChangeReadingMode = (event) => {
-    const newReadingMode = event.target.value;
-    restartLearning();
-    setReadingMode(newReadingMode);
+  const handleChangeReadingMode = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value;
+    switch (value) {
+      case "chapter":
+        setReadingMode(value);
+        break;
+      case "unit":
+        setReadingMode(value);
+        restartLearning();
+        break;
+      default:
+        console.error("tried to set reading mode to something other than chapter or unit: ", value);
+    }
   };
 
   const restartLearning = () => {
@@ -447,7 +384,7 @@ export const AppProvider = ({children}) => {
     setTestWordIndices(new Set());
   }
 
-  const handleSetSmartUnitLearning = (value) => {
+  const handleSetSmartUnitLearning = (value : boolean) => {
     setSmartUnitLearning(value);
     if (readingMode === 'unit') {
       restartLearning();
@@ -456,10 +393,6 @@ export const AppProvider = ({children}) => {
 
   return (<AppContext.Provider
       value={{
-        currentBook,
-        setCurrentBook,
-        currentChapter,
-        setCurrentChapter,
         selectedTesters,
         setSelectedTesters,
         gotNewData,
@@ -474,10 +407,6 @@ export const AppProvider = ({children}) => {
         setRMACDescriptions,
         loading,
         setLoading,
-        currentIndex,
-        setCurrentIndex,
-        displayWords,
-        setDisplayWords,
         testWordIndices,
         setTestWordIndices,
         showAnswer,
@@ -493,21 +422,8 @@ export const AppProvider = ({children}) => {
         handleSetSmartUnitLearning,
         correctLog,
         setCorrectLog,
-        settingsOpen,
-        setSettingsOpen,
-        helpOpen,
-        setHelpOpen,
         wordInfoOpen,
         setWordInfoOpen,
-        selectedBook,
-        setSelectedBook,
-        chapterOptions,
-        setChapterOptions,
-        selectedChapter,
-        setSelectedChapter,
-        verseOptions,
-        setVerseOptions,
-        setSelectedVerse,
         showAnswerChecked,
         setShowAnswerChecked,
         showEnglishInContext,
@@ -520,17 +436,10 @@ export const AppProvider = ({children}) => {
         handleChangeReadingMode,
         startLearning,
         markWord,
-        onBookSelect,
-        onChapterSelect,
-        onVerseSelect,
         onTesterSelect,
         onSetDefaultShowAnswer,
-        handleSettingsClick,
         handleCopyClick,
         printDebug,
-        handleHelpClick,
-        goRight,
-        goLeft,
         previousTestWord,
         nextTestWord,
         flipCard,

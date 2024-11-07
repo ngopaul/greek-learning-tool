@@ -1,10 +1,23 @@
+import React from "react";
 import { useContext } from "react";
 import { Box, Typography } from "@mui/material";
 import { AppContext } from "../contexts/AppContext";
+import { useAtom } from "jotai";
+import { displayWordsAtom } from "../atoms/bibleDisplayAtoms";
+import { useNavigation } from "./useNavigation";
 
 const WordContext = () => {
-  const { displayWords, currentIndex, openGNTData, testWordIndices, setCurrentIndex,
-    showEnglishInContext, showAnswer } = useContext(AppContext);
+  const [displayWords] = useAtom(displayWordsAtom)
+  const {currentIndex, setCurrentIndexAndProcess} = useNavigation();
+
+  const context = useContext(AppContext);
+  if (!context) {
+    return null;
+  }
+  const {  openGNTData, testWordIndices, 
+    showEnglishInContext, showAnswer } = context;
+
+    
 
   // If there are no display words, or the current index is invalid, return null
   if (displayWords.length === 0 || !displayWords[currentIndex]) {
@@ -27,16 +40,23 @@ const WordContext = () => {
     word.BookChapterVerseWord.verse === verse
   );
 
+  // TODO (Caleb): this is weird. for each over the const array.
+
   // add a key to wordsInChapter that tells where the word is in the displayWords array, or -1 if it is not
   // in the displayWords array
   wordsInChapter.forEach((word) => {
     word.displayIndex = displayWords.findIndex(w => w.BookChapterVerseWord === word.BookChapterVerseWord);
   });
+
+  // TODO (Caleb): I think we shouldj ust remove them from the array instead?
   wordsInChapter.forEach((word) => {
     if (word.displayIndex === -1) {
       word.displayIndex = null;
     }
   });
+
+  
+
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1, flexWrap: 'wrap', marginTop: "20px" }}>
@@ -47,11 +67,20 @@ const WordContext = () => {
             padding: 0,
             color: word === currentWord ? 'red' : 'inherit',
           }}
-          onClick={() => setCurrentIndex(word.displayIndex)}
+          // TODO (Caleb): this needs to be fixed. this is bad
+          onClick={() => setCurrentIndexAndProcess(word.displayIndex as number)}
         >
           {/* Greek and English word display */}
           <Box>
-            <Typography variant="h6" align="center">{word.Greek}</Typography>
+            {
+              (// TODO (Caleb): this needs to be fixed. this is bad
+                (testWordIndices.has(word.displayIndex as number))
+              ) ? (
+                <Typography sx={{ textDecoration: 'underline' }} variant="h6" align="center">{word.Greek}</Typography>
+              ) : (
+                <Typography variant="h6" align="center">{word.Greek}</Typography>
+              )
+            }
           </Box>
           {
             showEnglishInContext ? (
@@ -61,7 +90,8 @@ const WordContext = () => {
                  */}
                 {
                   ((
-                    (testWordIndices.has(word.displayIndex) && currentIndex !== word.displayIndex)
+                    // TODO (Caleb): this needs to be fixed. this is bad
+                    (testWordIndices.has(word.displayIndex as number) && currentIndex !== word.displayIndex)
                       || (currentIndex === word.displayIndex && !showAnswer)
                     ) ? (
                       <Typography variant="body1" align="center" sx={{color: 'red'}}>?</Typography>
@@ -71,7 +101,7 @@ const WordContext = () => {
                   )
                 }
               </Box>
-            ) : (<></>)
+            ) : null
           }
         </Box>
       ))}

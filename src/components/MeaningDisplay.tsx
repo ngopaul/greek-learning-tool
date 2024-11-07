@@ -1,9 +1,19 @@
 import {Typography} from '@mui/material';
 import React, {useContext} from "react";
 import {AppContext} from "../contexts/AppContext";
+import { useAtom } from "jotai";
+import { displayWordsAtom } from "../atoms/bibleDisplayAtoms";
+import { useNavigation } from './useNavigation';
 
 const MeaningDisplay = () => {
-  const {displayWords, currentIndex, showAnswer, flipCard} = useContext(AppContext);
+  const [displayWords] = useAtom(displayWordsAtom);
+  const {currentIndex} = useNavigation();
+
+  const context = useContext(AppContext);
+  if (!context) {
+      return null;
+    }
+  const { showAnswer, flipCard} = context;
 
   if (displayWords.length === 0) {
     return null;

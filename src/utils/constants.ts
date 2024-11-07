@@ -71,7 +71,7 @@ export const listOfBooks = [
   "jude",
   "revelation",
 ];
-export const bookNameToChapterCounts = {
+export const bookNameToChapterCounts : Record<string, number> = {
   genesis: 50,
   exodus: 40,
   leviticus: 27,

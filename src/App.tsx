@@ -10,7 +10,11 @@ import StudyProgress from "./components/StudyProgress";
 import AnswerDisplay from "./components/AnswerDisplay";
 
 function App() {
-  const { loading, loadProgress, gotNewData } = useContext(AppContext);
+  const context = useContext(AppContext);
+  if (!context) {
+    return null;
+  }
+  const { loading, loadProgress, gotNewData } = context;
 
   if (loading) {
     return (

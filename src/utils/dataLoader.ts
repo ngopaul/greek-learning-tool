@@ -1,15 +1,26 @@
-import Papa from 'papaparse';
-import { createHash } from 'crypto-browserify';
+import Papa, { LocalFile, ParseError } from 'papaparse';
+// import { createHash } from 'crypto-browserify';
 import Dexie from 'dexie';
+import { MappedDataEntry, MorphologyRecord, RMACResults, StudyChunk, StudyChunkCSVResult } from '../types/dataLoaderTypes';
 
-// Initialize Dexie database
-const db = new Dexie('OpenGNTDataDB');
-db.version(1).stores({
-  words: '++id, BookChapterVerseWord, Greek, Morphology, English, StudyChunkID, StrongsNumber', // Define schema
-});
+// Extend Dexie to add type definitions for the database schema
+class OpenGNTDataDB extends Dexie {
+  words!: Dexie.Table<MappedDataEntry, number>; // Define the 'words' table with type
+
+  constructor() {
+    super('OpenGNTDataDB');
+    this.version(1).stores({
+      words: '++id, BookChapterVerseWord, Greek, Morphology, English, StudyChunkID, StrongsNumber',
+    });
+  }
+}
+
+// Initialize the database
+const db = new OpenGNTDataDB();
 
 // Function to save data to IndexedDB
-const saveToIndexedDB = async (data) => {
+const saveToIndexedDB = async (data : MappedDataEntry[]) => {
+  // ERROR: Property 'words' does not exist on type 'Dexie'.ts(2339)
   await db.words.clear(); // Clear old data
   await db.words.bulkAdd(data); // Add new data
 };
@@ -47,6 +58,7 @@ export const loadDataVersions = async () => {
 }
 
 
+
 /* Function to parse OpenGNT_keyedFeatures.csv
  * Returns a very large list of objects. Each object has the following fields:
  *  Greek: the greek
@@ -54,29 +66,33 @@ export const loadDataVersions = async () => {
  *  English: the english meaning of the word
  *  BookChapterVerseWord: returns that object (with those fields, all of them being integers)
  */
-export const loadOpenGNTData = async (studyChunks, needToUpdateFiles, setLoadProgress) => {
+export const loadOpenGNTData = async (
+  studyChunks: Record<string, StudyChunk[]>, 
+  needToUpdateFiles: boolean, setLoadProgress : React.Dispatch<React.SetStateAction<number>>): 
+  Promise<[MappedDataEntry[],Record<string, MorphologyRecord> ]> => {
   console.log("Loading OpenGNT data");
   // if sameHash is true, then load the data from IndexedDB
   if (!needToUpdateFiles) {
     const storedData = await loadFromIndexedDB();
-    if (storedData && storedData.length > 0) {
+    const strongs_mapping : Record<string, MorphologyRecord> = JSON.parse(localStorage.getItem('strongs_mapping') ?? "");
+    if (storedData && storedData.length > 0 && strongs_mapping) {
       setLoadProgress(100);
-      return [storedData, JSON.parse(localStorage.getItem('strongs_mapping'))];
+      return [storedData, strongs_mapping];
     }
   }
   // otherwise, load the data from the server
   const response = await fetch('/data/OpenGNT_version3_3.csv');
   const csvData = await response.text();
-  return new Promise((resolve, reject) => {
-    Papa.parse(csvData, {
-      header: true, complete: async (results) => {
-        // Map the necessary fields
+  return new Promise<[MappedDataEntry[], Record<string, MorphologyRecord>]>((resolve, reject) => {
+    Papa.parse<Record<string, string>>(csvData, {
+      header: true,
+      complete: async (results) => {
         const totalWords = results.data.length;
         let processedWords = 0;
         let sizeBeforeUpdate = totalWords / 100;
         let currentSizeBeforeUpdate = 0;
-        const mappedData = [];
-        const strongsMapping = {};
+        const mappedData: MappedDataEntry[] = [];
+        const strongsMapping: Record<string, MorphologyRecord> = {};
 
         // Instead of using map, loop asynchronously to allow state updates
         let previousWordIdx = 0;
@@ -84,7 +100,7 @@ export const loadOpenGNTData = async (studyChunks, needToUpdateFiles, setLoadPro
         let currentChapter = 1;
         let currentVerse = 1;
         for (let item of results.data) {
-          const greekBreakdown  = item["〔OGNTk｜OGNTu｜OGNTa｜lexeme｜rmac｜sn〕"];
+          const greekBreakdown = item["〔OGNTk｜OGNTu｜OGNTa｜lexeme｜rmac｜sn〕"];
           const tbessg = item["〔TBESG｜IT｜LT｜ST｜Español〕"];
           const bookChapterVerse = item["〔Book｜Chapter｜Verse〕"];
           if (greekBreakdown && tbessg && bookChapterVerse) {
@@ -94,6 +110,15 @@ export const loadOpenGNTData = async (studyChunks, needToUpdateFiles, setLoadPro
             const strongsNumber = parseStrongsNumber(greekBreakdown);
             const [rootMeaning, english] = parseEnglishMeaning(tbessg);
             const bookChapterVerseWord = parseBookChapterVerseWord(previousWordIdx, bookChapterVerse, currentBook, currentChapter, currentVerse);
+            if (!bookChapterVerseWord) {
+              console.error(
+                `Skipping entry due to missing bookChapterVerseWord. 
+                Item: ${JSON.stringify(item)}, 
+                Current Book: ${currentBook}, 
+                Chapter: ${currentChapter}, Verse: ${currentVerse}`
+              );
+              continue;
+            }
             currentBook = bookChapterVerseWord.book;
             currentChapter = bookChapterVerseWord.chapter;
             currentVerse = bookChapterVerseWord.verse;
@@ -119,14 +144,14 @@ export const loadOpenGNTData = async (studyChunks, needToUpdateFiles, setLoadPro
                 strongsMapping[strongsNumber][morphology] = {
                   greek: greek,
                   count: 1
-                }
+                };
               }
             } else {
               strongsMapping[strongsNumber] = {}
               strongsMapping[strongsNumber][morphology] = {
                 greek: greek,
                 count: 1
-              }
+              };
             }
 
             // Increment the processed words and update progress
@@ -147,12 +172,14 @@ export const loadOpenGNTData = async (studyChunks, needToUpdateFiles, setLoadPro
         await saveToIndexedDB(mappedData);
         localStorage.setItem('strongs_mapping', JSON.stringify(strongsMapping));
         resolve([mappedData, strongsMapping]);
-      }, error: (err) => {
-        reject(err);
+      },
+      error: (error: Error, file?: LocalFile) => {
+        reject(error);
       },
     });
-  });
-};
+  });};
+
+
 
 /*
  * Parse study_chunks.csv
@@ -163,22 +190,27 @@ export const loadOpenGNTData = async (studyChunks, needToUpdateFiles, setLoadPro
  *  endings: what the word must end with in order to be tested by this study chunk
  */
 
-export const loadStudyChunks = async (needToUpdateFiles) => {
+export const loadStudyChunks = async (needToUpdateFiles: boolean): Promise<Record<string, StudyChunk[]>> => {
   // Get the hash of /data/study_chunks.csv
   console.log("Loading study_chunks.csv");
   const response = await fetch('/data/study_chunks.csv');
   const csvData = await response.text();
   if (!needToUpdateFiles) {
-    return JSON.parse(localStorage.getItem('study_chunks'));
+    const localStorageStudyChunks = localStorage.getItem('study_chunks');
+    if (!localStorageStudyChunks) {
+      throw Error("Nothing was loaded from local storage for study_chunks.... ")
+    }
+    return JSON.parse(localStorageStudyChunks);
   }
-  return new Promise((resolve, reject) => {
-    Papa.parse(csvData, {
-      header: true, complete: (results) => {
+  return new Promise<Record<string, StudyChunk[]>>((resolve, reject) => {
+    Papa.parse<{unit: string; name: string; morphologies: string; endings: string}>(csvData, {
+      header: true,
+      complete: (results: Papa.ParseResult<{unit: string; name: string; morphologies: string; endings: string}>) => {
         const data = results.data;
-        const unitDict = {};
+        const unitDict: Record<string, StudyChunk[]> = {};
 
         data.forEach(row => {
-          const {unit, name, morphologies, endings} = row;
+          const { unit, name, morphologies, endings } = row;
           if (!row || !unit) {
             return;
           }
@@ -189,7 +221,7 @@ export const loadStudyChunks = async (needToUpdateFiles) => {
           const endingsList = endings ? endings.split('|') : [];
 
           // Create the dictionary entry for this row
-          const entry = {
+          const entry: StudyChunk = {
             identifier: identifier,
             studyChunkID: unit + " | " + identifier,
             morphologies: morphologiesList,
@@ -207,40 +239,40 @@ export const loadStudyChunks = async (needToUpdateFiles) => {
 
         localStorage.setItem('study_chunks', JSON.stringify(unitDict));
         resolve(unitDict);
-      }, error: (err) => {
-        reject(err);
+      },
+      error: (error: Error, file?: LocalFile) => {
+        reject(error);
       },
     });
-  });
-};
+  });};
 
-export const loadRMACDescriptions = async () => {
+export const loadRMACDescriptions = async (): Promise<Record<string, string[]>> => {
   console.log("Loading RMAC descriptions");
   const response = await fetch('/data/OpenGNT_DictRMAC_English.tsv');
   const tsvData = await response.text();
 
-  return new Promise((resolve, reject) => {
-    Papa.parse(tsvData, {
+  return new Promise<Record<string, string[]>>((resolve, reject) => {
+    Papa.parse<{ RMAC: string; Description: string }>(tsvData, {
       header: true,        // Treat the first row as headers (RMAC, Description)
       delimiter: "\t",     // Tab-separated values (TSV)
       complete: (results) => {
         // Map the parsed data into a dictionary
-        const rmacDict = {};
+        const rmacDict: Record<string, string[]> = {};
         results.data.forEach(row => {
           if (row.RMAC) {
-            rmacDict[row.RMAC] = row.Description;
+            rmacDict[row.RMAC] = [row.Description];
           }
         });
         resolve(rmacDict);  // Resolve the dictionary as the final result
-      }, error: (err) => {
-        reject(err);  // Handle parsing errors
+      },
+      error: (error: Error, file?: LocalFile) => {
+        reject(error);
       },
     });
-  });
-}
+  });}
 
 // Implement parsing functions based on your data structure
-const parseGreekWord = (greekBreakdown) => {
+const parseGreekWord = (greekBreakdown: string) => {
   if (!greekBreakdown) {
     return '';
   }
@@ -252,7 +284,7 @@ const parseGreekWord = (greekBreakdown) => {
   return parts[2];
 };
 
-const parseMorphology = (greekBreakdown) => {
+const parseMorphology = (greekBreakdown: string) => {
   if (!greekBreakdown) {
     return '';
   }
@@ -264,7 +296,7 @@ const parseMorphology = (greekBreakdown) => {
   return parts[parts.length - 2];
 };
 
-const parseStrongsNumber = (greekBreakdown) => {
+const parseStrongsNumber = (greekBreakdown: string) => {
   if (!greekBreakdown) {
     return '';
   }
@@ -276,7 +308,7 @@ const parseStrongsNumber = (greekBreakdown) => {
   return parts[parts.length - 1];
 };
 
-const parseEnglishMeaning = (tbessg) => {
+const parseEnglishMeaning = (tbessg : string) => {
   if (!tbessg) {
     return '';
   }
@@ -292,7 +324,7 @@ const parseEnglishMeaning = (tbessg) => {
  *  verse number: int
  *  word number: int
  */
-const parseBookChapterVerseWord = (previousWordIdx, bookChapterVerse, previousBook, previousChapter, previousVerse) => {
+const parseBookChapterVerseWord = (previousWordIdx : number, bookChapterVerse : string, previousBook: number, previousChapter: number, previousVerse: number) => {
   if (!bookChapterVerse || previousWordIdx === null || previousWordIdx === undefined) {
     return null;
   }
@@ -335,7 +367,7 @@ function startsWithAny(string, array) {
 /*
  * Given the studyChunks object
  */
-const parseStudyChunkID = (studyChunks, greek, morphology) => {
+const parseStudyChunkID = (studyChunks : Record<string, StudyChunk[]>, greek : string, morphology : string) => {
   for (const [, studyChunksForTester] of Object.entries(studyChunks)) {
     if (studyChunksForTester) {
       // Check each study chunk under this unit
@@ -360,8 +392,6 @@ const parseStudyChunkID = (studyChunks, greek, morphology) => {
       }
     }
   }
-
-  return null;
 }
 
 /*
@@ -377,8 +407,8 @@ const parseStudyChunkID = (studyChunks, greek, morphology) => {
  * greekWordEndsWithEnding("ἡ", "τῆς") => false
  * greekWordEndsWithEnding("τῆς", "ἡ") => false
  */
-const greekWordEndsWithEnding = (greek, ending) => {
-  const vowels_to_possibilities = {
+const greekWordEndsWithEnding = (greek : string, ending : string) => {
+  const vowels_to_possibilities: Record<string, string[]> = {
     "α": ["ὰ", "ά", "ᾶ"],
     "ᾳ": ["ᾷ", "ᾲ", "ᾴ"],
     "ε": ["έ", "ὲ"],
@@ -393,7 +423,7 @@ const greekWordEndsWithEnding = (greek, ending) => {
   // Find the last vowel in the ending based on the keys in vowels_to_possibilities
   let vowelIndices = []
 
-  const getCharPossilibities = (char) => {
+  const getCharPossilibities = (char: string) => {
     const charPossibilities = [];
     charPossibilities.push(char);
     if (vowels_to_possibilities[char]) {
@@ -412,11 +442,11 @@ const greekWordEndsWithEnding = (greek, ending) => {
 
   // generate possible endings again with the ability to negate
   let includesNegation = false;
-  let smartEnding = [];
+  let smartEnding : [boolean, Set<string>][] = [];
   for (let i = 0; i < ending.length; i++) {
     if (ending[i] === '!') {
       includesNegation = true;
-      const nextChars = new Set();
+      const nextChars = new Set<string>();
       for (let j = i+2; ending[j] !== "]"; j++) {
         getCharPossilibities(ending[j]).forEach(item => nextChars.add(item))
         ++i;

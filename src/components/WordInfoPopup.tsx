@@ -2,7 +2,12 @@ import {Box, Paper, Typography, useMediaQuery, useTheme} from "@mui/material";
 import Popup from "./Popup";
 import React, {useContext} from "react";
 import {AppContext} from "../contexts/AppContext";
-import strongsGreekDictionary from "../utils/strongs-greek-dictionary.js";
+// TODO (Caleb): check this later... 
+// @ts-ignore
+import strongsGreekDictionary from "../utils/strongs-greek-dictionary";
+import { useAtom } from "jotai";
+import { displayWordsAtom } from "../atoms/bibleDisplayAtoms";
+import { useNavigation } from "./useNavigation";
 
 /*
  * Display the strongsMapping information about the current word
@@ -14,9 +19,18 @@ import strongsGreekDictionary from "../utils/strongs-greek-dictionary.js";
  * 5. maybe dynamically calculate the declension/group? TODO
  */
 const WordInfoPopup = () => {
-  const { wordInfoOpen, setWordInfoOpen, currentIndex, displayWords, strongsMapping, RMACDescriptions } = useContext(AppContext);
+  const [displayWords] = useAtom(displayWordsAtom)
+
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const {currentIndex} = useNavigation();
+
+  const context = useContext(AppContext);
+  if (!context) {
+    return null;
+  }
+  const { wordInfoOpen, setWordInfoOpen, strongsMapping, RMACDescriptions } = context;
+  
 
   const currentWord = displayWords[currentIndex];
   if (!currentWord) {

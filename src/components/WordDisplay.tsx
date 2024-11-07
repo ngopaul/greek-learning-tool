@@ -11,20 +11,32 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import grey from "@mui/material/colors/grey";
+import { useAtom } from 'jotai';
+import { displayWordsAtom } from '../atoms/bibleDisplayAtoms';
+import { useNavigation } from './useNavigation';
 
 const WordDisplay = () => {
-  const { displayWords, currentIndex, showAnswer, goLeft, goRight, flipCard,
-  readingMode, selectedTesters, startLearning, setWordInfoOpen, correctLog } = useContext(AppContext);
+  const [displayWords] = useAtom(displayWordsAtom)
+
   const [mainWordHovered, setMainWordHovered] = useState(false);
   const theme = useTheme();
   const isProbablyAPhone = useMediaQuery(theme.breakpoints.down('sm'));
   const isProbablyAPhoneOrTablet = useMediaQuery(theme.breakpoints.down('md'));
+  const {currentIndex , goLeft, goRight} = useNavigation();
+
+  const context = useContext(AppContext);
+  if (!context) {
+    return null;
+  }
+  const {  showAnswer, flipCard,
+  readingMode, selectedTesters, startLearning, setWordInfoOpen, correctLog } = context;
+  
 
   if (displayWords.length === 0) {
     return (
       readingMode === "chapter" ? (
         <Box sx={{ textAlign: 'center', marginTop: '20%' }}>
-          <Typography variant="h6">Please select a book and chapter to begin.</Typography>
+          <Typography variant="h6">Please select a Book and Chapter to begin.</Typography>
         </Box>
       ) : (
         selectedTesters.length === 0 ? (

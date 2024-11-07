@@ -3,9 +3,19 @@ import {AppContext} from "../contexts/AppContext";
 import MeaningDisplay from "./MeaningDisplay";
 import MorphologyDisplay from "./MorphologyDisplay";
 import {Box, Paper} from '@mui/material';
+import { useAtom } from "jotai";
+import { displayWordsAtom } from "../atoms/bibleDisplayAtoms";
+import { useNavigation } from "./useNavigation";
 
 const AnswerDisplay = () => {
-  const {displayWords, currentIndex, testingMode, flipCard} = useContext(AppContext);
+  const [displayWords] = useAtom(displayWordsAtom)
+  const {currentIndex} = useNavigation();
+
+  const context = useContext(AppContext);
+  if (!context) {
+    return null;
+  }
+  const { testingMode, flipCard} = context;
 
   if (displayWords.length === 0) {
     return null;
