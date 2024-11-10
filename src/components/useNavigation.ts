@@ -36,11 +36,11 @@ export const useNavigation = () => {
   
 
   useEffect(() => {
-    if (currentChapter && currentChapter.data) {
+    if (currentChapter && currentChapter.data && readingMode == "chapter") {
       setDisplayWords(currentChapter.data);
       setCurrentIndexAndProcess(0);
     }
-  }, [currentBook, currentChapter]);
+  }, [currentBook, currentChapter, readingMode]);
 
   const goLeft = () => {
     setCurrentIndexAndProcess(Math.max(currentIndex - 1, 0));

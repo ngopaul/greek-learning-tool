@@ -140,9 +140,9 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
         }
         flipCard();
       } else if (e.key === '?') {
-        handleHelpClick();
+        // TODO fix open help
       } else if (e.key === '/') {
-        handleSettingsClick();
+        // TODO fix open settings
       } else if (e.key === 'ArrowUp') {
         e.preventDefault();
         markWord(currentIndex, true);
