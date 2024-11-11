@@ -74,7 +74,7 @@ const chapter4_3 : SimpleTableData= [
   ['Nominative', 'ὁ ...ης', 'ὁ ...ας', 'οἱ ...αι'],
   ['Genitive', 'τοῦ ...ου', 'τοῦ ...ου', 'τῶν ...ων'],
   ['Dative', 'τῷ ...ῃ', 'τῷ ...ᾳ', 'τοῖς ...αις'],
-  ['Accusative', 'τὸν ...ῃν', 'τὸν ...αν', 'τοὺς ...ας'],
+  ['Accusative', 'τὸν ...ην', 'τὸν ...αν', 'τοὺς ...ας'],
   ['Vocative', '...α', '...α', '...αι']
 ]
 
@@ -111,6 +111,95 @@ const chapter5_3 : SimpleTableData= [
   ['3rd', 'ἦν', 'ἦσαν'],
 ]
 
+const chapter6_1 : SimpleTableData= [
+  {title: '1st/2nd Decl Singular Adjectives', numColumns: 4},
+  ['', 'Masculine', 'Feminine', 'Neuter'],
+  ['Nominative', '-ος', '-η/-α', '-ον'],
+  ['Genitive', '-ου', '-ης/-ας', '-ου'],
+  ['Dative', '-ῳ', '-ῃ/-ᾳ', '-ῳ'],
+  ['Accusative', '-ον', '-ην/-αν', '-ον'],
+  ['Vocative', '-ε', '-η/-α', '-ον'],
+];
+
+const chapter6_2 : SimpleTableData= [
+  {title: '1st/2nd Decl Plural Adjectives', numColumns: 4},
+  ['', 'Masculine', 'Feminine', 'Neuter'],
+  ['Nominative', '-οι', '-αι', '-α'],
+  ['Genitive', '-ων', '-ων', '-ων'],
+  ['Dative', '-οις', '-αις', '-οις'],
+  ['Accusative', '-ους', '-ας', '-α'],
+  ['Vocative', '-οι', '-αι', '-α'],
+];
+
+// Adjectives which don't follow the rules (Third Declension and Irregular Adjectives)
+const chapter14_1 : SimpleTableData= [
+  {title: 'Third Decl Adjective in -ης, -ες', numColumns: 5},
+  ['', 'Sing. Masc./Fem.', 'Sing. Neut.', 'Plural Masc./Fem.', 'Plural Neut.'],
+  ['Nom.', '-ης', '-ες', '-εις', '-η'],
+  ['Gen.', '-ους', '-ους', '-ων', '-ων'],
+  ['Dat.', '-ει', '-ει', '-εσι(ν)', '-εσιν(ν)'],
+  ['Acc.', '-η', '-ες', '-εις', '-η'],
+  ['Voc.', '-ες', '-ες', '-εις', '-η'],
+];
+
+const chapter14_2 : SimpleTableData= [
+  {title: 'Third Decl Adjective in -ων, -ον', numColumns: 5},
+  ['', 'Sing. Masc./Fem.', 'Sing. Neut.', 'Plural Masc./Fem.', 'Plural Neut.'],
+  ['Nom.', '-ων', '-ον', '-ες', '-α'],
+  ['Gen.', '-ονος', '-ονος', '-ων', '-ων'],
+  ['Dat.', '-ονι', '-ονι', '-οσι(ν)', '-σοι(ν)'],
+  ['Acc.', '-ονα', '-ον', '-ονας', '-ονα'],
+  ['Voc.', '-ον', '-ον', '-ονες', '-α'],
+];
+
+const chapter14_3 : SimpleTableData= [
+  {title: 'Third Decl Adjective in -υς, -εια, -υ', numColumns: 4},
+  ['', 'Masculine', 'Feminine', 'Neuter'],
+  ['Nom. Sing.', '-υς', '-εια', '-υ'],
+  ['Gen. Sing.', '-εωσ', '-ειας', '-εως'],
+  ['Dat. Sing.', '-ει', '-ειᾳ', '-ει'],
+  ['Acc. Sing.', '-υν', '-ειαν', '-υ'],
+  ['Voc. Sing.', '-υ', '-εια', '-υ'],
+  ['Nom. Plur.', '-εις', '-ειαι', '-εα'],
+  ['Gen. Plur.', '-εων', '-ειων', '-εων'],
+  ['Dat. Plur.', '-εισι(ν)', '-ειαις', '-εσι(ν)'],
+  ['Acc. Plur.', '-εις', '-ειας', '-εα'],
+  ['Voc. Plur.', '-εις', '-ειαι', '-εα'],
+];
+
+const chapter14_4 : SimpleTableData= [
+  {title: 'Third Decl Adjective πᾶς, πᾶσα, πᾶν', numColumns: 4},
+  ['', 'Masculine', 'Feminine', 'Neuter'],
+  ['Nom. Sing.', 'πᾶς', 'πᾶσα', 'πᾶν'],
+  ['Gen. Sing.', 'παντός', 'πάντης', 'παντός'],
+  ['Dat. Sing.', 'παντί', 'πάντῃ', 'παντί'],
+  ['Acc. Sing.', 'πάντα', 'πᾶσαν', 'πᾶν'],
+  ['Voc. Sing.', 'πᾶν', 'πᾶσα', 'πᾶν'],
+  ['Nom. Plur.', 'πάντες', 'πᾶσαι', 'πάντα'],
+  ['Gen. Plur.', 'πάντων', 'πασῶν', 'πάντων'],
+  ['Dat. Plur.', 'πᾶσι(ν)', 'πάσαις', 'πᾶσι(ν)'],
+  ['Acc. Plur.', 'πάντας', 'πάσας', 'πάντα'],
+  ['Voc. Plur.', 'πάντες', 'πᾶσαι', 'πάντα'],
+];
+
+const chapter14_5 : SimpleTableData= [
+  {title: 'More Charts to be added soon...', numColumns: 4},
+  ['', 'Masculine', 'Feminine', 'Neuter'],
+  ['Nom. Sing.', '...', '...', '...'],
+]
+
+const chapter15_1 : SimpleTableData= [
+  {title: 'More Charts to be added soon...', numColumns: 4},
+  ['', 'Masculine', 'Feminine', 'Neuter'],
+  ['Nom. Sing.', '...', '...', '...'],
+]
+
+const chapter16_1 : SimpleTableData= [
+  {title: 'More Charts to be added soon...', numColumns: 4},
+  ['', 'Masculine', 'Feminine', 'Neuter'],
+  ['Nom. Sing.', '...', '...', '...'],
+]
+
 export const unitNameToTables: Record<string, ReactNode> = {
   "Unit 2": (<div>
     <div>
@@ -139,6 +228,31 @@ export const unitNameToTables: Record<string, ReactNode> = {
       <SimpleTable data={chapter5_1}/>
       <SimpleTable data={chapter5_2}/>
       <SimpleTable data={chapter5_3}/>
+    </div>
+  ),
+  "Unit 6": (
+    <div>
+      <SimpleTable data={chapter6_1}/>
+      <SimpleTable data={chapter6_2}/>
+    </div>
+  ),
+  "Unit 14": (
+    <div>
+      <SimpleTable data={chapter14_1}/>
+      <SimpleTable data={chapter14_2}/>
+      <SimpleTable data={chapter14_3}/>
+      <SimpleTable data={chapter14_4}/>
+      <SimpleTable data={chapter14_5}/>
+    </div>
+  ),
+  "Unit 15": (
+    <div>
+      <SimpleTable data={chapter15_1}/>
+    </div>
+  ),
+  "Unit 16": (
+    <div>
+      <SimpleTable data={chapter16_1}/>
     </div>
   )
 };

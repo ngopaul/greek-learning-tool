@@ -355,7 +355,7 @@ const parseBookChapterVerseWord = (previousWordIdx : number, bookChapterVerse : 
   }
 }
 
-function startsWithAny(string, array) {
+function startsWithAny(string: string, array: string[]) {
   for (let item of array) {
     if (string.startsWith(item)) {
       return true;
