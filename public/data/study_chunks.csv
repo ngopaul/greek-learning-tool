@@ -6,12 +6,12 @@ Unit 2,ω verbs Active 1nd Person Plural,V-PAI-1P,ομεν
 Unit 2,ω verbs Active 2nd Person Plural,V-PAI-2P,ετε
 Unit 2,ω verbs Active 3rd Person Plural,V-PAI-3P,ουσιν
 Unit 2,ω verbs Active Infinitive,V-PAN,ειν
-Unit 2,ω verbs Middle/Passive 1st Person Singular,V-PEI-1S|V-PMI-1S|V-PPI-1S|V-PNI-1S,ομαι
+Unit 2,ω verbs Middle/Passive 1st Person Singular,V-PEI-1S|V-PMI-1S|V-PPI-1S|V-PNI-1S,ομαι|αμαι
 Unit 2,ω verbs Middle/Passive 2nd Person Singular,V-PMI-2S|V-PPI-2S|V-PNI-2S,ῃ|ει
-Unit 2,ω verbs Middle/Passive 3rd Person Singular,V-PEI-3S|V-PMI-3S|V-PPI-3S|V-PNI-3S,εται
-Unit 2,ω verbs Middle/Passive 1st Person Plural,V-PEI-1P|V-PMI-1P|V-PPI-1P|V-PNI-1P,όμεθα
-Unit 2,ω verbs Middle/Passive 2nd Person Plural,V-PEI-2P|V-PMI-2P|V-PPI-2P|V-PNI-2P,εσθε
-Unit 2,ω verbs Middle/Passive 3rd Person Plural,V-PEI-3P|V-PMI-3P|V-PPI-3P|V-PNI-3P,ονται
+Unit 2,ω verbs Middle/Passive 3rd Person Singular,V-PEI-3S|V-PMI-3S|V-PPI-3S|V-PNI-3S,εται|αται
+Unit 2,ω verbs Middle/Passive 1st Person Plural,V-PEI-1P|V-PMI-1P|V-PPI-1P|V-PNI-1P,ομεθα|αμεθα
+Unit 2,ω verbs Middle/Passive 2nd Person Plural,V-PEI-2P|V-PMI-2P|V-PPI-2P|V-PNI-2P,εσθε|ασθε
+Unit 2,ω verbs Middle/Passive 3rd Person Plural,V-PEI-3P|V-PMI-3P|V-PPI-3P|V-PNI-3P,ονται|ανται
 Unit 2,ω verbs Middle/Passive Infinitive,V-PEN|V-PNN,εσθαι
 Unit 2,εἰμι 1st Person Singular,V-PAI-1S,εἰμι|εἰμὶ
 Unit 2,εἰμι 2nd Person Singular,V-PAI-2S,εἶ
@@ -108,18 +108,48 @@ Unit 5,ω verbs Active 3rd Person Singular,V-IAI-3S,ε|εν
 Unit 5,ω verbs Active 1st Person Plural,V-IAI-1P,ομεν
 Unit 5,ω verbs Active 2nd Person Plural,V-IAI-2P,ετε
 Unit 5,ω verbs Active 3rd Person Plural,V-IAI-3P,ον
-Unit 5,ω verbs Middle/Passive 1st Person Singular,V-IMI-1S|V-IPI-1S|V-INI-1S,ομην
+Unit 5,ω verbs Middle/Passive 1st Person Singular,V-IMI-1S|V-IPI-1S|V-INI-1S,ομην|αμην
 Unit 5,ω verbs Middle/Passive 2nd Person Singular,V-IMI-2S|V-IPI-2S|V-INI-2S,ου
-Unit 5,ω verbs Middle/Passive 3rd Person Singular,V-IMI-3S|V-IPI-3S|V-INI-3S|V-IEI-3S,ετο
-Unit 5,ω verbs Middle/Passive 1st Person Plural,V-IMI-1P|V-IPI-1P|V-INI-1P,ομεθα
-Unit 5,ω verbs Middle/Passive 2nd Person Plural,V-IMI-2P|V-IPI-2P|V-INI-2P,εσθε
-Unit 5,ω verbs Middle/Passive 3rd Person Plural,V-IMI-3P|V-IPI-3P|V-INI-3P|V-IDI-3P,οντο
+Unit 5,ω verbs Middle/Passive 3rd Person Singular,V-IMI-3S|V-IPI-3S|V-INI-3S|V-IEI-3S,ετο|ατο
+Unit 5,ω verbs Middle/Passive 1st Person Plural,V-IMI-1P|V-IPI-1P|V-INI-1P,ομεθα|αμεθα
+Unit 5,ω verbs Middle/Passive 2nd Person Plural,V-IMI-2P|V-IPI-2P|V-INI-2P,εσθε|ασθε
+Unit 5,ω verbs Middle/Passive 3rd Person Plural,V-IMI-3P|V-IPI-3P|V-INI-3P|V-IDI-3P,οντο|αντο
 Unit 5,εἰμι Imperfect 1st Person Singular,V-IMI-1S,ἤμην
 Unit 5,εἰμι Imperfect 2nd Person Singular,V-IAI-2S|V-IMI-2S,ἦς|ἦσθα
 Unit 5,εἰμι Imperfect 3rd Person Singular,V-IAI-3S,ἦν
 Unit 5,εἰμι Imperfect 1st Person Plural,V-IAI-1P,ἦμεν|ἦμεθα
 Unit 5,εἰμι Imperfect 2nd Person Plural,V-IAI-2P,ἦτε
 Unit 5,εἰμι Imperfect 3rd Person Plural,V-IAI-3P,ἦσαν
+Unit 6,1st/2nd Decl Adj Nominative Singular Masculine,A-NSM,ος
+Unit 6,1st/2nd Decl Adj Genitive Singular Masculine,A-GSM,ου
+Unit 6,1st/2nd Decl Adj Dative Singular Masculine,A-DSM,ῳ
+Unit 6,1st/2nd Decl Adj Accusative Singular Masculine,A-ASM,ον
+Unit 6,1st/2nd Decl Adj Vocative Singular Masculine,A-VSM,ε
+Unit 6,1st/2nd Decl Adj Nominative Singular Feminine,A-NSF,η|α
+Unit 6,1st/2nd Decl Adj Genitive Singular Feminine,A-GSF,ης|ας
+Unit 6,1st/2nd Decl Adj Dative Singular Feminine,A-DSF,ῃ|ᾳ
+Unit 6,1st/2nd Decl Adj Accusative Singular Feminine,A-ASF,ην|αν
+Unit 6,1st/2nd Decl Adj Vocative Singular Feminine,A-VSF,η|α
+Unit 6,1st/2nd Decl Adj Nominative Singular Neuter,A-NSN,ον
+Unit 6,1st/2nd Decl Adj Genitive Singular Neuter,A-GSN,ου
+Unit 6,1st/2nd Decl Adj Dative Singular Neuter,A-DSN,ῳ
+Unit 6,1st/2nd Decl Adj Accusative Singular Neuter,A-ASN,ον
+Unit 6,1st/2nd Decl Adj Vocative Singular Neuter,A-VSN,ον
+Unit 6,1st/2nd Decl Adj Nominative Plural Masculine,A-NPM,οι
+Unit 6,1st/2nd Decl Adj Genitive Plural Masculine,A-GPM,ων
+Unit 6,1st/2nd Decl Adj Dative Plural Masculine,A-DPM,οις
+Unit 6,1st/2nd Decl Adj Accusative Plural Masculine,A-APM,ους
+Unit 6,1st/2nd Decl Adj Vocative Plural Masculine,A-VPM,οι
+Unit 6,1st/2nd Decl Adj Nominative Plural Feminine,A-NPF,αι
+Unit 6,1st/2nd Decl Adj Genitive Plural Feminine,A-GPF,ων
+Unit 6,1st/2nd Decl Adj Dative Plural Feminine,A-DPF,αις
+Unit 6,1st/2nd Decl Adj Accusative Plural Feminine,A-APF,ας
+Unit 6,1st/2nd Decl Adj Vocative Plural Feminine,A-VPF,αι
+Unit 6,1st/2nd Decl Adj Nominative Plural Neuter,A-NPN,α
+Unit 6,1st/2nd Decl Adj Genitive Plural Neuter,A-GPN,ων
+Unit 6,1st/2nd Decl Adj Dative Plural Neuter,A-DPN,οις
+Unit 6,1st/2nd Decl Adj Accusative Plural Neuter,A-APN,α
+Unit 6,1st/2nd Decl Adj Vocative Plural Neuter,A-VPN,α
 Unit 14,3rd Decl Adj in -ης/-ες Nominative Singular Masculine/Feminine,A-NSF|A-NSM,ης
 Unit 14,3rd Decl Adj in -ης/-ες Genitive Singular Masculine/Feminine,A-GSF|A-GSM,ους
 Unit 14,3rd Decl Adj in -ης/-ες Dative Singular Masculine/Feminine,A-DSF|A-DSM,ει
