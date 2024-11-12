@@ -91,7 +91,7 @@ This is a csv with headers `unit`, `name`, `morphologies`, and `endings`.
 `endings` is a list of greek endings, like "οῦ|ὸν|οὺς".
 The logic to parse this file is in `src/utils/dataLoader.js`, in function `loadStudyChunks`.
 
-### `index.js `
+### `index.ts `
 
 Has our ThemeProvider, which is used to wrap the app.
 

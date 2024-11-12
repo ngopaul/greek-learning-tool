@@ -6,12 +6,12 @@ Unit 2,ω verbs Active 1nd Person Plural,V-PAI-1P,ομεν
 Unit 2,ω verbs Active 2nd Person Plural,V-PAI-2P,ετε
 Unit 2,ω verbs Active 3rd Person Plural,V-PAI-3P,ουσιν
 Unit 2,ω verbs Active Infinitive,V-PAN,ειν
-Unit 2,ω verbs Middle/Passive 1st Person Singular,V-PEI-1S|V-PMI-1S|V-PPI-1S|V-PNI-1S,ομαι
+Unit 2,ω verbs Middle/Passive 1st Person Singular,V-PEI-1S|V-PMI-1S|V-PPI-1S|V-PNI-1S,ομαι|αμαι
 Unit 2,ω verbs Middle/Passive 2nd Person Singular,V-PMI-2S|V-PPI-2S|V-PNI-2S,ῃ|ει
-Unit 2,ω verbs Middle/Passive 3rd Person Singular,V-PEI-3S|V-PMI-3S|V-PPI-3S|V-PNI-3S,εται
-Unit 2,ω verbs Middle/Passive 1st Person Plural,V-PEI-1P|V-PMI-1P|V-PPI-1P|V-PNI-1P,όμεθα
-Unit 2,ω verbs Middle/Passive 2nd Person Plural,V-PEI-2P|V-PMI-2P|V-PPI-2P|V-PNI-2P,εσθε
-Unit 2,ω verbs Middle/Passive 3rd Person Plural,V-PEI-3P|V-PMI-3P|V-PPI-3P|V-PNI-3P,ονται
+Unit 2,ω verbs Middle/Passive 3rd Person Singular,V-PEI-3S|V-PMI-3S|V-PPI-3S|V-PNI-3S,εται|αται
+Unit 2,ω verbs Middle/Passive 1st Person Plural,V-PEI-1P|V-PMI-1P|V-PPI-1P|V-PNI-1P,ομεθα|αμεθα
+Unit 2,ω verbs Middle/Passive 2nd Person Plural,V-PEI-2P|V-PMI-2P|V-PPI-2P|V-PNI-2P,εσθε|ασθε
+Unit 2,ω verbs Middle/Passive 3rd Person Plural,V-PEI-3P|V-PMI-3P|V-PPI-3P|V-PNI-3P,ονται|ανται
 Unit 2,ω verbs Middle/Passive Infinitive,V-PEN|V-PNN,εσθαι
 Unit 2,εἰμι 1st Person Singular,V-PAI-1S,εἰμι|εἰμὶ
 Unit 2,εἰμι 2nd Person Singular,V-PAI-2S,εἶ
@@ -108,15 +108,344 @@ Unit 5,ω verbs Active 3rd Person Singular,V-IAI-3S,ε|εν
 Unit 5,ω verbs Active 1st Person Plural,V-IAI-1P,ομεν
 Unit 5,ω verbs Active 2nd Person Plural,V-IAI-2P,ετε
 Unit 5,ω verbs Active 3rd Person Plural,V-IAI-3P,ον
-Unit 5,ω verbs Middle/Passive 1st Person Singular,V-IMI-1S|V-IPI-1S|V-INI-1S,ομην
+Unit 5,ω verbs Middle/Passive 1st Person Singular,V-IMI-1S|V-IPI-1S|V-INI-1S,ομην|αμην
 Unit 5,ω verbs Middle/Passive 2nd Person Singular,V-IMI-2S|V-IPI-2S|V-INI-2S,ου
-Unit 5,ω verbs Middle/Passive 3rd Person Singular,V-IMI-3S|V-IPI-3S|V-INI-3S|V-IEI-3S,ετο
-Unit 5,ω verbs Middle/Passive 1st Person Plural,V-IMI-1P|V-IPI-1P|V-INI-1P,ομεθα
-Unit 5,ω verbs Middle/Passive 2nd Person Plural,V-IMI-2P|V-IPI-2P|V-INI-2P,εσθε
-Unit 5,ω verbs Middle/Passive 3rd Person Plural,V-IMI-3P|V-IPI-3P|V-INI-3P|V-IDI-3P,οντο
+Unit 5,ω verbs Middle/Passive 3rd Person Singular,V-IMI-3S|V-IPI-3S|V-INI-3S|V-IEI-3S,ετο|ατο
+Unit 5,ω verbs Middle/Passive 1st Person Plural,V-IMI-1P|V-IPI-1P|V-INI-1P,ομεθα|αμεθα
+Unit 5,ω verbs Middle/Passive 2nd Person Plural,V-IMI-2P|V-IPI-2P|V-INI-2P,εσθε|ασθε
+Unit 5,ω verbs Middle/Passive 3rd Person Plural,V-IMI-3P|V-IPI-3P|V-INI-3P|V-IDI-3P,οντο|αντο
 Unit 5,εἰμι Imperfect 1st Person Singular,V-IMI-1S,ἤμην
 Unit 5,εἰμι Imperfect 2nd Person Singular,V-IAI-2S|V-IMI-2S,ἦς|ἦσθα
 Unit 5,εἰμι Imperfect 3rd Person Singular,V-IAI-3S,ἦν
 Unit 5,εἰμι Imperfect 1st Person Plural,V-IAI-1P,ἦμεν|ἦμεθα
 Unit 5,εἰμι Imperfect 2nd Person Plural,V-IAI-2P,ἦτε
 Unit 5,εἰμι Imperfect 3rd Person Plural,V-IAI-3P,ἦσαν
+Unit 6,1st/2nd Decl Adj Nominative Singular Masculine,A-NSM,ος
+Unit 6,1st/2nd Decl Adj Genitive Singular Masculine,A-GSM,ου
+Unit 6,1st/2nd Decl Adj Dative Singular Masculine,A-DSM,ῳ
+Unit 6,1st/2nd Decl Adj Accusative Singular Masculine,A-ASM,ον
+Unit 6,1st/2nd Decl Adj Vocative Singular Masculine,A-VSM,ε
+Unit 6,1st/2nd Decl Adj Nominative Singular Feminine,A-NSF,η|α
+Unit 6,1st/2nd Decl Adj Genitive Singular Feminine,A-GSF,ης|ας
+Unit 6,1st/2nd Decl Adj Dative Singular Feminine,A-DSF,ῃ|ᾳ
+Unit 6,1st/2nd Decl Adj Accusative Singular Feminine,A-ASF,ην|αν
+Unit 6,1st/2nd Decl Adj Vocative Singular Feminine,A-VSF,η|α
+Unit 6,1st/2nd Decl Adj Nominative Singular Neuter,A-NSN,ον
+Unit 6,1st/2nd Decl Adj Genitive Singular Neuter,A-GSN,ου
+Unit 6,1st/2nd Decl Adj Dative Singular Neuter,A-DSN,ῳ
+Unit 6,1st/2nd Decl Adj Accusative Singular Neuter,A-ASN,ον
+Unit 6,1st/2nd Decl Adj Vocative Singular Neuter,A-VSN,ον
+Unit 6,1st/2nd Decl Adj Nominative Plural Masculine,A-NPM,οι
+Unit 6,1st/2nd Decl Adj Genitive Plural Masculine,A-GPM,ων
+Unit 6,1st/2nd Decl Adj Dative Plural Masculine,A-DPM,οις
+Unit 6,1st/2nd Decl Adj Accusative Plural Masculine,A-APM,ους
+Unit 6,1st/2nd Decl Adj Vocative Plural Masculine,A-VPM,οι
+Unit 6,1st/2nd Decl Adj Nominative Plural Feminine,A-NPF,αι
+Unit 6,1st/2nd Decl Adj Genitive Plural Feminine,A-GPF,ων
+Unit 6,1st/2nd Decl Adj Dative Plural Feminine,A-DPF,αις
+Unit 6,1st/2nd Decl Adj Accusative Plural Feminine,A-APF,ας
+Unit 6,1st/2nd Decl Adj Vocative Plural Feminine,A-VPF,αι
+Unit 6,1st/2nd Decl Adj Nominative Plural Neuter,A-NPN,α
+Unit 6,1st/2nd Decl Adj Genitive Plural Neuter,A-GPN,ων
+Unit 6,1st/2nd Decl Adj Dative Plural Neuter,A-DPN,οις
+Unit 6,1st/2nd Decl Adj Accusative Plural Neuter,A-APN,α
+Unit 6,1st/2nd Decl Adj Vocative Plural Neuter,A-VPN,α
+Unit 14,3rd Decl Adj in -ης/-ες Nominative Singular Masculine/Feminine,A-NSF|A-NSM,ης
+Unit 14,3rd Decl Adj in -ης/-ες Genitive Singular Masculine/Feminine,A-GSF|A-GSM,ους
+Unit 14,3rd Decl Adj in -ης/-ες Dative Singular Masculine/Feminine,A-DSF|A-DSM,ει
+Unit 14,3rd Decl Adj in -ης/-ες Accusative Singular Masculine/Feminine,A-ASF|A-ASM,η
+Unit 14,3rd Decl Adj in -ης/-ες Vocative Singular Masculine/Feminine,A-VSF|A-VSM,ες
+Unit 14,3rd Decl Adj in -ης/-ες Nominative Singular Neuter,A-NSN,ες
+Unit 14,3rd Decl Adj in -ης/-ες Genitive Singular Neuter,A-GSN,ους
+Unit 14,3rd Decl Adj in -ης/-ες Dative Singular Neuter,A-DSN,ει
+Unit 14,3rd Decl Adj in -ης/-ες Accusative Singular Neuter,A-ASN,ες
+Unit 14,3rd Decl Adj in -ης/-ες Vocative Singular Neuter,A-VSN,ες
+Unit 14,3rd Decl Adj in -ης/-ες Nominative Plural Masculine/Feminine,A-NPF|A-NPM,εις
+Unit 14,3rd Decl Adj in -ης/-ες Genitive Plural Masculine/Feminine,A-GPF|A-GPM,ων
+Unit 14,3rd Decl Adj in -ης/-ες Dative Plural Masculine/Feminine,A-DPF|A-DPM,εσι|εσιν
+Unit 14,3rd Decl Adj in -ης/-ες Accusative Plural Masculine/Feminine,A-APM|A-APF,εις
+Unit 14,3rd Decl Adj in -ης/-ες Vocative Plural Masculine/Feminine,A-VPM|A-VPF,εις
+Unit 14,3rd Decl Adj in -ης/-ες Nominative Plural Neuter,A-NPN,η
+Unit 14,3rd Decl Adj in -ης/-ες Genitive Plural Neuter,A-GPN,ων
+Unit 14,3rd Decl Adj in -ης/-ες Dative Plural Neuter,A-DPN,εσι|εσιν
+Unit 14,3rd Decl Adj in -ης/-ες Accusative Plural Neuter,A-APN,η
+Unit 14,3rd Decl Adj in -ης/-ες Vocative Plural Neuter,A-VPN,η
+Unit 14,3rd Decl Adj in -ων/-ον Nominative Singular Masculine/Feminine,A-NSF|A-NSM,ων
+Unit 14,3rd Decl Adj in -ων/-ον Genitive Singular Masculine/Feminine,A-GSF|A-GSM,ονος
+Unit 14,3rd Decl Adj in -ων/-ον Dative Singular Masculine/Feminine,A-DSF|A-DSM,ονι
+Unit 14,3rd Decl Adj in -ων/-ον Accusative Singular Masculine/Feminine,A-ASF|A-ASM,ονα
+Unit 14,3rd Decl Adj in -ων/-ον Vocative Singular Masculine/Feminine,A-VSF|A-VSM,ον
+Unit 14,3rd Decl Adj in -ων/-ον Nominative Singular Neuter,A-NSN,ον
+Unit 14,3rd Decl Adj in -ων/-ον Genitive Singular Neuter,A-GSN,ονος
+Unit 14,3rd Decl Adj in -ων/-ον Dative Singular Neuter,A-DSN,ονι
+Unit 14,3rd Decl Adj in -ων/-ον Accusative Singular Neuter,A-ASN,ον
+Unit 14,3rd Decl Adj in -ων/-ον Vocative Singular Neuter,A-VSN,ον
+Unit 14,3rd Decl Adj in -ων/-ον Nominative Plural Neuter,A-NPF|A-NPM,ονες
+Unit 14,3rd Decl Adj in -ων/-ον Genitive Plural Masculine/Feminine,A-GPF|A-GPM,ονων
+Unit 14,3rd Decl Adj in -ων/-ον Dative Plural Masculine/Feminine,A-DPF|A-DPM,οσι|οσιν
+Unit 14,3rd Decl Adj in -ων/-ον Accusative Plural Masculine/Feminine,A-APM|A-APF,ονας
+Unit 14,3rd Decl Adj in -ων/-ον Vocative Plural Masculine/Feminine,A-VPM|A-VPF,ονες
+Unit 14,3rd Decl Adj in -ων/-ον Nominative Plural Neuter,A-NPN,ονα
+Unit 14,3rd Decl Adj in -ων/-ον Genitive Plural Neuter,A-GPN,ονων
+Unit 14,3rd Decl Adj in -ων/-ον Dative Plural Neuter,A-DPN,οσι|σοιν
+Unit 14,3rd Decl Adj in -ων/-ον Accusative Plural Neuter,A-APN,ονα
+Unit 14,3rd Decl Adj in -ων/-ον Vocative Plural Neuter,A-VPN,ονα
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Nominative Singular Masculine,A-NSM,υς
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Genitive Singular Masculine,A-GSM,εως
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Dative Singular Masculine,A-DSM,ει
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Accusative Singular Masculine,A-ASM,υν
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Vocative Singular Masculine,A-VSM,υ
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Nominative Singular Feminine,A-NSF,εια
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Genitive Singular Feminine,A-GSF,ειας
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Dative Singular Feminine,A-DSF,ειᾳ
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Accusative Singular Feminine,A-ASF,ειαν
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Vocative Singular Feminine,A-VSF,εια
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Nominative Singular Neuter,A-NSN,υ
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Genitive Singular Neuter,A-GSN,εως
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Dative Singular Neuter,A-DSN,ει
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Accusative Singular Neuter,A-ASN,υ
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Vocative Singular Neuter,A-VSN,υ
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Nominative Plural Masculine,A-NPM,εις
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Genitive Plural Masculine,A-GPM,εων
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Dative Plural Masculine,A-DPM,εσι|εσιν
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Accusative Plural Masculine,A-APM,εις
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Vocative Plural Masculine,A-VPM,εις
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Nominative Plural Feminine,A-NPF,ειαι
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Genitive Plural Feminine,A-GPF,ειων
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Dative Plural Feminine,A-DPF,ειαις
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Accusative Plural Feminine,A-APF,ειας
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Vocative Plural Feminine,A-VPF,ειαι
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Nominative Plural Neuter,A-NPN,εα
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Genitive Plural Neuter,A-GPN,εων
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Dative Plural Neuter,A-DPN,εσι|εσιν
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Accusative Plural Neuter,A-APN,εα
+Unit 14,3rd Decl Adj in -υς/-εια/-υ Vocative Plural Neuter,A-VPN,εα
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Nominative Singular Masculine,A-NSM,ας
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Genitive Singular Masculine,A-GSM,αντος
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Dative Singular Masculine,A-DSM,αντι
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Accusative Singular Masculine,A-ASM,αντα
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Vocative Singular Masculine,A-VSM,ας
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Nominative Singular Feminine,A-NSF,ασα
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Genitive Singular Feminine,A-GSF,ασης
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Dative Singular Feminine,A-DSF,ασῃ
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Accusative Singular Feminine,A-ASF,ασαν
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Vocative Singular Feminine,A-VSF,ασα
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Nominative Singular Neuter,A-NSN,αν
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Genitive Singular Neuter,A-GSN,αντος
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Dative Singular Neuter,A-DSN,αντι
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Accusative Singular Neuter,A-ASN,αν
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Vocative Singular Neuter,A-VSN,αν
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Nominative Plural Masculine,A-NPM,αντες
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Genitive Plural Masculine,A-GPM,αντων
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Dative Plural Masculine,A-DPM,ασι|ασιν
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Accusative Plural Masculine,A-APM,αντας
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Vocative Plural Masculine,A-VPM,αντες
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Nominative Plural Feminine,A-NPF,ασαι
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Genitive Plural Feminine,A-GPF,ασων
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Dative Plural Feminine,A-DPF,ασαις
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Accusative Plural Feminine,A-APF,ασας
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Vocative Plural Feminine,A-VPF,ασαι
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Nominative Plural Neuter,A-NPN,αντα
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Genitive Plural Neuter,A-GPN,αντων
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Dative Plural Neuter,A-DPN,ασι|ασιν
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Accusative Plural Neuter,A-APN,αντα
+Unit 14,3rd Decl Adj in -πᾶς/-πᾶσα/-πᾶν Vocative Plural Neuter,A-VPN,αντα
+Unit 14,Irregular Adj πολύς/πολλή/πολύ Nominative Singular Masculine,A-NSM,πολύς
+Unit 14,Irregular Adj πολύς/πολλή/πολύ Genitive Singular Masculine,A-GSM,πολλοῦ
+Unit 14,Irregular Adj πολύς/πολλή/πολύ Dative Singular Masculine,A-DSM,πολλῷ
+Unit 14,Irregular Adj πολύς/πολλή/πολύ Accusative Singular Masculine,A-ASM,πολύν
+Unit 14,Irregular Adj πολύς/πολλή/πολύ Nominative Singular Feminine,A-NSF,πολλή
+Unit 14,Irregular Adj πολύς/πολλή/πολύ Genitive Singular Feminine,A-GSF,πολλῆς
+Unit 14,Irregular Adj πολύς/πολλή/πολύ Dative Singular Feminine,A-DSF,πολλῇ
+Unit 14,Irregular Adj πολύς/πολλή/πολύ Accusative Singular Feminine,A-ASF,πολλήν
+Unit 14,Irregular Adj πολύς/πολλή/πολύ Nominative Singular Neuter,A-NSN,πολύ
+Unit 14,Irregular Adj πολύς/πολλή/πολύ Genitive Singular Neuter,A-GSN,πολλοῦ
+Unit 14,Irregular Adj πολύς/πολλή/πολύ Dative Singular Neuter,A-DSN,πολλῷ
+Unit 14,Irregular Adj πολύς/πολλή/πολύ Accusative Singular Neuter,A-ASN,πολύ
+Unit 14,Irregular Adj πολύς/πολλή/πολύ Nominative Plural Masculine,A-NPM,πολλοί
+Unit 14,Irregular Adj πολύς/πολλή/πολύ Genitive Plural Masculine,A-GPM,πολλῶν
+Unit 14,Irregular Adj πολύς/πολλή/πολύ Dative Plural Masculine,A-DPM,πολλοῖς
+Unit 14,Irregular Adj πολύς/πολλή/πολύ Accusative Plural Masculine,A-APM,πολλούς
+Unit 14,Irregular Adj πολύς/πολλή/πολύ Nominative Plural Feminine,A-NPF,πολλαί
+Unit 14,Irregular Adj πολύς/πολλή/πολύ Genitive Plural Feminine,A-GPF,πολλῶν
+Unit 14,Irregular Adj πολύς/πολλή/πολύ Dative Plural Feminine,A-DPF,πολλαῖς
+Unit 14,Irregular Adj πολύς/πολλή/πολύ Accusative Plural Feminine,A-APF,πολλάς
+Unit 14,Irregular Adj πολύς/πολλή/πολύ Nominative Plural Neuter,A-NPN,πολλά
+Unit 14,Irregular Adj πολύς/πολλή/πολύ Genitive Plural Neuter,A-GPN,πολλών
+Unit 14,Irregular Adj πολύς/πολλή/πολύ Dative Plural Neuter,A-DPN,πολλοῖς
+Unit 14,Irregular Adj πολύς/πολλή/πολύ Accusative Plural Neuter,A-APN,πολλά
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Nominative Singular Masculine,A-NSM,μέγας
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Genitive Singular Masculine,A-GSM,μεγάλου
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Dative Singular Masculine,A-DSM,μεγάλῳ
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Accusative Singular Masculine,A-ASM,μέγαν
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Vocative Singular Masculine,A-VSM,μεγάλε
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Nominative Singular Feminine,A-NSF,μεγάλη
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Genitive Singular Feminine,A-GSF,μεγάλης
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Dative Singular Feminine,A-DSF,μεγάλῃ
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Accusative Singular Feminine,A-ASF,μεγἀλην
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Vocative Singular Feminine,A-VSF,μεγἀλη
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Nominative Singular Neuter,A-NSN,μέγα
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Genitive Singular Neuter,A-GSN,μεγάλου
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Dative Singular Neuter,A-DSN,μεγάλῳ
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Accusative Singular Neuter,A-ASN,μέγα
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Vocative Singular Neuter,A-VSN,μέγα
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Nominative Plural Masculine,A-NPM,μεγάλοι
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Genitive Plural Masculine,A-GPM,μεγάων
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Dative Plural Masculine,A-DPM,μεγάλοις
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Accusative Plural Masculine,A-APM,μεγάλους
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Vocative Plural Masculine,A-VPM,μεγάλοι
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Nominative Plural Feminine,A-NPF,μεγάλαι
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Genitive Plural Feminine,A-GPF,μεγάλων
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Dative Plural Feminine,A-DPF,μεγάλαις
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Accusative Plural Feminine,A-APF,μεγάλας
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Vocative Plural Feminine,A-VPF,μεγάλαι
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Nominative Plural Neuter,A-NPN,μεγάλα
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Genitive Plural Neuter,A-GPN,μεγάλων
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Dative Plural Neuter,A-DPN,μεγάλοις
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Accusative Plural Neuter,A-APN,μεγἀλα
+Unit 14,Irregular Adj μέγας/μεγάλη/μέγα Vocative Plural Neuter,A-VPN,μεγἀλα
+Unit 15,Interrogative Pronoun Nominative Singular Masculine/Feminine,I-NSM|I-NSF,τις
+Unit 15,Interrogative Pronoun Nominative Singular Neuter,I-NSN,τι
+Unit 15,Interrogative Pronoun Genitive Singular All,I-GSM|I-GSF|I-GSN,τινος
+Unit 15,Interrogative Pronoun Dative Singular All,I-DSM|I-DSF|I-DSN,τινι
+Unit 15,Interrogative Pronoun Accusative Singular Masculine/Feminine,I-ASM|I-ASF,τινα
+Unit 15,Interrogative Pronoun Accusative Singular Neuter,I-ASN,τι
+Unit 15,Interrogative Pronoun Nominative Plural Masculine/Feminine,I-NPM|I-NPF,τινες
+Unit 15,Interrogative Pronoun Nominative Plural Neuter,I-NPN,τινα
+Unit 15,Interrogative Pronoun Genitive Plural All,I-GPM|I-GPF|I-GPN,τινων
+Unit 15,Interrogative Pronoun Dative Plural All,I-DPM|I-DPF|I-DPN,τισι|τισιν
+Unit 15,Interrogative Pronoun Accusative Plural Masculine/Feminine,I-APM|I-APF,τινας
+Unit 15,Interrogative Pronoun Accusative Plural Neuter,I-APN,τινα
+Unit 15,Indefinite Pronoun Nominative Singular Masculine/Feminine,X-NSF|X-NSM,τις
+Unit 15,Indefinite Pronoun Nominative Singular Neuter,X-NSN,τι
+Unit 15,Indefinite Pronoun Genitive Singular All,X-GSM|X-GSF|X-GSN,τινος
+Unit 15,Indefinite Pronoun Dative Singular All,X-DSM|X-DSF|X-DSN,τινι
+Unit 15,Indefinite Pronoun Accusative Singular Masculine/Feminine,X-ASM|X-ASF,τινα
+Unit 15,Indefinite Pronoun Accusative Singular Neuter,X-ASN,τι
+Unit 15,Indefinite Pronoun Nominative Plural Masculine/Feminine,X-NPM|X-NPF,τινες
+Unit 15,Indefinite Pronoun Nominative Plural Neuter,X-NPN,τινα
+Unit 15,Indefinite Pronoun Genitive Plural All,X-GPM|X-GPF|X-GPN,τινων
+Unit 15,Indefinite Pronoun Dative Plural All,X-DPM|X-DPF|X-DPN,τισι|τισιν
+Unit 15,Indefinite Pronoun Accusative Plural Masculine/Feminine,X-APM|X-APF,τινας
+Unit 15,Indefinite Pronoun Accusative Plural Neuter,X-APN,τινα
+Unit 15,Indefinite Relative Pronoun Nominative Singular Masculine,R-NSM,οστις|ὅστις
+Unit 15,Indefinite Relative Pronoun Nominative Singular Feminine,R-NSF,ητις|ἥτις
+Unit 15,Indefinite Relative Pronoun Nominative Singular Neuter,R-NSN,οτι|ὅτι
+Unit 15,Indefinite Relative Pronoun Accusative Singular Neuter,R-ASN,οτι|ὅτι
+Unit 15,Indefinite Relative Pronoun Nominative Plural Masculine,R-NPM,αιτινες|οἵτινες
+Unit 15,Indefinite Relative Pronoun Nominative Plural Feminine,R-NPF,αιτινες|αἵτινες
+Unit 15,Indefinite Relative Pronoun Nominative Plural Neuter,R-NPN,ατινα|ἅτινα
+Unit 15,Reflexive Pronoun 1st Genitive Singular Masculine,F-1GSM,
+Unit 15,Reflexive Pronoun 1st Genitive Singular Feminine,F-1GSF,
+Unit 15,Reflexive Pronoun 2nd Genitive Singular Masculine,F-2GSM,
+Unit 15,Reflexive Pronoun 2nd Genitive Singular Feminine,F-2GSF,
+Unit 15,Reflexive Pronoun 3rd Genitive Singular Masculine,F-3GSM,
+Unit 15,Reflexive Pronoun 3rd Genitive Singular Feminine,F-3GSF,
+Unit 15,Reflexive Pronoun 3rd Genitive Singular Neuter,F-3GSN,
+Unit 15,Reflexive Pronoun 1st Dative Singular Masculine,F-1DSM,
+Unit 15,Reflexive Pronoun 1st Dative Singular Feminine,F-1DSF,
+Unit 15,Reflexive Pronoun 2nd Dative Singular Masculine,F-2DSM,
+Unit 15,Reflexive Pronoun 2nd Dative Singular Feminine,F-2DSF,
+Unit 15,Reflexive Pronoun 3rd Dative Singular Masculine,F-3DSM,
+Unit 15,Reflexive Pronoun 3rd Dative Singular Feminine,F-3DSF,
+Unit 15,Reflexive Pronoun 3rd Dative Singular Neuter,F-3DSN,
+Unit 15,Reflexive Pronoun 1st Accusative Singular Masculine,F-1ASM,
+Unit 15,Reflexive Pronoun 1st Accusative Singular Feminine,F-1ASF,
+Unit 15,Reflexive Pronoun 2nd Accusative Singular Masculine,F-2ASM,
+Unit 15,Reflexive Pronoun 2nd Accusative Singular Feminine,F-2ASF,
+Unit 15,Reflexive Pronoun 3rd Accusative Singular Masculine,F-3ASM,
+Unit 15,Reflexive Pronoun 3rd Accusative Singular Feminine,F-3ASF,
+Unit 15,Reflexive Pronoun 3rd Accusative Singular Neuter,F-3ASN,
+Unit 15,Reflexive Pronoun 1/2/3 Genitive Plural Masculine,F-1GPM|F-2GPM|F-3GPM,
+Unit 15,Reflexive Pronoun 1/2/3 Genitive Plural Feminine,F-1GPF|F-2GPF|F-3GPF,
+Unit 15,Reflexive Pronoun 1/2/3 Genitive Plural Neuter,F-1GPN|F-2GPN|F-3GPN,
+Unit 15,Reflexive Pronoun 1/2/3 Dative Plural Masculine,F-1DPM|F-2DPM|F-3DPM,
+Unit 15,Reflexive Pronoun 1/2/3 Dative Plural Feminine,F-1DPF|F-2DPF|F-3DPF,
+Unit 15,Reflexive Pronoun 1/2/3 Dative Plural Neuter,F-1DPN|F-2DPN|F-3DPN,
+Unit 15,Reflexive Pronoun 1/2/3 Accusative Plural Masculine,F-1APM|F-2APM|F-3APM,
+Unit 15,Reflexive Pronoun 1/2/3 Accusative Plural Feminine,F-1APF|F-2APF|F-3APF,
+Unit 15,Reflexive Pronoun 1/2/3 Accusative Plural Neuter,F-1APN|F-2APN|F-3APN,
+Unit 15,Declinable Numeral One Nominative Masculine,A-NSM,εἷς
+Unit 15,Declinable Numeral One Nominative Feminine,A-NSF,μία
+Unit 15,Declinable Numeral One Nominative Neuter,A-NSN,ἕν
+Unit 15,Declinable Numeral One Genitive Masculine,A-GSM,ἑνός
+Unit 15,Declinable Numeral One Genitive Feminine,A-GSF,μιᾶς
+Unit 15,Declinable Numeral One Genitive Neuter,A-GSN,ἑνός
+Unit 15,Declinable Numeral One Dative Masculine,A-DSM,ἑνί
+Unit 15,Declinable Numeral One Dative Feminine,A-DSF,μιᾷ
+Unit 15,Declinable Numeral One Dative Neuter,A-DSN,ἑνί
+Unit 15,Declinable Numeral One Accusative Masculine,A-ASM,ἕνα
+Unit 15,Declinable Numeral One Accusative Feminine,A-ASF,μίαν
+Unit 15,Declinable Numeral One Accusative Neuter,A-ASN,ἕν
+Unit 15,Declinable Numeral Three Nominative/Accusative Masculine/Feminine,A-NPM|A-NPF|A-APM|A-APF,τρεῖς
+Unit 15,Declinable Numeral Three Nominative/Accusative Neuter,A-NPN|A-APN,τρία
+Unit 15,Declinable Numeral Three Genitive,A-GPM|A-GPF|A-GPN,τριῶν
+Unit 15,Declinable Numeral Three Dative,A-DPM|A-DPF|A-DPN,τρισί|τρισίν
+Unit 15,Declinable Numeral Four Nominative Masculine/Feminine,A-NPM|A-NPF,τέσσαρες
+Unit 15,Declinable Numeral Four Nominative Neuter,A-NPN,τέσσαρα
+Unit 15,Declinable Numeral Four Genitive,A-GPM|A-GPF|A-GPN,τεσσαράων
+Unit 15,Declinable Numeral Four Dative,A-DPM|A-DPF|A-DPN,τεσσαράσι|τεσσαράσιν
+Unit 15,Declinable Numeral Four Accusative Masculine/Feminine,A-APM|A-APF,τέσσαρας
+Unit 15,Declinable Numeral Four Accusative Neuter,A-APN,τέσσαρα
+Unit 15,Numeral Two Nominative/Genitive/Accusative,A-NPM|A-NPF|A-NPN|A-GPM|A-GPF|A-GPN|A-APM|A-APF|A-APN,δύο
+Unit 15,Numeral Two Dative,A-DPM|A-DPF|A-DPN,δύσι|δύσιν|δυσὶν|δυσὶ
+Unit 16,ω verbs Perfect Indicative Active 1st Singular,V-RAI-1S,α
+Unit 16,ω verbs Perfect Indicative Active 2nd Singular,V-RAI-2S,ας
+Unit 16,ω verbs Perfect Indicative Active 3rd Singular,V-RAI-3S,ε|εν
+Unit 16,ω verbs Perfect Indicative Active 1st Plural,V-RAI-1P,αμεν
+Unit 16,ω verbs Perfect Indicative Active 2nd Plural,V-RAI-2P,ατε
+Unit 16,ω verbs Perfect Indicative Active 3rd Plural,V-RAI-3P,ασι|αν
+Unit 16,ω verbs Perfect Active Infinitive,V-RAN,εναι
+Unit 16,ω verbs Perfect Indicative Middle/Passive 1st Singular,V-RMI-1S|V-RPI-1S|V-RNI-1S,μαι
+Unit 16,ω verbs Perfect Indicative Middle/Passive 2nd Singular,V-RMI-2S|V-RPI-2S|V-RNI-2S,σαι
+Unit 16,ω verbs Perfect Indicative Middle/Passive 3rd Singular,V-RMI-3S|V-RPI-3S|V-RNI-3S,ται
+Unit 16,ω verbs Perfect Indicative Middle/Passive 1st Plural,V-RMI-1P|V-RPI-1P|V-RNI-1P,μεθα
+Unit 16,ω verbs Perfect Indicative Middle/Passive 2nd Plural,V-RMI-2P|V-RPI-2P|V-RNI-2P,σθε
+Unit 16,ω verbs Perfect Indicative Middle/Passive 3rd Plural,V-RMI-3P|V-RPI-3P|V-RNI-3P,νται
+Unit 16,ω verbs Perfect Indicative Middle/Passive Active Infinitive,V-RPN|V-RNN,σθαι
+Unit 16,Perfect Active Participle Nominative Singular Masculine,V-RAP-NSM,
+Unit 16,Perfect Active Participle Nominative Singular Feminine,V-RAP-NSF,
+Unit 16,Perfect Active Participle Nominative Singular Neuter,V-RAP-NSN,
+Unit 16,Perfect Active Participle Genitive Singular Masculine,V-RAP-GSM,
+Unit 16,Perfect Active Participle Genitive Singular Feminine,V-RAP-GSF,
+Unit 16,Perfect Active Participle Genitive Singular Neuter,V-RAP-GSN,
+Unit 16,Perfect Active Participle Dative Singular Masculine,V-RAP-DSM,
+Unit 16,Perfect Active Participle Dative Singular Feminine,V-RAP-DSF,
+Unit 16,Perfect Active Participle Dative Singular Neuter,V-RAP-DSN,
+Unit 16,Perfect Active Participle Accusative Singular Masculine,V-RAP-ASM,
+Unit 16,Perfect Active Participle Accusative Singular Feminine,V-RAP-ASF,
+Unit 16,Perfect Active Participle Accusative Singular Neuter,V-RAP-ASN,
+Unit 16,Perfect Active Participle Nominative Plural Masculine,V-RAP-NPM,
+Unit 16,Perfect Active Participle Nominative Plural Feminine,V-RAP-NPF,
+Unit 16,Perfect Active Participle Nominative Plural Neuter,V-RAP-NPN,
+Unit 16,Perfect Active Participle Genitive Plural Masculine,V-RAP-GPM,
+Unit 16,Perfect Active Participle Genitive Plural Feminine,V-RAP-GPF,
+Unit 16,Perfect Active Participle Genitive Plural Neuter,V-RAP-GPN,
+Unit 16,Perfect Active Participle Dative Plural Masculine,V-RAP-DPM,
+Unit 16,Perfect Active Participle Dative Plural Feminine,V-RAP-DPF,
+Unit 16,Perfect Active Participle Dative Plural Neuter,V-RAP-DPN,
+Unit 16,Perfect Active Participle Accusative Plural Masculine,V-RAP-APM,
+Unit 16,Perfect Active Participle Accusative Plural Feminine,V-RAP-APF,
+Unit 16,Perfect Active Participle Accusative Plural Neuter,V-RAP-APN,
+Unit 16,Perfect Active Participle Nominative Singular Masculine,V-RMP-NSM|V-RPP-NSM|V-REP-NSM,
+Unit 16,Perfect Active Participle Nominative Singular Feminine,V-RMP-NSF|V-RPP-NSF|V-REP-NSF,
+Unit 16,Perfect Active Participle Nominative Singular Neuter,V-RMP-NSN|V-RPP-NSN|V-REP-NSN,
+Unit 16,Perfect Active Participle Genitive Singular Masculine,V-RMP-GSM|V-RPP-GSM|V-REP-GSM,
+Unit 16,Perfect Active Participle Genitive Singular Feminine,V-RMP-GSF|V-RPP-GSF|V-REP-GSF,
+Unit 16,Perfect Active Participle Genitive Singular Neuter,V-RMP-GSN|V-RPP-GSN|V-REP-GSN,
+Unit 16,Perfect Active Participle Dative Singular Masculine,V-RMP-DSM|V-RPP-DSM|V-REP-DSM,
+Unit 16,Perfect Active Participle Dative Singular Feminine,V-RMP-DSF|V-RPP-DSF|V-REP-DSF,
+Unit 16,Perfect Active Participle Dative Singular Neuter,V-RMP-DSN|V-RPP-DSN|V-REP-DSN,
+Unit 16,Perfect Active Participle Accusative Singular Masculine,V-RMP-ASM|V-RPP-ASM|V-REP-ASM,
+Unit 16,Perfect Active Participle Accusative Singular Feminine,V-RMP-ASF|V-RPP-ASF|V-REP-ASF,
+Unit 16,Perfect Active Participle Accusative Singular Neuter,V-RMP-ASN|V-RPP-ASN|V-REP-ASN,
+Unit 16,Perfect Active Subjunctive 1st Singular,V-RAS-1S,
+Unit 16,Perfect Active Subjunctive 1st Plural,V-RAS-1P,
+Unit 16,Perfect Active Subjunctive 2nd Singular,V-RAS-2S,
+Unit 16,Perfect Active Subjunctive 2nd Plural,V-RAS-2P,
+Unit 16,Pluperfect Middle/Passive Indicative 1st Singular,V-LDI-1S|V-LMI-1S|V-LPI-1S,
+Unit 16,Pluperfect Middle/Passive Indicative 1st Plural,V-LDI-1P|V-LMI-1P|V-LPI-1P,
+Unit 16,Pluperfect Middle/Passive Indicative 2nd Singular,V-LDI-2S|V-LMI-2S|V-LPI-2S,
+Unit 16,Pluperfect Middle/Passive Indicative 2nd Plural,V-LDI-2P|V-LMI-2P|V-LPI-2P,
+Unit 16,Pluperfect Middle/Passive Indicative 3rd Singular,V-LDI-3S|V-LMI-3S|V-LPI-3S,
+Unit 16,Pluperfect Middle/Passive Indicative 3rd Plural,V-LDI-3P|V-LMI-3P|V-LPI-3P,

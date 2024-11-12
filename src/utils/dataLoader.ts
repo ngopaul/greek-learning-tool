@@ -355,6 +355,15 @@ const parseBookChapterVerseWord = (previousWordIdx : number, bookChapterVerse : 
   }
 }
 
+function startsWithAny(string: string, array: string[]) {
+  for (let item of array) {
+    if (string.startsWith(item)) {
+      return true;
+    }
+  }
+  return false;
+}
+
 /*
  * Given the studyChunks object
  */
@@ -366,14 +375,15 @@ const parseStudyChunkID = (studyChunks : Record<string, StudyChunk[]>, greek : s
         const {studyChunkID, morphologies, endings} = chunk;
 
         // Check if the word's morphology is in the list of morphologies
-        const morphologyMatches = morphologies.includes(morphology);
+        const morphologyMatches = startsWithAny(morphology, morphologies);
 
         if (!morphologyMatches) {
           continue;
         }
 
         // Check if the word's Greek ending matches any ending in the chunk
-        const endingMatches = endings.some(ending => greekWordEndsWithEnding(greek, ending));
+        const endingMatches = endings.length === 1
+          || endings.some(ending => greekWordEndsWithEnding(greek.toLowerCase(), ending));
 
         // If both conditions are met, add the word's index to the set
         if (endingMatches) {
