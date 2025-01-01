@@ -59,7 +59,7 @@ export const loadDataVersions = async () => {
 
 
 
-/* Function to parse OpenGNT_keyedFeatures.csv
+/* Function to parse RcV_version1_0.csv
  * Returns a very large list of objects. Each object has the following fields:
  *  Greek: the greek
  *  Morphology: the morphology code (e.g. V-PAI-1S)
@@ -81,7 +81,7 @@ export const loadOpenGNTData = async (
     }
   }
   // otherwise, load the data from the server
-  const response = await fetch('/data/OpenGNT_version3_3.csv');
+  const response = await fetch('/data/RcV_version1_0.csv');
   const csvData = await response.text();
   return new Promise<[MappedDataEntry[], Record<string, MorphologyRecord>]>((resolve, reject) => {
     Papa.parse<Record<string, string>>(csvData, {
