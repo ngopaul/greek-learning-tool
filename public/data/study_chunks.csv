@@ -150,6 +150,27 @@ Unit 6,1st/2nd Decl Adj Genitive Plural Neuter,A-GPN,ων
 Unit 6,1st/2nd Decl Adj Dative Plural Neuter,A-DPN,οις
 Unit 6,1st/2nd Decl Adj Accusative Plural Neuter,A-APN,α
 Unit 6,1st/2nd Decl Adj Vocative Plural Neuter,A-VPN,α
+Unit 7,ω verbs Future Active 1P Singular,V-FAI-1S,ω
+Unit 7,ω verbs Future Active 2P Singular,V-FAI-2S,εις
+Unit 7,ω verbs Future Active 3P Singular,V-FAI-3S,ει
+Unit 7,ω verbs Future Active 1P Plural,V-FAI-1P,ομεν
+Unit 7,ω verbs Future Active 2P Plural,V-FAI-2P,ετε
+Unit 7,ω verbs Future Active 3P Plural,V-FAI-3P,ουσιν
+Unit 7,ω verbs Future Active Infinitive,V-PAN,ειν
+Unit 7,ω verbs Future Middle/Passive 1P Singular,V-FDI-1S|V-FMI-1S|V-FNI-1S|V-FOI-1S|V-FPI-1S,ομαι|αμαι
+Unit 7,ω verbs Future Middle/Passive 2P Singular,V-FDI-2S|V-FMI-2S|V-FNI-2S|V-FOI-2S|V-FPI-2S,ῃ|ει
+Unit 7,ω verbs Future Middle/Passive 3P Singular,V-FDI-3S|V-FMI-3S|V-FNI-3S|V-FOI-3S|V-FPI-3S,εται|αται
+Unit 7,ω verbs Future Middle/Passive 1P Plural,V-FDI-1P|V-FMI-1P|V-FNI-1P|V-FOI-1P|V-FPI-1P,ομεθα|αμεθα
+Unit 7,ω verbs Future Middle/Passive 2P Plural,V-FDI-2P|V-FMI-2P|V-FNI-2P|V-FOI-2P|V-FPI-2P,εσθε|ασθε
+Unit 7,ω verbs Future Middle/Passive 3P Plural,V-FDI-3P|V-FMI-3P|V-FNI-3P|V-FOI-3P|V-FPI-3P,ονται|ανται
+Unit 7,ω verbs Future Middle/Passive Infinitive,V-FDN,εσθαι
+Unit 7,εἰμι Future 1P Singular,V-FDI-1S,ἔσομαι
+Unit 7,εἰμι Future 2P Singular,V-FDI-2S,ἔσῃ
+Unit 7,εἰμι Future 3P Singular,V-FDI-3S,ἔσται
+Unit 7,εἰμι Future 1P Plural,V-FDI-1P,ἐσόμεθα
+Unit 7,εἰμι Future 2P Plural,V-FDI-2P,ἔσεσθε
+Unit 7,εἰμι Future 3P Plural,V-FDI-3P,ἔσονται
+Unit 7,εἰμι Future Infinitive,V-FDN,ἔσεσθαι
 Unit 14,3rd Decl Adj in -ης/-ες Nominative Singular Masculine/Feminine,A-NSF|A-NSM,ης
 Unit 14,3rd Decl Adj in -ης/-ες Genitive Singular Masculine/Feminine,A-GSF|A-GSM,ους
 Unit 14,3rd Decl Adj in -ης/-ες Dative Singular Masculine/Feminine,A-DSF|A-DSM,ει
