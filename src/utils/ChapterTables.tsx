@@ -25,7 +25,7 @@ const chapter2_3 : SimpleTableData= [
   ['1st', 'εἰμὶ', '', 'ἐσμέν'],
   ['2nd', 'εἶ', '', 'ἐστέ'],
   ['3rd', 'ἐστί(ν)', '', 'εἰσί(ν)'],
-  ['Infinitive', '', '-εἶναι', ''],
+  ['Infinitive', '', 'εἶναι', ''],
 ]
 
 const chapter3_1 : SimpleTableData= [
@@ -131,6 +131,33 @@ const chapter6_2 : SimpleTableData= [
   ['Vocative', '-οι', '-αι', '-α'],
 ];
 
+const chapter8_1 : SimpleTableData = [
+  {title: 'Future Active Indicative -ω verbs: Active', numColumns: 3},
+  ['Person',      'Singular',   '',     'Plural'],
+  ['1st',         '-σω',         '',     '-σομεν'],
+  ['2nd',         '-σεις',       '',     '-σετε'],
+  ['3rd',         '-σει',        '',     '-σουσιν'],
+  ['Infinitive',  '',           '-σειν', ''],
+];
+
+const chapter8_2: SimpleTableData = [
+  {title: 'Future Active Indicative -ω verbs: Middle/Passive', numColumns: 4},
+  ['Person', 'Singular', '', 'Plural'],
+  ['1st', '-σ-ο-μαι', '', '-σ-ό-μεθα'],
+  ['2nd', '-σ-ει/-σ-ῃ', '', '-σ-εσθε'],
+  ['3rd', '-σ-ε-ται', '', '-σ-ο-νται'],
+  ['Infinitive', '', '-σ-ε-σθαι', ''],
+]
+
+const chapter8_3 : SimpleTableData= [
+  {title: 'εἰμὶ Future Active Indicative', numColumns: 4},
+  ['Person', 'Singular', '', 'Plural'],
+  ['1st', 'ἔσομαι', '', 'ἐσόμεθα'],
+  ['2nd', 'ἔσῃ', '', 'ἔσεσθε'],
+  ['3rd', 'ἔσται', '', 'ἔσονται'],
+  ['Infinitive', '', 'ἔσεσθαι', ''],
+]
+
 // Adjectives which don't follow the rules (Third Declension and Irregular Adjectives)
 const chapter14_1 : SimpleTableData= [
   {title: 'Third Decl Adjective in -ης, -ες', numColumns: 5},
@@ -234,6 +261,13 @@ export const unitNameToTables: Record<string, ReactNode> = {
     <div>
       <SimpleTable data={chapter6_1}/>
       <SimpleTable data={chapter6_2}/>
+    </div>
+  ),
+  "Unit 8": (
+    <div>
+      <SimpleTable data={chapter8_1}/>
+      <SimpleTable data={chapter8_2}/>
+      <SimpleTable data={chapter8_3}/>
     </div>
   ),
   "Unit 14": (
