@@ -149,13 +149,49 @@ const chapter8_2: SimpleTableData = [
   ['Infinitive', '', '-σ-ε-σθαι', ''],
 ]
 
-const chapter8_3 : SimpleTableData= [
+const chapter8_3 : SimpleTableData = [
   {title: 'εἰμὶ Future Active Indicative', numColumns: 4},
   ['Person', 'Singular', '', 'Plural'],
   ['1st', 'ἔσομαι', '', 'ἐσόμεθα'],
   ['2nd', 'ἔσῃ', '', 'ἔσεσθε'],
   ['3rd', 'ἔσται', '', 'ἔσονται'],
   ['Infinitive', '', 'ἔσεσθαι', ''],
+]
+
+const chapter9_1 : SimpleTableData = [
+  {title: 'First Aorist Indicative -ω verbs: Active', numColumns: 3},
+  ['Person',      'Singular',   '',     'Plural'],
+  ['1st',         '-σα',         '',     '-σαμεν'],
+  ['2nd',         '-σας',       '',     '-σατε'],
+  ['3rd',         '-σε(ν)',        '',     '-σαν'],
+  ['Infinitive',  '',           '-σαι', ''],
+]
+
+const chapter9_2 : SimpleTableData = [
+  {title: 'First Aorist Indicative -ω verbs: Middle', numColumns: 3},
+  ['Person',      'Singular',   '',     'Plural'],
+  ['1st',         '-σαμην',         '',     '-σαμεθα'],
+  ['2nd',         '-σω',       '',     '-σασθε'],
+  ['3rd',         '-σατο',        '',     '-σαντο'],
+  ['Infinitive',  '',           '-σασθαι', ''],
+]
+
+const chapter9_3 : SimpleTableData = [
+  {title: 'Second Aorist Indicative -ω verbs: Active', numColumns: 3},
+  ['Person',      'Singular',   '',     'Plural'],
+  ['1st',         '-ον',         '',     '-ομεν'],
+  ['2nd',         '-ες',       '',     '-ετε'],
+  ['3rd',         '-ε(ν)',        '',     '-ον'],
+  ['Infinitive',  '',           '-ειν', ''],
+]
+
+const chapter9_4 : SimpleTableData = [
+  {title: 'Second Aorist Indicative -ω verbs: Middle', numColumns: 3},
+  ['Person',      'Singular',   '',     'Plural'],
+  ['1st',         '-ομην',         '',     '-ομεθα'],
+  ['2nd',         '-ου',       '',     '-εσθε'],
+  ['3rd',         '-ετο',        '',     '-οντο'],
+  ['Infinitive',  '',           '-εσθαι', ''],
 ]
 
 // Adjectives which don't follow the rules (Third Declension and Irregular Adjectives)
@@ -268,6 +304,14 @@ export const unitNameToTables: Record<string, ReactNode> = {
       <SimpleTable data={chapter8_1}/>
       <SimpleTable data={chapter8_2}/>
       <SimpleTable data={chapter8_3}/>
+    </div>
+  ),
+  "Unit 9": (
+    <div>
+      <SimpleTable data={chapter9_1}/>
+      <SimpleTable data={chapter9_2}/>
+      <SimpleTable data={chapter9_3}/>
+      <SimpleTable data={chapter9_4}/>
     </div>
   ),
   "Unit 14": (
