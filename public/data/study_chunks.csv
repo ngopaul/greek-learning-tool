@@ -171,6 +171,34 @@ Unit 8,εἰμι Future 1P Plural,V-FDI-1P,ἐσόμεθα
 Unit 8,εἰμι Future 2P Plural,V-FDI-2P,ἔσεσθε
 Unit 8,εἰμι Future 3P Plural,V-FDI-3P,ἔσονται
 Unit 8,εἰμι Future Infinitive,V-FDN,ἔσεσθαι
+Unit 9,First Aorist Active Indicative 1S,V-AAI-1S,σα
+Unit 9,First Aorist Active Indicative 2S,V-AAI-2S,σας
+Unit 9,First Aorist Active Indicative 3S,V-AAI-3S,σε|σεν
+Unit 9,First Aorist Active Indicative 1P,V-AAI-1P,σαμεν
+Unit 9,First Aorist Active Indicative 2P,V-AAI-2P,σατε
+Unit 9,First Aorist Active Indicative 3P,V-AAI-3P,σαν
+Unit 9,First Aorist Active Infinitive,V-AAN,σαι
+Unit 9,First Aorist Middle Indicative 1S,V-ADI-1S|V-AMI-1S|V-ANI-1S,σαμην
+Unit 9,First Aorist Middle Indicative 2S,V-ADI-2S|V-AMI-2S|V-ANI-2S,σω
+Unit 9,First Aorist Middle Indicative 3S,V-ADI-3S|V-AMI-3S|V-ANI-3S,σατο
+Unit 9,First Aorist Middle Indicative 1P,V-ADI-1P|V-AMI-1P|V-ANI-1P,σαμεθα
+Unit 9,First Aorist Middle Indicative 2P,V-ADI-2P|V-AMI-2P|V-ANI-2P,σασθε
+Unit 9,First Aorist Middle Indicative 3P,V-ADI-3P|V-AMI-3P|V-ANI-3P,σαντο
+Unit 9,First Aorist Middle Infinitive,V-ADN|V-AMN,σασθαι
+Unit 9,Second Aorist Active Indicative 1S,V-2AAI-1S,ον
+Unit 9,Second Aorist Active Indicative 2S,V-2AAI-2S,ες
+Unit 9,Second Aorist Active Indicative 3S,V-2AAI-3S,ε|εν
+Unit 9,Second Aorist Active Indicative 1P,V-2AAI-1P,ομεν
+Unit 9,Second Aorist Active Indicative 2P,V-2AAI-2P,ετε
+Unit 9,Second Aorist Active Indicative 3P,V-2AAI-3P,ον
+Unit 9,Second Aorist Active Infinitive,V-2AAN,ειν
+Unit 9,Second Aorist Middle Indicative 1S,V-2ADI-1S|V-2AMI-1S,ομην
+Unit 9,Second Aorist Middle Indicative 2S,V-2ADI-2S|V-2AMI-2S,ου
+Unit 9,Second Aorist Middle Indicative 3S,V-2ADI-3S|V-2AMI-3S,ετο
+Unit 9,Second Aorist Middle Indicative 1P,V-2ADI-1P|V-2AMI-1P,ομεθα
+Unit 9,Second Aorist Middle Indicative 2P,V-2ADI-2P|V-2AMI-2P,εσθε
+Unit 9,Second Aorist Middle Indicative 3P,V-2ADI-3P|V-2AMI-3P,οντο
+Unit 9,Second Aorist Active Infinitive,V-2ADN|V-2AMN,εσθαι
 Unit 14,3rd Decl Adj in -ης/-ες Nominative Singular Masculine/Feminine,A-NSF|A-NSM,ης
 Unit 14,3rd Decl Adj in -ης/-ες Genitive Singular Masculine/Feminine,A-GSF|A-GSM,ους
 Unit 14,3rd Decl Adj in -ης/-ες Dative Singular Masculine/Feminine,A-DSF|A-DSM,ει
