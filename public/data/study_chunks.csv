@@ -199,6 +199,78 @@ Unit 9,Second Aorist Middle Indicative 1P,V-2ADI-1P|V-2AMI-1P,ομεθα
 Unit 9,Second Aorist Middle Indicative 2P,V-2ADI-2P|V-2AMI-2P,εσθε
 Unit 9,Second Aorist Middle Indicative 3P,V-2ADI-3P|V-2AMI-3P,οντο
 Unit 9,Second Aorist Active Infinitive,V-2ADN|V-2AMN,εσθαι
+Unit 10,Personal Pronoun Nominative Singular 1st Person,P-1NS,εγω
+Unit 10,Personal Pronoun Nominative Singular 2nd Person,P-2NS,συ
+Unit 10,Personal Pronoun Nominative Singular 3rd Person,P-NSM|P-NSF|P-NSN,αὐτος|αὐτη|αὐτο
+Unit 10,Personal Pronoun Genitive Singular 1st Person,P-1GS,ἐμου|μου
+Unit 10,Personal Pronoun Genitive Singular 2nd Person,P-2GS,σου
+Unit 10,Personal Pronoun Genitive Singular 3rd Person,P-GSM|P-GSF|P-GSN,αὐτου|αὐτης|αὐτου
+Unit 10,Personal Pronoun Dative Singular 1st Person,P-1DS,ἐμοι|μοι
+Unit 10,Personal Pronoun Dative Singular 2nd Person,P-2DS,σοι
+Unit 10,Personal Pronoun Dative Singular 3rd Person,P-DSF|P-DSM|P-DSN,αὐτῃ|αὐτῷ|αὐτῃν
+Unit 10,Personal Pronoun Accusative Singular 1st Person,P-1AS,ἐμε|με
+Unit 10,Personal Pronoun Accusative Singular 2nd Person,P-2AS,σε|σου
+Unit 10,Personal Pronoun Accusative Singular 3rd Person,P-ASF|P-ASM|P-ASN,αὐτην|αὐτον|αὐτο
+Unit 10,Personal Pronoun Nominative Plural 1st Person,P-1NP,ἡμεις
+Unit 10,Personal Pronoun Nominative Plural 2nd Person,P-2NP,ὑμεις
+Unit 10,Personal Pronoun Nominative Plural 3rd Person,P-NPM|P-NPF|P-NPN,αὐτοι|αὐται|αὐτα
+Unit 10,Personal Pronoun Genitive Plural 1st Person,P-1GP,ἡμων
+Unit 10,Personal Pronoun Genitive Plural 2nd Person,P-2GP,ὑμων
+Unit 10,Personal Pronoun Genitive Plural 3rd Person,P-GPM|P-GPF|P-GPN,αὐτων
+Unit 10,Personal Pronoun Dative Plural 1st Person,P-1DP,ἡμιν
+Unit 10,Personal Pronoun Dative Plural 2nd Person,P-2DP,ὑμιν
+Unit 10,Personal Pronoun Dative Plural 3rd Person,P-DPM|P-DPF|P-DPN,αὐτοις|αὐταις|αὐταῖς
+Unit 10,Personal Pronoun Accusative Plural 1st Person,P-1AP,ἡμας
+Unit 10,Personal Pronoun Accusative Plural 2nd Person,P-2AP,ὑμας
+Unit 10,Personal Pronoun Accusative Plural 3rd Person,P-APM|P-APF|P-APN,αὐτους|αὐτας|αὐτα
+Unit 10,Demonstrative Pronoun Nominative Singular Masculine,D-NSM,οὗτος
+Unit 10,Demonstrative Pronoun Nominative Singular Feminine,D-NSF,αὕτη
+Unit 10,Demonstrative Pronoun Nominative Singular Neuter,D-NSN,τοῦτο
+Unit 10,Demonstrative Pronoun Genitive Singular Masculine,D-GSM,τοῦτου
+Unit 10,Demonstrative Pronoun Genitive Singular Feminine,D-GSF,ταύτης
+Unit 10,Demonstrative Pronoun Genitive Singular Neuter,D-GSN,τούτου
+Unit 10,Demonstrative Pronoun Dative Singular Masculine,D-DSM,τούτῳ
+Unit 10,Demonstrative Pronoun Dative Singular Feminine,D-DSF,ταύτῃ
+Unit 10,Demonstrative Pronoun Dative Singular Neuter,D-DSN,τούτῳ
+Unit 10,Demonstrative Pronoun Accusative Singular Masculine,D-ASM,τούτον
+Unit 10,Demonstrative Pronoun Accusative Singular Feminine,D-ASF,ταύτην
+Unit 10,Demonstrative Pronoun Accusative Singular Neuter,D-ASN,τούτο
+Unit 10,Demonstrative Pronoun Nominative Pluras Masculine,D-NPM,οὗτοι
+Unit 10,Demonstrative Pronoun Nominative Plural Feminine,D-NPF,αὗται
+Unit 10,Demonstrative Pronoun Nominative Plural Neuter,D-NPN,ταῦτα
+Unit 10,Demonstrative Pronoun Genitive Plural Masculine,D-GPM,τούτων
+Unit 10,Demonstrative Pronoun Genitive Plural Feminine,D-GPF,τούτων
+Unit 10,Demonstrative Pronoun Genitive Plural Neuter,D-GPN,τούτων
+Unit 10,Demonstrative Pronoun Dative Plural Masculine,D-DPM,τούτοις
+Unit 10,Demonstrative Pronoun Dative Plural Feminine,D-DPF,ταύταις
+Unit 10,Demonstrative Pronoun Dative Plural Neuter,D-DPN,τούτοις
+Unit 10,Demonstrative Pronoun Accusative Plural Masculine,D-APM,τούτους
+Unit 10,Demonstrative Pronoun Accusative Plural Feminine,D-APF,ταύτας
+Unit 10,Demonstrative Pronoun Accusative Plural Neuter,D-APN,ταῦτα
+Unit 10,Relative Pronoun Nominative Singular Masculine,R-NSM,ὅς
+Unit 10,Relative Pronoun Nominative Singular Feminine,R-NSF,ἥ
+Unit 10,Relative Pronoun Nominative Singular Neuter,R-NSN,ὅ
+Unit 10,Relative Pronoun Genitive Singular Masculine,R-GSM,οὗ
+Unit 10,Relative Pronoun Genitive Singular Feminine,R-GSF,ἧς
+Unit 10,Relative Pronoun Genitive Singular Neuter,R-GSN,οὗ
+Unit 10,Relative Pronoun Dative Singular Masculine,R-DSM,ᾧ
+Unit 10,Relative Pronoun Dative Singular Feminine,R-DSF,ᾗ
+Unit 10,Relative Pronoun Dative Singular Neuter,R-DSN,ᾧ
+Unit 10,Relative Pronoun Accusative Singular Masculine,R-ASM,ὅν
+Unit 10,Relative Pronoun Accusative Singular Feminine,R-ASF,ἥν
+Unit 10,Relative Pronoun Accusative Singular Neuter,R-ASN,ὅ
+Unit 10,Relative Pronoun Nominative Plural Masculine,R-NPM,οἱ
+Unit 10,Relative Pronoun Nominative Plural Feminine,R-NPF,αἵ
+Unit 10,Relative Pronoun Nominative Plural Neuter,R-NPN,ἅ
+Unit 10,Relative Pronoun Genitive Plural Masculine,R-GPM,ὧν
+Unit 10,Relative Pronoun Genitive Plural Feminine,R-GPF,ὧν
+Unit 10,Relative Pronoun Genitive Plural Neuter,R-GPN,ὧν
+Unit 10,Relative Pronoun Dative Plural Masculine,R-DPM,οἷς
+Unit 10,Relative Pronoun Dative Plural Feminine,R-DPF,αἷς
+Unit 10,Relative Pronoun Dative Plural Neuter,R-DPN,οἷς
+Unit 10,Relative Pronoun Accusative Plural Masculine,R-APM,οὕς
+Unit 10,Relative Pronoun Accusative Plural Feminine,R-APF,ἅς
+Unit 10,Relative Pronoun Accusative Plural Neuter,R-APN,ἅ
 Unit 14,3rd Decl Adj in -ης/-ες Nominative Singular Masculine/Feminine,A-NSF|A-NSM,ης
 Unit 14,3rd Decl Adj in -ης/-ες Genitive Singular Masculine/Feminine,A-GSF|A-GSM,ους
 Unit 14,3rd Decl Adj in -ης/-ες Dative Singular Masculine/Feminine,A-DSF|A-DSM,ει
