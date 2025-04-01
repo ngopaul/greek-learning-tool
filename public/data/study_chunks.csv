@@ -171,20 +171,20 @@ Unit 8,εἰμι Future 1P Plural,V-FDI-1P,ἐσόμεθα
 Unit 8,εἰμι Future 2P Plural,V-FDI-2P,ἔσεσθε
 Unit 8,εἰμι Future 3P Plural,V-FDI-3P,ἔσονται
 Unit 8,εἰμι Future Infinitive,V-FDN,ἔσεσθαι
-Unit 9,First Aorist Active Indicative 1S,V-AAI-1S,σα
-Unit 9,First Aorist Active Indicative 2S,V-AAI-2S,σας
-Unit 9,First Aorist Active Indicative 3S,V-AAI-3S,σε|σεν
-Unit 9,First Aorist Active Indicative 1P,V-AAI-1P,σαμεν
-Unit 9,First Aorist Active Indicative 2P,V-AAI-2P,σατε
-Unit 9,First Aorist Active Indicative 3P,V-AAI-3P,σαν
-Unit 9,First Aorist Active Infinitive,V-AAN,σαι
-Unit 9,First Aorist Middle Indicative 1S,V-ADI-1S|V-AMI-1S|V-ANI-1S,σαμην
-Unit 9,First Aorist Middle Indicative 2S,V-ADI-2S|V-AMI-2S|V-ANI-2S,σω
-Unit 9,First Aorist Middle Indicative 3S,V-ADI-3S|V-AMI-3S|V-ANI-3S,σατο
-Unit 9,First Aorist Middle Indicative 1P,V-ADI-1P|V-AMI-1P|V-ANI-1P,σαμεθα
-Unit 9,First Aorist Middle Indicative 2P,V-ADI-2P|V-AMI-2P|V-ANI-2P,σασθε
-Unit 9,First Aorist Middle Indicative 3P,V-ADI-3P|V-AMI-3P|V-ANI-3P,σαντο
-Unit 9,First Aorist Middle Infinitive,V-ADN|V-AMN,σασθαι
+Unit 9,First Aorist Active Indicative 1S,V-AAI-1S,α
+Unit 9,First Aorist Active Indicative 2S,V-AAI-2S,ας
+Unit 9,First Aorist Active Indicative 3S,V-AAI-3S,ε|εν
+Unit 9,First Aorist Active Indicative 1P,V-AAI-1P,αμεν
+Unit 9,First Aorist Active Indicative 2P,V-AAI-2P,ατε
+Unit 9,First Aorist Active Indicative 3P,V-AAI-3P,αν
+Unit 9,First Aorist Active Infinitive,V-AAN,αι
+Unit 9,First Aorist Middle Indicative 1S,V-ADI-1S|V-AMI-1S|V-ANI-1S,αμην
+Unit 9,First Aorist Middle Indicative 2S,V-ADI-2S|V-AMI-2S|V-ANI-2S,ω
+Unit 9,First Aorist Middle Indicative 3S,V-ADI-3S|V-AMI-3S|V-ANI-3S,ατο
+Unit 9,First Aorist Middle Indicative 1P,V-ADI-1P|V-AMI-1P|V-ANI-1P,αμεθα
+Unit 9,First Aorist Middle Indicative 2P,V-ADI-2P|V-AMI-2P|V-ANI-2P,ασθε
+Unit 9,First Aorist Middle Indicative 3P,V-ADI-3P|V-AMI-3P|V-ANI-3P,αντο
+Unit 9,First Aorist Middle Infinitive,V-ADN|V-AMN,ασθαι
 Unit 9,Second Aorist Active Indicative 1S,V-2AAI-1S,ον
 Unit 9,Second Aorist Active Indicative 2S,V-2AAI-2S,ες
 Unit 9,Second Aorist Active Indicative 3S,V-2AAI-3S,ε|εν
