@@ -194,6 +194,42 @@ const chapter9_4 : SimpleTableData = [
   ['Infinitive',  '',           '-εσθαι', ''],
 ]
 
+const chapter10_1 : SimpleTableData= [
+  {title: 'Personal Pronouns, 1st and 2nd person', numColumns: 5},
+  ['', '1S', '1P', '2S', '2P'],
+  ['Nom.', 'ἐγώ', 'ἡμεῖς', 'σὺ', 'ὑμεῖς'],
+  ['Gen.', 'ἐμοῦ, μου', 'ἡμῶν', 'σοῦ, σου', 'ὑμῶν'],
+  ['Dat.', 'ἐμοί, μοι', 'ἡμῖν', 'σοί, σοι', 'ὑμῖν'],
+  ['Acc.', 'ἐμέ, με', 'ἡμᾶς', 'σέ, σε', 'ὑμᾶς'],
+];
+
+const chapter10_2 : SimpleTableData= [
+  {title: 'Personal Pronouns, 3rd person', numColumns: 7},
+  ['', 'Sing. Masc.', 'Sing. Fem.', 'Sing. Neut.', 'Plur. Masc.', 'Plur. Fem.', 'Plur. Neut.'],
+  ['Nom.', 'αὐτός', 'αὐτή', 'αὐτό', 'αὐτοί', 'αὐταί', 'αὐτά'],
+  ['Gen.', 'αὐτοῦ', 'αὐτῆς', 'αὐτοῦ', 'αὐτῶν', 'αὐτῶν', 'αὐτῶν'],
+  ['Dat.', 'αὐτῷ', 'αὐτῇ', 'αὐτῷ', 'αὐτοῖς', 'αὐταῖς', 'αὐτοῖς'],
+  ['Acc.', 'αὐτόν', 'αὐτήν', 'αὐτό', 'αὐτούς', 'αὐτάς', 'αὐτά'],
+];
+
+const chapter10_3 : SimpleTableData= [
+  {title: 'Demonstrative Pronouns', numColumns: 7},
+  ['', 'Sing. Masc.', 'Sing. Fem.', 'Sing. Neut.', 'Plur. Masc.', 'Plur. Fem.', 'Plur. Neut.'],
+  ['Nom.', 'οὗτος', 'αὕτη', 'τοῦτο', 'οὗτοι', 'αὗται', 'ταῦτα'],
+  ['Gen.', 'τούτου', 'ταύτης', 'τούτου', 'τούτων', 'τούτων', 'τούτων'],
+  ['Dat.', 'τούτῳ', 'ταύτῃ', 'τούτῳ', 'τούτοις', 'ταύταις', 'τούτοις'],
+  ['Acc.', 'τούτον', 'ταύτην', 'τοῦτο', 'τούτους', 'ταύτας', 'ταῦτα'],
+];
+
+const chapter10_4 : SimpleTableData= [
+  {title: 'Relative Pronouns', numColumns: 7},
+  ['', 'Sing. Masc.', 'Sing. Fem.', 'Sing. Neut.', 'Plur. Masc.', 'Plur. Fem.', 'Plur. Neut.'],
+  ['Nom.', 'ὅς', 'ἥ', 'ὅ', 'οἵ', 'αἵ', 'ἅ'],
+  ['Gen.', 'οὗ', 'ἧς', 'οὗ', 'ὧν', 'ὧν', 'ὧν'],
+  ['Dat.', 'ᾧ', 'ᾗ', 'ᾧ', 'οἷς', 'αἷς', 'οἷς'],
+  ['Acc.', 'ὅν', 'ἥν', 'ὅ', 'οὕς', 'ἅς', 'ἅ'],
+]
+
 // Adjectives which don't follow the rules (Third Declension and Irregular Adjectives)
 const chapter14_1 : SimpleTableData= [
   {title: 'Third Decl Adjective in -ης, -ες', numColumns: 5},
@@ -312,6 +348,14 @@ export const unitNameToTables: Record<string, ReactNode> = {
       <SimpleTable data={chapter9_2}/>
       <SimpleTable data={chapter9_3}/>
       <SimpleTable data={chapter9_4}/>
+    </div>
+  ),
+  "Unit 10": (
+    <div>
+      <SimpleTable data={chapter10_1}/>
+      <SimpleTable data={chapter10_2}/>
+      <SimpleTable data={chapter10_3}/>
+      <SimpleTable data={chapter10_4}/>
     </div>
   ),
   "Unit 14": (
