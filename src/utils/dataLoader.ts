@@ -381,9 +381,10 @@ const parseStudyChunkID = (studyChunks : Record<string, StudyChunk[]>, greek : s
           continue;
         }
 
-        // Check if the word's Greek ending matches any ending in the chunk
-        const endingMatches = endings.length >= 1
-          && endings.some(ending => greekWordEndsWithEnding(greek.toLowerCase(), ending));
+        // Check if the word's Greek ending matches any ending in the chunk,
+        // or accept any ending if no endings are provided.
+        const endingMatches = endings.length === 0 
+        || endings.some(ending => greekWordEndsWithEnding(greek.toLowerCase(), ending));
 
         // If both conditions are met, add the word's index to the set
         if (endingMatches) {
