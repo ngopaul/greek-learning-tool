@@ -123,7 +123,7 @@ export const useNavigation = () => {
         chapterValue: temporaryCurrentChapter.value,
         data: filteredData,
       });
-      setSelectedTesters(selectedTesters); // trigger callback to update testers
+      setSelectedTesters([...selectedTesters]); // trigger re-render so testers update
     } else {
       setCurrentChapter(undefined);
     }
