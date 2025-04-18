@@ -1,110 +1,125 @@
-import React from "react";
-import { useContext } from "react";
-import { Box, Typography } from "@mui/material";
-import { AppContext } from "../contexts/AppContext";
-import { useAtom } from "jotai";
-import { displayWordsAtom } from "../atoms/bibleDisplayAtoms";
-import { useNavigation } from "./useNavigation";
+import React, { useContext } from 'react';
+import { Box, Typography } from '@mui/material';
+import { useAtom } from 'jotai';
+import { displayWordsAtom } from '../atoms/bibleDisplayAtoms';
+import { AppContext } from '../contexts/AppContext';
+import { useNavigation } from './useNavigation';
 
-const WordContext = () => {
-  const [displayWords] = useAtom(displayWordsAtom)
-  const {currentIndex, setCurrentIndexAndProcess} = useNavigation();
-
+const WordContext: React.FC = () => {
+  const [displayWords] = useAtom(displayWordsAtom);
+  const { currentIndex, setCurrentIndexAndProcess } = useNavigation();
   const context = useContext(AppContext);
-  if (!context) {
-    return null;
-  }
-  const {  openGNTData, testWordIndices, 
-    showEnglishInContext, showAnswer } = context;
 
-    
+  if (!context) return null;
+  const {
+    openGNTData,
+    testWordIndices,
+    showEnglishInContext,
+    showAnswer,
+    showAnswerChecked,
+  } = context;
 
-  // If there are no display words, or the current index is invalid, return null
-  if (displayWords.length === 0 || !displayWords[currentIndex]) {
+  // Nothing to show unless we're in a valid verse
+  if (
+    displayWords.length === 0 ||
+    currentIndex < 0 ||
+    currentIndex >= displayWords.length
+  ) {
     return null;
   }
 
   const currentWord = displayWords[currentIndex];
-
-  // If the current word is for the finished round, return null
-  if (currentWord.StudyChunkID === "finished round of testing") {
+  if (currentWord.StudyChunkID === 'finished round of testing') {
     return null;
   }
 
-  // Get all words in the surrounding chapter using the current word's BookChapterVerseWord
   const { book, chapter, verse } = currentWord.BookChapterVerseWord;
 
-  const wordsInChapter = openGNTData.filter(word =>
-    word.BookChapterVerseWord.book === book &&
-    word.BookChapterVerseWord.chapter === chapter &&
-    word.BookChapterVerseWord.verse === verse
-  );
-
-  // TODO (Caleb): this is weird. for each over the const array.
-
-  // add a key to wordsInChapter that tells where the word is in the displayWords array, or -1 if it is not
-  // in the displayWords array
-  wordsInChapter.forEach((word) => {
-    word.displayIndex = displayWords.findIndex(w => w.BookChapterVerseWord === word.BookChapterVerseWord);
-  });
-
-  // TODO (Caleb): I think we shouldj ust remove them from the array instead?
-  wordsInChapter.forEach((word) => {
-    if (word.displayIndex === -1) {
-      word.displayIndex = null;
-    }
-  });
-
-  
-
+  // Gather all words in this verse, and record their index within displayWords (or null)
+  const wordsInChapter = openGNTData
+    .filter(
+      w =>
+        w.BookChapterVerseWord.book === book &&
+        w.BookChapterVerseWord.chapter === chapter &&
+        w.BookChapterVerseWord.verse === verse
+    )
+    .map(w => {
+      const idx = displayWords.findIndex(
+        dw =>
+          dw.BookChapterVerseWord.book === w.BookChapterVerseWord.book &&
+          dw.BookChapterVerseWord.chapter === w.BookChapterVerseWord.chapter &&
+          dw.BookChapterVerseWord.verse === w.BookChapterVerseWord.verse &&
+          dw.BookChapterVerseWord.word === w.BookChapterVerseWord.word
+      );
+      return { word: w, displayIndex: idx >= 0 ? idx : null };
+    });
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1, flexWrap: 'wrap', marginTop: "20px" }}>
-      {wordsInChapter.map((word, index) => (
-        <Box
-          key={index}
-          sx={{
-            padding: 0,
-            color: word === currentWord ? 'red' : 'inherit',
-          }}
-          // TODO (Caleb): this needs to be fixed. this is bad
-          onClick={() => setCurrentIndexAndProcess(word.displayIndex as number)}
-        >
-          {/* Greek and English word display */}
-          <Box>
-            {
-              (// TODO (Caleb): this needs to be fixed. this is bad
-                (testWordIndices.has(word.displayIndex as number))
-              ) ? (
-                <Typography sx={{ textDecoration: 'underline' }} variant="h6" align="center">{word.Greek}</Typography>
-              ) : (
-                <Typography variant="h6" align="center">{word.Greek}</Typography>
-              )
-            }
-          </Box>
-          {
-            showEnglishInContext ? (
-              <Box>
-                {/* Don't display the English word if it is not the same as the current word and if is also
-                one of the test words
-                 */}
-                {
-                  ((
-                    // TODO (Caleb): this needs to be fixed. this is bad
-                    (testWordIndices.has(word.displayIndex as number) && currentIndex !== word.displayIndex)
-                      || (currentIndex === word.displayIndex && !showAnswer)
-                    ) ? (
-                      <Typography variant="body1" align="center" sx={{color: 'red'}}>?</Typography>
-                    ) : (
-                      <Typography variant="body1" align="center">{word.English}</Typography>
-                    )
-                  )
-                }
-              </Box>
-            ) : null
+    <Box
+      sx={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: 1,
+        mt: 2,
+        justifyContent: 'center',
+      }}
+    >
+      {wordsInChapter.map(({ word, displayIndex }, i) => {
+        const isCurrent = displayIndex === currentIndex;
+        const isTested =
+          displayIndex !== null && testWordIndices.has(displayIndex);
+
+        // Determine what to show as the English/context line
+        let contextLine: string | null = null;
+        if (showEnglishInContext) {
+          if (isCurrent) {
+            contextLine = showAnswer ? word.English : '?';
+          } else if (!showAnswerChecked) {
+            // hide all non-current words
+            contextLine = '?';
+          } else {
+            // showAnswerChecked === true
+            contextLine = isTested ? '?' : word.English;
           }
-        </Box>
-      ))}
+        }
+        let maxChars = Math.floor(Math.max(word.Greek.length, (word.English ? word.English.length : 0)) * 0.7);
+        let minWidth = `${maxChars}ch`;
+
+        return (
+          <Box
+            key={i}
+            onClick={() =>
+              typeof displayIndex === 'number' &&
+              setCurrentIndexAndProcess(displayIndex)
+            }
+            sx={{
+              textAlign: 'center',
+              cursor: displayIndex !== null ? 'pointer' : 'default',
+              color: 'inherit',
+              minWidth: minWidth,
+            }}
+          >
+            <Typography
+              variant="h6"
+              color={isCurrent ? 'red' : 'inherit'}
+              sx={{
+                textDecoration: isTested ? 'underline' : 'none',
+              }}
+            >
+              {word.Greek}
+            </Typography>
+
+            {showEnglishInContext && contextLine !== null && (
+              <Typography
+                variant="body2"
+                color={isCurrent ? 'red' : 'inherit'}
+              >
+                {contextLine}
+              </Typography>
+            )}
+          </Box>
+        );
+      })}
     </Box>
   );
 };
