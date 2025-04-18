@@ -1,10 +1,10 @@
 import { useAtom } from "jotai";
-import { chartsOpenAtom, helpOpenAtom, settingsOpenAtom } from "../atoms/headerAtoms";
+import { chartsOpenAtom, infoOpenAtom, settingsOpenAtom } from "../atoms/headerAtoms";
 
 
 
 export const useHeader = () => {
-    const [, setHelpOpen] = useAtom(helpOpenAtom);
+    const [, setHelpOpen] = useAtom(infoOpenAtom);
     const [, setChartsOpen] = useAtom(chartsOpenAtom);
     const [, setSettingsOpen] = useAtom(settingsOpenAtom);
 

@@ -4,7 +4,7 @@ import Popup from "../Popup";
 import React, {useContext} from "react";
 import {AppContext} from "../../contexts/AppContext";
 import grey from "@mui/material/colors/grey";
-import { helpOpenAtom } from "../../atoms/headerAtoms";
+import { infoOpenAtom } from "../../atoms/headerAtoms";
 import { useAtom } from "jotai";
 import TableChartIcon from '@mui/icons-material/TableChart';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -12,7 +12,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import { useNavigation } from "../useNavigation";
 
 const InfoPopup = () => {
-  const [helpOpen, setHelpOpen] = useAtom(helpOpenAtom);
+  const [infoOpen, setInfoOpen] = useAtom(infoOpenAtom);
   const theme = useTheme();
   const probablyNoKeyboard = useMediaQuery(theme.breakpoints.down('md'));
   const context = useContext(AppContext);
@@ -24,7 +24,7 @@ const InfoPopup = () => {
    testWordIndices, selectedTesters
   } = context;
 
-  return (<Popup open={helpOpen} onClose={() => setHelpOpen(false)} title="Help">
+  return (<Popup open={infoOpen} onClose={() => setInfoOpen(false)} title="Info">
       {/* List the keyboard shortcuts:
          LeftArrow = next word
          RightArrow = previous word
@@ -63,7 +63,13 @@ const InfoPopup = () => {
                   <pre>&gt; next tested word</pre>
                 </li>
                 <li>
-                  <pre>? open this menu (info)</pre>
+                  <pre>e toggle english</pre>
+                </li>
+                <li>
+                  <pre>g grammar tables</pre>
+                </li>
+                <li>
+                  <pre>? (this) info menu</pre>
                 </li>
                 <li>
                   <pre>/ open settings</pre>

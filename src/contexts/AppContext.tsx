@@ -8,6 +8,7 @@ import { useAtom } from 'jotai';
 import { startTestingAtom } from '../atoms/testingAtoms';
 import { defaultShowAnswerAtom, displayWordsAtom, openGNTDataAtom, readingModeAtom, selectedTestersAtom, showAnswerAtom, testWordIndicesAtom } from '../atoms/bibleDisplayAtoms';
 import { useNavigation } from '../components/useNavigation';
+import { settingsOpenAtom, infoOpenAtom, chartsOpenAtom } from '../atoms/headerAtoms';
 
 
 
@@ -22,7 +23,9 @@ interface AppProviderProps {
 export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
   const { currentChapter, currentIndex, goLeft, goRight, setCurrentIndexAndProcess} = useNavigation();
 
-
+  const [_, setSettingsOpen] = useAtom(settingsOpenAtom);
+  const [__, setInfoOpen] = useAtom(infoOpenAtom);
+  const [___, setChartsOpen] = useAtom(chartsOpenAtom);
   // const [selectedTesters, setSelectedTesters] = useState<Tester[]>([]);
   const [selectedTesters, setSelectedTesters] = useAtom(selectedTestersAtom);
   const [gotNewData, setGotNewData] = useState(false);
@@ -134,15 +137,33 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
       } else if (e.key === '>') {
         nextTestWord();
       } else if (e.key === ' ') {
-        // prevent scrolling on space
-        if (e.target === document.body) {
+        // Prevent default space key behavior if not in an input field
+        if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
           e.preventDefault();
+          flipCard();
         }
-        flipCard();
       } else if (e.key === '?') {
-        // TODO fix open help
+        // open the info modal
+        setInfoOpen((prev) => !prev);
+        setSettingsOpen(false);
+        setChartsOpen(false);
       } else if (e.key === '/') {
-        // TODO fix open settings
+        // open the settings modal
+        setSettingsOpen((prev) => !prev);
+        setInfoOpen(false);
+        setChartsOpen(false);
+      } else if (e.key.toLowerCase() === 'e') {
+        // toggle "Show English in Context"
+        if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+          setShowEnglishInContext(prev => !prev);
+        }
+      } else if (e.key.toLowerCase() === 'g') {
+        // toggle "Show English in Context"
+        if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+          setChartsOpen(prev => !prev);
+          setInfoOpen(false);
+          setSettingsOpen(false);
+        }
       } else if (e.key === 'ArrowUp') {
         e.preventDefault();
         markWord(currentIndex, true);
