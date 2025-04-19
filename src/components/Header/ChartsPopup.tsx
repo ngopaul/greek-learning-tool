@@ -1,46 +1,72 @@
-import {Box, Paper, Typography, useMediaQuery, useTheme} from "@mui/material";
-import {unitNameToTables} from "../../utils/ChapterTables";
-import Popup from "../Popup";
-import React, {useContext} from "react";
-import {AppContext} from "../../contexts/AppContext";
-import grey from "@mui/material/colors/grey";
-import { useAtom } from "jotai";
-import { displayWordsAtom } from "../../atoms/bibleDisplayAtoms";
-import { chartsOpenAtom } from "../../atoms/headerAtoms";
-import { useNavigation } from "../useNavigation";
+import React, { useContext } from 'react';
+import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
+import Popup from '../Popup';
+import { unitNameToTables } from '../../utils/ChapterTables';
+import { AppContext } from '../../contexts/AppContext';
+import { useAtom } from 'jotai';
+import { displayWordsAtom } from '../../atoms/bibleDisplayAtoms';
+import { chartsOpenAtom } from '../../atoms/headerAtoms';
+import { useNavigation } from '../useNavigation';
 
-const ChartsPopup = () => {
-  const [displayWords] = useAtom(displayWordsAtom)
+const ChartsPopup: React.FC = () => {
+  const [displayWords] = useAtom(displayWordsAtom);
   const [chartsOpen, setChartsOpen] = useAtom(chartsOpenAtom);
-
-  const theme = useTheme();
+  const { currentIndex } = useNavigation();
   const context = useContext(AppContext);
-  const {currentIndex} = useNavigation();
-  if (!context) {
-    return null;
-  }
-  const { testWordIndices, selectedTesters
-  } = context;
-  
+  if (!context) return null;
+  const { RMACDescriptions } = context;
 
-  return (<Popup open={chartsOpen} onClose={() => setChartsOpen(false)} title="Grammar Tables">
-      {/* List the keyboard shortcuts:
-         LeftArrow = next word
-         RightArrow = previous word
-         Spacebar/UpArrow/DownArrow = flip card
-         > = next tested word (if selected at least one unit to test)
-         < = previous tested word (if selected at least one unit to test)
-         ? = open or close this menu (showing a helpful chart when testing a unit)
-         */}
-      <Box>
-        {testWordIndices && (testWordIndices.has(currentIndex) && displayWords[currentIndex] && displayWords[currentIndex].StudyChunkID) ? (unitNameToTables[displayWords[currentIndex].StudyChunkID.split(" | ")[0]]) : (selectedTesters.length === 1 ? (unitNameToTables[selectedTesters[0].value]) : (
-            <Typography variant="subtitle2" color={grey[800]}>
-              When you have selected one Textbook Unit, this area will show the grammar tables for that Textbook Unit.
-              When you have selected multiple Textbook Units at the same time, 
-              this area will ONLY show the relevant grammar tables on a word that is taught in one of the selected Textbook Units.
-            </Typography>))}
+  // Grab the current word (or undefined)
+  const currentWord = displayWords[currentIndex];
+  const isFinished =
+    !currentWord ||
+    currentWord.StudyChunkID === 'finished round of testing';
+
+  return (
+    <Popup
+      open={chartsOpen}
+      onClose={() => setChartsOpen(false)}
+      title="Grammar Tables"
+    >
+      <Box p={2}>
+        {isFinished ? (
+          <Typography>No grammar tables available for this item.</Typography>
+        ) : (() => {
+          // Extract unit and table lookup
+          const { StudyChunkID, Greek, Morphology } = currentWord!;
+
+          if (!StudyChunkID) {
+            return (
+              <Typography>
+                No grammar tables available for this item.
+              </Typography>
+            );
+          }
+
+          const unit = StudyChunkID.split(' | ')[0];
+          const tables = unitNameToTables[unit];
+
+          if (tables) {
+            return (
+              <>
+                <Typography variant="h6" gutterBottom>
+                  Grammar Tables for {Greek} – {RMACDescriptions[Morphology]}
+                </Typography>
+                <Box>{tables}</Box>
+              </>
+            );
+          } else {
+            return (
+              <Typography>
+                This word ({Greek} – {RMACDescriptions[Morphology]}) is not yet part of any textbook
+                grammar chart, so there are no grammar tables to display.
+              </Typography>
+            );
+          }
+        })()}
       </Box>
-    </Popup>)
-}
+    </Popup>
+  );
+};
 
 export default ChartsPopup;
