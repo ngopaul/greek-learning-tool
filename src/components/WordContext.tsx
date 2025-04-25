@@ -9,8 +9,8 @@ const WordContext: React.FC = () => {
   const [displayWords] = useAtom(displayWordsAtom);
   const { currentIndex, setCurrentIndexAndProcess } = useNavigation();
   const context = useContext(AppContext);
-
   if (!context) return null;
+
   const {
     openGNTData,
     testWordIndices,
@@ -19,7 +19,7 @@ const WordContext: React.FC = () => {
     showAnswerChecked,
   } = context;
 
-  // Nothing to show unless we're in a valid verse
+  // 1. Bail out if no words or bad index
   if (
     displayWords.length === 0 ||
     currentIndex < 0 ||
@@ -29,29 +29,42 @@ const WordContext: React.FC = () => {
   }
 
   const currentWord = displayWords[currentIndex];
-  if (currentWord.StudyChunkID === 'finished round of testing') {
+
+  // 2. If it's the "finished" marker or has no BCVW, bail out
+  if (
+    currentWord.StudyChunkID === 'finished round of testing' ||
+    !currentWord.BookChapterVerseWord
+  ) {
     return null;
   }
 
+  // 3. Destructure safely
   const { book, chapter, verse } = currentWord.BookChapterVerseWord;
 
-  // Gather all words in this verse, and record their index within displayWords (or null)
+  // 4. Collect only those openGNTData entries with a non-null BCVW that match this verse
   const wordsInChapter = openGNTData
-    .filter(
-      w =>
-        w.BookChapterVerseWord.book === book &&
-        w.BookChapterVerseWord.chapter === chapter &&
-        w.BookChapterVerseWord.verse === verse
-    )
-    .map(w => {
-      const idx = displayWords.findIndex(
-        dw =>
-          dw.BookChapterVerseWord.book === w.BookChapterVerseWord.book &&
-          dw.BookChapterVerseWord.chapter === w.BookChapterVerseWord.chapter &&
-          dw.BookChapterVerseWord.verse === w.BookChapterVerseWord.verse &&
-          dw.BookChapterVerseWord.word === w.BookChapterVerseWord.word
+    .filter(w => w.BookChapterVerseWord != null)
+    .filter(w => {
+      const bcw = w.BookChapterVerseWord!;
+      return (
+        bcw.book === book &&
+        bcw.chapter === chapter &&
+        bcw.verse === verse
       );
-      return { word: w, displayIndex: idx >= 0 ? idx : null };
+    })
+    .map(w => {
+      // find its index in displayWords (or null if not found)
+      const idx = displayWords.findIndex(dw =>
+        dw.BookChapterVerseWord != null &&
+        dw.BookChapterVerseWord.book === w.BookChapterVerseWord!.book &&
+        dw.BookChapterVerseWord.chapter === w.BookChapterVerseWord!.chapter &&
+        dw.BookChapterVerseWord.verse === w.BookChapterVerseWord!.verse &&
+        dw.BookChapterVerseWord.word === w.BookChapterVerseWord!.word
+      );
+      return {
+        word: w,
+        displayIndex: idx >= 0 ? idx : null,
+      };
     });
 
   return (
@@ -69,21 +82,22 @@ const WordContext: React.FC = () => {
         const isTested =
           displayIndex !== null && testWordIndices.has(displayIndex);
 
-        // Determine what to show as the English/context line
         let contextLine: string | null = null;
         if (showEnglishInContext) {
           if (isCurrent) {
             contextLine = showAnswer ? word.English : '?';
           } else if (!showAnswerChecked) {
-            // hide all non-current words
             contextLine = '?';
           } else {
-            // showAnswerChecked === true
             contextLine = isTested ? '?' : word.English;
           }
         }
-        let maxChars = Math.floor(Math.max(word.Greek.length, (word.English ? word.English.length : 0)) * 0.7);
-        let minWidth = `${maxChars}ch`;
+
+        // Reserve approximate width so “?” vs full English doesn't shrink
+        const greekText = word.Greek || '';
+        const englishText = word.English || '';
+        const maxChars = Math.max(greekText.length, englishText.length);
+        const minWidth = `${maxChars}ch`;
 
         return (
           <Box
@@ -95,18 +109,15 @@ const WordContext: React.FC = () => {
             sx={{
               textAlign: 'center',
               cursor: displayIndex !== null ? 'pointer' : 'default',
-              color: 'inherit',
-              minWidth: minWidth,
+              minWidth,
             }}
           >
             <Typography
               variant="h6"
               color={isCurrent ? 'red' : 'inherit'}
-              sx={{
-                textDecoration: isTested ? 'underline' : 'none',
-              }}
+              sx={{ textDecoration: isTested ? 'underline' : 'none' }}
             >
-              {word.Greek}
+              {greekText}
             </Typography>
 
             {showEnglishInContext && contextLine !== null && (
