@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Popup from '../Popup';
 import { unitNameToTables } from '../../utils/ChapterTables';
 import { AppContext } from '../../contexts/AppContext';
@@ -14,9 +14,9 @@ const ChartsPopup: React.FC = () => {
   const { currentIndex } = useNavigation();
   const context = useContext(AppContext);
   if (!context) return null;
-  const { RMACDescriptions } = context;
 
-  // Grab the current word (or undefined)
+  const { RMACDescriptions, selectedTesters } = context;
+
   const currentWord = displayWords[currentIndex];
   const isFinished =
     !currentWord ||
@@ -32,37 +32,51 @@ const ChartsPopup: React.FC = () => {
         {isFinished ? (
           <Typography>No grammar tables available for this item.</Typography>
         ) : (() => {
-          // Extract unit and table lookup
           const { StudyChunkID, Greek, Morphology } = currentWord!;
-
           if (!StudyChunkID) {
             return (
-              <Typography>
-                No grammar tables available for this item.
-              </Typography>
+              <Typography>No grammar tables available for this item.</Typography>
             );
           }
 
-          const unit = StudyChunkID.split(' | ')[0];
-          const tables = unitNameToTables[unit];
+          const wordUnit = StudyChunkID.split(' | ')[0];
+          const wordTables = unitNameToTables[wordUnit];
 
-          if (tables) {
+          // 1) If there are direct tables for this word's unit, show them
+          if (wordTables) {
             return (
               <>
                 <Typography variant="h6" gutterBottom>
-                  Grammar Tables for {Greek} – {RMACDescriptions[Morphology]}
+                  Grammar Tables for {Greek} – {RMACDescriptions[Morphology]}
                 </Typography>
-                <Box>{tables}</Box>
+                <Box>{wordTables}</Box>
               </>
             );
-          } else {
-            return (
-              <Typography>
-                This word ({Greek} – {RMACDescriptions[Morphology]}) is not yet part of any textbook
-                grammar chart, so there are no grammar tables to display.
-              </Typography>
-            );
           }
+
+          // 2) Otherwise, if exactly one unit is selected, show that unit's tables if they exist
+          if (selectedTesters.length === 1) {
+            const fallbackUnit = selectedTesters[0].value;
+            const fallbackTables = unitNameToTables[fallbackUnit];
+            if (fallbackTables) {
+              return (
+                <>
+                  <Typography variant="h6" gutterBottom>
+                    Grammar Tables for {Greek} – {RMACDescriptions[Morphology]}
+                  </Typography>
+                  <Box>{fallbackTables}</Box>
+                </>
+              );
+            }
+          }
+
+          // 3) No tables found in either case
+          return (
+            <Typography>
+              This word ({Greek} – {RMACDescriptions[Morphology]}) is not yet part
+              of any textbook grammar chart, so there are no grammar tables to display.
+            </Typography>
+          );
         })()}
       </Box>
     </Popup>
