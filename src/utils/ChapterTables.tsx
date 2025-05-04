@@ -233,11 +233,11 @@ const chapter10_4 : SimpleTableData= [
 const chapter11_1 : SimpleTableData= [
   {title: '3rd Declension Noun Endings', numColumns: 5},
   ['Declension', 'Masc/Fem Sing.',  'Masc/Fem Pl.', 'Neuter Singular', 'Neuter Plural'],
-  ['Nominative', '-ς (possibly dropped)', '-ες', '[stem - no ending]', '-α'],
+  ['Nominative', '-ς', '-ες', '[no ending]', '-α'],
   ['Genitive', '-ος', '-ων', '-ος', '-ων'],
   ['Dative', '-ι(ν)', '-σι(ν)', '-ι(ν)', '-σι(ν)'],
-  ['Accusative', '-α/-ν', '-ας', '[stem - no ending]', '-α'],
-  ['Vocative', '-ς (or none, & possible vowel shortened)', '-ες', '[stem - no ending]', '-α'],
+  ['Accusative', '-α/-ν', '-ας', '[no ending]', '-α'],
+  ['Vocative', '-ς (possibly shortened vowel)', '-ες', '[no ending]', '-α'],
 ];
 
 const chapter11_2 : SimpleTableData= [
@@ -295,7 +295,6 @@ const chapter11_5 : SimpleTableData= [
   ['Dat.', 'εσσι→εσι', 'γένεσι', 'ἔτεσι', 'ἔθνεσι', 'μέλεσι'],
   ['Acc.', 'εσα→η', 'γένη', 'ἔτη', 'ἔθνη', 'μέλη'],
 ]
-
 
 // Adjectives which don't follow the rules (Third Declension and Irregular Adjectives)
 const chapter14_1 : SimpleTableData= [
@@ -423,6 +422,15 @@ export const unitNameToTables: Record<string, ReactNode> = {
       <SimpleTable data={chapter10_2}/>
       <SimpleTable data={chapter10_3}/>
       <SimpleTable data={chapter10_4}/>
+    </div>
+  ),
+  "Unit 11": (
+    <div>
+      <SimpleTable data={chapter11_1}/>
+      <SimpleTable data={chapter11_2}/>
+      <SimpleTable data={chapter11_3}/>
+      <SimpleTable data={chapter11_4}/>
+      <SimpleTable data={chapter11_5}/>
     </div>
   ),
   "Unit 14": (
