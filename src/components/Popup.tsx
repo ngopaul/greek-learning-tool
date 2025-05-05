@@ -35,7 +35,7 @@ const Popup = ({ open, onClose, title, children }: PopupProps) => {
       {/* Dialog Content */}
       <DialogContent dividers>
         {/* Wraps content inside DialogContent to ensure scrolling */}
-        <Box mt={2}>{children}</Box>
+        <Box>{children}</Box>
       </DialogContent>
     </Dialog>
   );
