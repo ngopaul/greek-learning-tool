@@ -237,7 +237,7 @@ const chapter11_1 : SimpleTableData= [
   ['Genitive', '-ος', '-ων', '-ος', '-ων'],
   ['Dative', '-ι(ν)', '-σι(ν)', '-ι(ν)', '-σι(ν)'],
   ['Accusative', '-α/-ν', '-ας', '[no ending]', '-α'],
-  ['Vocative', '-ς (possibly shortened vowel)', '-ες', '[no ending]', '-α'],
+  ['Vocative', '-ς', '-ες', '[no ending]', '-α'],
 ];
 
 const chapter11_2 : SimpleTableData= [

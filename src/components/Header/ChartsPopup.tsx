@@ -22,6 +22,32 @@ const ChartsPopup: React.FC = () => {
     !currentWord ||
     currentWord.StudyChunkID === 'finished round of testing';
 
+  let fallbackHTML = (
+    <>
+      <Typography variant="body1" gutterBottom>
+        No grammar tables available for this item.
+      </Typography>
+    </>
+  );
+
+  if (selectedTesters.length >= 1) {
+    const fallbackUnit = selectedTesters[0].value;
+    const fallbackTables = unitNameToTables[fallbackUnit];
+
+    fallbackHTML = fallbackTables ? (
+      <>
+        <Typography variant="body1" gutterBottom>
+          Showing the grammar table for the first selected unit (
+          {fallbackUnit}):
+        </Typography>
+       <Box>{fallbackTables}</Box>
+      </>
+    ) : (
+      <Typography>No grammar tables available for this item.</Typography>
+    );
+  }
+
+  
   return (
     <Popup
       open={chartsOpen}
@@ -30,13 +56,11 @@ const ChartsPopup: React.FC = () => {
     >
       <Box p={2}>
         {isFinished ? (
-          <Typography>No grammar tables available for this item.</Typography>
+          fallbackHTML
         ) : (() => {
           const { StudyChunkID, Greek, Morphology } = currentWord!;
           if (!StudyChunkID) {
-            return (
-              <Typography>No grammar tables available for this item.</Typography>
-            );
+            return fallbackHTML;
           }
 
           const wordUnit = StudyChunkID.split(' | ')[0];
@@ -55,28 +79,15 @@ const ChartsPopup: React.FC = () => {
           }
 
           // 2) Otherwise, if exactly one unit is selected, show that unit's tables if they exist
-          if (selectedTesters.length === 1) {
-            const fallbackUnit = selectedTesters[0].value;
-            const fallbackTables = unitNameToTables[fallbackUnit];
-            if (fallbackTables) {
-              return (
-                <>
-                  <Typography variant="h6" gutterBottom>
-                    Grammar Tables for {Greek} – {RMACDescriptions[Morphology]}
-                  </Typography>
-                  <Box>{fallbackTables}</Box>
-                </>
-              );
-            }
-          }
-
-          // 3) No tables found in either case
           return (
-            <Typography>
-              This word ({Greek} – {RMACDescriptions[Morphology]}) is not yet part
-              of any textbook grammar chart, so there are no grammar tables to display.
-            </Typography>
+            <>
+              <Typography variant="h6" gutterBottom>
+                No Grammar Tables for {Greek} – {RMACDescriptions[Morphology]}
+              </Typography>
+              <Box>{fallbackHTML}</Box>
+            </>
           );
+
         })()}
       </Box>
     </Popup>

@@ -86,7 +86,6 @@ export const useNavigation = () => {
       setCurrentBook(undefined);
     }
     setCurrentChapter(undefined);
-    setSelectedTesters([]);
     setCurrentIndexAndProcess(0);
     setDisplayWords([]);
     setTestWordIndices(new Set());
