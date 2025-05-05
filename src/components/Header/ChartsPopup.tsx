@@ -59,8 +59,17 @@ const ChartsPopup: React.FC = () => {
           fallbackHTML
         ) : (() => {
           const { StudyChunkID, Greek, Morphology } = currentWord!;
-          if (!StudyChunkID) {
+          if (!Greek) {
             return fallbackHTML;
+          } else if (!StudyChunkID) {
+            return (
+              <>
+                <Typography variant="h6" gutterBottom>
+                  No Grammar Tables for {Greek} – {RMACDescriptions[Morphology]}
+                </Typography>
+                <Box>{fallbackHTML}</Box>
+              </>
+            )
           }
 
           const wordUnit = StudyChunkID.split(' | ')[0];
