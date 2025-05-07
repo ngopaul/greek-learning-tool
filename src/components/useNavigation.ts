@@ -1,10 +1,5 @@
-import { useEffect } from "react";
-import {
-  BookOption,
-  ChapterOption,
-  VerseOption,
-} from "../types/AppContextTypes";
-import { useAtom } from "jotai";
+// src/components/useNavigation.ts
+import { useAtom } from 'jotai';
 import {
   currentBookAtom,
   currentChapterAtom,
@@ -13,142 +8,125 @@ import {
   displayWordsAtom,
   openGNTDataAtom,
   readingModeAtom,
-  selectedTestersAtom,
   showAnswerAtom,
   testWordIndicesAtom,
-} from "../atoms/bibleDisplayAtoms";
+} from '../atoms/bibleDisplayAtoms';
+import {
+  BookOption,
+  ChapterOption,
+  VerseOption,
+} from '../types/AppContextTypes';
 
 export const useNavigation = () => {
-  const [displayWords, setDisplayWords] = useAtom(displayWordsAtom);
-  const [currentIndex, setCurrentIndex] = useAtom(currentIndexAtom);
-  const [currentChapter, setCurrentChapter] = useAtom(currentChapterAtom);
-  const [currentBook, setCurrentBook] = useAtom(currentBookAtom);
-
-  //temporary
-  const [showAnswer, setShowAnswer] = useAtom(showAnswerAtom);
-  const [defaultShowAnswer, setDefaultShowAnswer] = useAtom(
-    defaultShowAnswerAtom
-  );
-  const [openGNTData, setOpenGNTData] = useAtom(openGNTDataAtom);
-  const [selectedTesters, setSelectedTesters] = useAtom(selectedTestersAtom);
+  const [currentBook, setCurrentBook]         = useAtom(currentBookAtom);
+  const [currentChapter, setCurrentChapter]   = useAtom(currentChapterAtom);
+  const [currentIndex, setCurrentIndexRaw]    = useAtom(currentIndexAtom);
+  const [displayWords, setDisplayWords]       = useAtom(displayWordsAtom);
+  const [openGNTData]                         = useAtom(openGNTDataAtom);
   const [testWordIndices, setTestWordIndices] = useAtom(testWordIndicesAtom);
-  const [readingMode, setReadingMode] = useAtom(readingModeAtom);
-  
+  const [showAnswer, setShowAnswer]           = useAtom(showAnswerAtom);
+  const [defaultShowAnswer]                   = useAtom(defaultShowAnswerAtom);
+  const [readingMode]                         = useAtom(readingModeAtom);
 
-  useEffect(() => {
-    if (currentChapter && currentChapter.data && readingMode == "chapter") {
-      setDisplayWords(currentChapter.data);
-      setCurrentIndexAndProcess(0);
-    }
-  }, [currentBook, currentChapter, readingMode]);
-
-  const goLeft = () => {
-    setCurrentIndexAndProcess(Math.max(currentIndex - 1, 0));
+  // unified setter that applies the "hide answer if tested" logic
+  const setCurrentIndex = (idx: number) => {
+    if (idx == null || isNaN(idx) || idx < 0 || idx >= displayWords.length) return;
+    setCurrentIndexRaw(idx);
+    setShowAnswer(testWordIndices?.has(idx) ? false : defaultShowAnswer);
   };
 
-  const goRight = () => {
-    setCurrentIndexAndProcess(
-      Math.min(currentIndex + 1, displayWords.length - 1)
-    );
-  };
-
-  const setCurrentIndexAndProcess = (
-    idx: number,
-    newDisplayWords = displayWords,
-    newTestWordIndices = testWordIndices
+  /**
+   * navigateTo(book?, chapter?, verse?)
+   * - if book or chapter changed → reload displayWords + clear test indices
+   * - always calls setCurrentIndex( … ) with either the matching verse index, or 0
+   */
+  const navigateTo = (
+    bookOpt?: BookOption,
+    chapOpt?: ChapterOption,
+    verseOpt?: VerseOption
   ) => {
-    if (
-      !newTestWordIndices ||
-      idx === null ||
-      idx === undefined ||
-      isNaN(idx) ||
-      idx < 0 ||
-      idx >= newDisplayWords.length
-    ) {
+    // 1) no book = full reset
+    if (!bookOpt) {
+      setCurrentBook(undefined);
+      setCurrentChapter(undefined);
+      setDisplayWords([]);
+      setTestWordIndices(new Set());
+      setCurrentIndexRaw(0);
+      setShowAnswer(defaultShowAnswer);
       return;
     }
-    setCurrentIndex(idx);
-    if (newTestWordIndices.has(idx)) {
-      setShowAnswer(false);
-    } else if (readingMode === "chapter") {
-      setShowAnswer(defaultShowAnswer);
-    } else if (readingMode === "unit" && idx !== displayWords.length) {
-      setShowAnswer(defaultShowAnswer);
-    } else {
-      setShowAnswer(true);
-    }
-  };
 
-  const onBookSelect = (selected: BookOption) => {
-    if (selected && selected.value) {
-      setCurrentBook(selected);
-    } else {
-      setCurrentBook(undefined);
-    }
-    setCurrentChapter(undefined);
-    setSelectedTesters([]);
-    setCurrentIndexAndProcess(0);
-    setDisplayWords([]);
-    setTestWordIndices(new Set());
-    setShowAnswer(defaultShowAnswer);
-  };
+    const sameBook    = currentBook?.value === bookOpt.value;
+    const sameChapter =
+      sameBook && currentChapter?.chapterValue === chapOpt?.value;
 
-  const onChapterSelect = (selected: ChapterOption) => {
-    if (!currentBook) {
-      // TODO: Handle when book is not selected and selecting chapter here.
-      return false;
-    }
-    if (selected) {
-      const temporaryCurrentChapter = selected;
-      const filteredData = openGNTData.filter((item) => {
-        if (!item) {
-          return false;
-        }
-        const bookChapterVerseWord = item.BookChapterVerseWord;
-        if (!bookChapterVerseWord) {
-          return false;
-        }
+    // 2) book or chapter changed → reload that chapter
+    if (!sameBook || !sameChapter) {
+      setCurrentBook(bookOpt);
 
-        // Extract chapter info from 'OpenTextWord_KEY'
-        // Example Key: "〔40.1.1.w1〕" where 40 = Matthew
+      if (!chapOpt) {
+        // book-only navigation
+        setCurrentChapter(undefined);
+        setDisplayWords([]);
+        setTestWordIndices(new Set());
+        setCurrentIndexRaw(0);
+        setShowAnswer(defaultShowAnswer);
+        return;
+      }
+
+      // load the new chapter's words
+      const filtered = openGNTData.filter(item => {
+        const bcw = item.BookChapterVerseWord;
         return (
-          bookChapterVerseWord.book === currentBook.value &&
-          bookChapterVerseWord.chapter === temporaryCurrentChapter.value
+          bcw != null &&
+          bcw.book === bookOpt.value &&
+          bcw.chapter === chapOpt.value
         );
       });
-      setCurrentChapter({
-        bookName: currentBook.label,
-        bookValue: currentBook.value,
-        chapterName: temporaryCurrentChapter.label,
-        chapterValue: temporaryCurrentChapter.value,
-        data: filteredData,
-      });
-      setSelectedTesters([...selectedTesters]); // trigger re-render so testers update
-    } else {
-      setCurrentChapter(undefined);
-    }
-  };
 
-  const onVerseSelect = (selected: VerseOption) => {
-    if (!selected) {
-      return;
-    }
-    for (let i = 0; i < displayWords.length; i++) {
-      if (displayWords[i].BookChapterVerseWord.verse === selected.value) {
-        setCurrentIndexAndProcess(i);
-        return;
+      setCurrentChapter({
+        bookName:    bookOpt.label,
+        bookValue:   bookOpt.value,
+        chapterName: chapOpt.label,
+        chapterValue: chapOpt.value,
+        data:         filtered,
+      });
+      setDisplayWords(filtered);
+      setTestWordIndices(new Set());
+
+      // pick the verse index (or 0 if none)
+      if (verseOpt) {
+        const idx = filtered.findIndex(item => {
+          const bcw = item.BookChapterVerseWord!;
+          return bcw.verse === verseOpt.value;
+        });
+        setCurrentIndex(idx >= 0 ? idx : 0);
+      } else {
+        setCurrentIndex(0);
+      }
+    } else {
+      // 3) same book+chapter: only verse may have changed
+      if (verseOpt) {
+        const idx = displayWords.findIndex(item => {
+          const bcw = item.BookChapterVerseWord!;
+          return bcw.verse === verseOpt.value;
+        });
+        if (idx >= 0) setCurrentIndex(idx);
       }
     }
   };
 
+  const goLeft  = () => setCurrentIndex(Math.max(currentIndex - 1, 0));
+  const goRight = () => setCurrentIndex(Math.min(currentIndex + 1, displayWords.length - 1));
+
   return {
+    currentBook,
     currentChapter,
     currentIndex,
-    onChapterSelect,
+    displayWords,
+    navigateTo,
     goLeft,
     goRight,
-    setCurrentIndexAndProcess,
-    onVerseSelect,
-    onBookSelect,
+    setCurrentIndex,
   };
 };
