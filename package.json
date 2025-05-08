@@ -31,7 +31,7 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build-search-index": "ts-node scripts/buildSearchIndex.ts",
-    "build": "npm run build-search-index && react-app-rewired build",
+    "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject"
   },
