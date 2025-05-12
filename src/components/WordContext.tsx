@@ -7,7 +7,7 @@ import { useNavigation } from './useNavigation';
 
 const WordContext: React.FC = () => {
   const [displayWords] = useAtom(displayWordsAtom);
-  const { currentIndex, setCurrentIndexAndProcess } = useNavigation();
+  const { currentIndex, setCurrentIndex } = useNavigation();
   const context = useContext(AppContext);
   if (!context) return null;
 
@@ -104,7 +104,7 @@ const WordContext: React.FC = () => {
             key={i}
             onClick={() =>
               typeof displayIndex === 'number' &&
-              setCurrentIndexAndProcess(displayIndex)
+              setCurrentIndex(displayIndex)
             }
             sx={{
               textAlign: 'center',

@@ -1,161 +1,136 @@
-import React, {useContext, useState} from 'react';
-import {AppBar, Box, IconButton, Toolbar } from '@mui/material';
+import React, { useContext, useState } from 'react';
+import { AppBar, Box, IconButton, Toolbar } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { ContentCopy, BugReport } from '@mui/icons-material';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
-import {listOfBooks} from "../utils/constants";
-import {bibleBookAbbreviations, bibleBookNameToChapterCounts, bibleBookVerseCounts} from "../utils/bibleUtils";
-import {AppContext} from "../contexts/AppContext";
-import SettingsPopup from "./Header/SettingsPopup";
-import InfoPopup from "./Header/InfoPopup";
+import { listOfBooks } from '../utils/constants';
+import {
+  bibleBookAbbreviations,
+  bibleBookNameToChapterCounts,
+  bibleBookVerseCounts
+} from '../utils/bibleUtils';
+import { AppContext } from '../contexts/AppContext';
+import SettingsPopup from './Header/SettingsPopup';
+import InfoPopup from './Header/InfoPopup';
 import { BookOption, ChapterOption, VerseOption } from '../types/AppContextTypes';
-import ChartsPopup from "./Header/ChartsPopup";
+import ChartsPopup from './Header/ChartsPopup';
 import TableChartIcon from '@mui/icons-material/TableChart';
 import { useHeader } from './useHeader';
 import { useNavigation } from './useNavigation';
+import SearchPopup from './SearchPopup';
+import { searchOpenAtom } from '../atoms/headerAtoms';
+import { useAtom } from 'jotai';
 
-let bookOptions : BookOption[] = [];
+let bookOptions: BookOption[] = [];
 let startValue = 40;
-
 for (let i = 39; i < listOfBooks.length; i++) {
-  let book = listOfBooks[i];
-  let capitalizedBook = bibleBookAbbreviations[book] || book.charAt(0).toUpperCase() + book.slice(1);
-  bookOptions.push({value: startValue, label: capitalizedBook});
+  const book = listOfBooks[i];
+  const label =
+    bibleBookAbbreviations[book] ||
+    book.charAt(0).toUpperCase() + book.slice(1);
+  bookOptions.push({ value: startValue, label });
   startValue++;
 }
 
 const animatedComponents = makeAnimated();
-
-
-// TODO (Caleb): clean up the anys!!
 const customStyles = {
-  option: (provided: any) => ({
-    ...provided, color: 'black',      // Customize text color
-    padding: 10,         // Customize padding
-  }), singleValue: (provided: any) => ({
-    ...provided, color: 'black',      // Customize text color of the selected value
-    fontSize: '1.0rem',  // Customize text size
-  }), placeholder: (provided: any) => ({
-    ...provided, color: 'grey',       // Customize placeholder text color
-  }),
+  option: (provided: any) => ({ ...provided, color: 'black', padding: 10 }),
+  singleValue: (provided: any) => ({ ...provided, color: 'black', fontSize: '1rem' }),
+  placeholder: (provided: any) => ({ ...provided, color: 'grey' }),
 };
 
-const Header = () => {
-  // Currently the 'selectedVerse' state is not reactive. Use this as temporary measure until 'selectedVerse' is reactive.
-  const [curSelectedVerse, setCurSelectedVerse] = React.useState<VerseOption>();
-  const [handleSettingsClick, handleHelpClick, handleChartsClick] = useHeader();
-  const {
-    onVerseSelect,
-    onBookSelect,
-    onChapterSelect,
-  
-  } = useNavigation();
-  const [selectedBook, setSelectedBook] = useState<string>();
-  const [selectedChapter, setSelectedChapter] = useState<ChapterOption>();
-  const [selectedVerse, setSelectedVerse] = useState<VerseOption>();
-  const [chapterOptions, setChapterOptions] = useState<ChapterOption[]>([]);
-  const [verseOptions, setVerseOptions] = useState<VerseOption[]>([]);
-
-
-
+const Header: React.FC = () => {
+  const [curSelectedVerse, setCurSelectedVerse] = useState<VerseOption>();
+  const [handleSettingsClick, handleHelpClick, handleChartsClick, handleSearchClick] =
+    useHeader();
+  const { navigateTo } = useNavigation();
+  const [selectedBookOption, setSelectedBookOption]     = useState<BookOption>();
+  const [selectedChapterOption, setSelectedChapterOption] = useState<ChapterOption>();
+  const [selectedVerseOption, setSelectedVerseOption]     = useState<VerseOption>();
+  const [chapterOptions, setChapterOptions]             = useState<ChapterOption[]>([]);
+  const [verseOptions, setVerseOptions]                 = useState<VerseOption[]>([]);
+  const [searchOpen, setSearchOpen] = useAtom(searchOpenAtom);
 
   const context = useContext(AppContext);
-  if (!context) {
-    return null;
-  }
-  const {
-    studyChunks,
-    onTesterSelect,
-    setSelectedTesters,
-    handleCopyClick,
-    printDebug,
-    readingMode
-  } = context;
+  if (!context) return null;
+  const { studyChunks, onTesterSelect, setSelectedTesters, handleCopyClick, printDebug, readingMode } =
+    context;
 
-  
+  // Generate study-chunk options...
+  const createStudyChunkOptions = (sc: any) =>
+    Object.keys(sc).map(unit => ({ label: unit, value: unit }));
 
-  type StudyChunkOption = {label: string, value: string}
-
-  // Function to generate studyChunkOptions
-  // TODO (Caleb): investigate this any.
-  const createStudyChunkOptions = (studyChunks: any): StudyChunkOption[] => {
-    let studyChunkOptions: StudyChunkOption[] = [];
-
-    Object.keys(studyChunks).forEach(unit => {
-      const label = `${unit}`;
-      const value = `${unit}`; // You can customize the value based on your requirements
-      studyChunkOptions.push({label, value});
-    });
-
-    return studyChunkOptions;
-  };
-
-  return (<>
+  return (
+    <>
       <AppBar position="static">
         <Toolbar>
-          {/* Home Button */}
-          <IconButton edge="start" color="inherit" aria-label="home" onClick={handleSettingsClick}>
-            <SettingsIcon/>
+          <IconButton edge="start" color="inherit" onClick={handleSettingsClick}>
+            <SettingsIcon />
           </IconButton>
-          <Box sx={{
-            display: 'flex', flexDirection: 'row', // Change layout based on screen size
-            width: '100%', justifyContent: 'space-between', alignItems: 'center',
-            flexWrap: 'wrap', gap: 1, py: 1
-          }}>
-            {readingMode === 'chapter' ? (<>
-                {/* Book Dropdown */}
-                <Box sx={{flexGrow: 5, mx: 1}}>
+          <IconButton color="inherit" onClick={handleSearchClick}>
+            <SearchIcon />
+          </IconButton>
+          <Box
+            sx={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              width: '100%',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              gap: 1,
+              py: 1,
+            }}
+          >
+            {readingMode === 'chapter' && (
+              <>
+                {/* Book */}
+                <Box sx={{ flexGrow: 5, mx: 1 }}>
                   <Select
                     options={bookOptions}
-                    onChange={(selected) => {
-                      if (selected === null) {
-                        console.error("selected book is null somehow. investigate");
-                        return;
-                      }
-                      setSelectedBook(selected.label.toLowerCase())
-                      onBookSelect(selected);
-                      setSelectedChapter(undefined);
-                      setSelectedVerse(undefined);
-                      let temporaryChapterOptions = [];
-                      for (let i = 0; i < bibleBookNameToChapterCounts[selected.label.toLowerCase()]; ++i) {
-                        temporaryChapterOptions.push({'value': i + 1, 'label': (i + 1).toString()});
-                      }
-                      setChapterOptions(temporaryChapterOptions);
+                    onChange={book => {
+                      if (!book) return;
+                      setSelectedBookOption(book);
+                      navigateTo(book); // only book
+                      setSelectedChapterOption(undefined);
+                      setSelectedVerseOption(undefined);
+                      // build chapter list
+                      const count = bibleBookNameToChapterCounts[book.label.toLowerCase()];
+                      setChapterOptions(
+                        Array.from({ length: count }, (_, i) => ({
+                          value: i + 1,
+                          label: String(i + 1),
+                        }))
+                      );
                     }}
                     placeholder="Book"
                     styles={customStyles}
                   />
                 </Box>
 
-                {/* Chapter Dropdown */}
-                <Box sx={{flexGrow: 1, mx: 1}}>
+                {/* Chapter */}
+                <Box sx={{ flexGrow: 1, mx: 1 }}>
                   <Select
-                    value={selectedChapter}
+                    value={selectedChapterOption}
                     options={chapterOptions}
-                    onChange={(selected) => {
-                      if (!selected) {
-                        console.error("chapter dropdown onchange is undefined somehow. investigate");
-                        return;
-                      }
-                      //TODO Caleb: replicate this pattern in other places.
-                      setSelectedChapter(selected === null ? undefined : selected);
-                      onChapterSelect(selected);
-                      setSelectedVerse(undefined);
-                      if (selected && selected.value) {
-                        let temporaryVerseOptions = [];
-                        if (selectedBook === undefined) {
-                          console.error("selectedBook is undefined somehow. inestigate this")
-                          return;
-                        }
-                        // bibleBookVerseCounts maps lowercase bible book names to a list of verses in each chapter
-                        const verseCount = bibleBookVerseCounts[selectedBook.toLowerCase()][selected.value - 1];
-                        for (let i = 0; i < verseCount; ++i) {
-                          temporaryVerseOptions.push({'value': i + 1, 'label': (i + 1).toString()});
-                        }
-                        setVerseOptions(temporaryVerseOptions);
-                      }
+                    onChange={chap => {
+                      if (!chap || !selectedBookOption) return;
+                      setSelectedChapterOption(chap);
+                      navigateTo(selectedBookOption, chap);
+                      setSelectedVerseOption(undefined);
+                      // build verse list
+                      const verses =
+                        bibleBookVerseCounts[selectedBookOption.label.toLowerCase()][
+                          chap.value - 1
+                        ];
+                      setVerseOptions(
+                        Array.from({ length: verses }, (_, i) => ({
+                          value: i + 1,
+                          label: String(i + 1),
+                        }))
+                      );
                     }}
                     placeholder="Chapter"
                     styles={customStyles}
@@ -163,74 +138,72 @@ const Header = () => {
                   />
                 </Box>
 
-                {/* Verse Dropdown */}
-                <Box sx={{flexGrow: 1, mx: 1}}>
+                {/* Verse */}
+                <Box sx={{ flexGrow: 1, mx: 1 }}>
                   <Select
-                    value={selectedVerse}
+                    value={selectedVerseOption}
                     options={verseOptions}
-                    onChange={(selected) => {
-                      if (!selected) {
-                        console.error("verse dropdown onchange is undefined somehow. investigate");
+                    onChange={verse => {
+                      if (!verse || !selectedBookOption || !selectedChapterOption)
                         return;
-                      }
-                      setSelectedVerse(selected);
-                      setCurSelectedVerse(selected);
-                      onVerseSelect(selected);
+                      setSelectedVerseOption(verse);
+                      setCurSelectedVerse(verse);
+                      navigateTo(
+                        selectedBookOption,
+                        selectedChapterOption,
+                        verse
+                      );
                     }}
                     placeholder="Verse (optional)"
                     styles={customStyles}
                     isClearable
                   />
                 </Box>
-                {curSelectedVerse ? (
-                  <>
-                  {/* Copy click */}
-                <IconButton edge="start" color="inherit" aria-label="home" onClick={handleCopyClick}>
-                  <ContentCopy/>
-                </IconButton>
-                {/* print debug */}
-              <IconButton edge="start" color="inherit" aria-label="home" onClick={printDebug}>
-                <BugReport/>
-              </IconButton>
-              </>): null}
-                
-              </>) : null}
 
-            {/* Tester/Unit Dropdown */}
-            <Box sx={{flexGrow: 7, mx: 2}}>
+                {curSelectedVerse && (
+                  <>
+                    <IconButton color="inherit" onClick={handleCopyClick}>
+                      <ContentCopy />
+                    </IconButton>
+                    <IconButton color="inherit" onClick={printDebug}>
+                      <BugReport />
+                    </IconButton>
+                  </>
+                )}
+              </>
+            )}
+
+            {/* Unit/Testers */}
+            <Box sx={{ flexGrow: 7, mx: 2 }}>
               <Select
                 components={animatedComponents}
                 options={createStudyChunkOptions(studyChunks)}
                 isMulti
-                onChange={(selected) => {
-                  setSelectedTesters(selected);
-                  onTesterSelect(selected);
+                onChange={sel => {
+                  setSelectedTesters(sel || []);
+                  onTesterSelect(sel || []);
                 }}
                 placeholder="Textbook Unit (optional)"
                 styles={customStyles}
               />
             </Box>
           </Box>
-          {/* Charts Button */}
-          <IconButton color="inherit" aria-label="charts" onClick={handleChartsClick}>
-            <TableChartIcon/>
+
+          <IconButton color="inherit" onClick={handleChartsClick}>
+            <TableChartIcon />
           </IconButton>
-          {/* Info Button */}
-          <IconButton edge="end" color="inherit" aria-label="info" onClick={handleHelpClick}>
-            <QuestionMarkIcon/>
+          <IconButton color="inherit" onClick={handleHelpClick}>
+            <QuestionMarkIcon />
           </IconButton>
         </Toolbar>
       </AppBar>
 
-      {/* Settings Popup */}
-      <SettingsPopup/>
-
-      {/* Info Popup */}
-      <InfoPopup/>
-
-      {/* Charts Popup */}
-      <ChartsPopup/>
-    </>);
+      <SettingsPopup />
+      <InfoPopup />
+      <ChartsPopup />
+      <SearchPopup />
+    </>
+  );
 };
 
 export default Header;
