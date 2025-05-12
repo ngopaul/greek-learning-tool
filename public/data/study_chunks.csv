@@ -271,6 +271,35 @@ Unit 10,Relative Pronoun Dative Plural Neuter,R-DPN,
 Unit 10,Relative Pronoun Accusative Plural Masculine,R-APM,
 Unit 10,Relative Pronoun Accusative Plural Feminine,R-APF,
 Unit 10,Relative Pronoun Accusative Plural Neuter,R-APN,
+Unit 11,3rd Decl Noun Nominative Singular Masculine,N-NSM,ς|ν|ρ
+Unit 11,3rd Decl Noun Genitive Singular Masculine,N-GSM,ος
+Unit 11,3rd Decl Noun Dative Singular Masculine,N-DSM,ι
+Unit 11,3rd Decl Noun Accusative Singular Masculine,N-ASM,α|ν
+Unit 11,3rd Decl Noun Vocative Singular Masculine,N-VSM,ς|ν|ρ
+Unit 11,3rd Decl Noun Nominative Singular Feminine,N-NSF,ς|α|ρ|η|ξ
+Unit 11,3rd Decl Noun Genitive Singular Feminine,N-GSF,ος
+Unit 11,3rd Decl Noun Dative Singular Feminine,N-DSF,ι
+Unit 11,3rd Decl Noun Accusative Singular Feminine,N-ASF,α|ν|ρ|η|ξ
+Unit 11,3rd Decl Noun Vocative Singular Feminine,N-VSF,ς|α|ρ|η|ξ
+Unit 11,3rd Decl Noun Nominative Singular Neuter,N-NSN,α|ν|ρ
+Unit 11,3rd Decl Noun Genitive Singular Neuter,N-GSN,ος
+Unit 11,3rd Decl Noun Dative Singular Neuter,N-DSN,ι
+Unit 11,3rd Decl Noun Accusative Singular Neuter,N-ASN,α|ν|ρ
+Unit 11,3rd Decl Noun Vocative Singular Neuter,N-VSN,α|ν|ρ
+Unit 11,3rd Decl Noun Nominative Plural Masculine,N-NPM,ες
+Unit 11,3rd Decl Noun Genitive Plural Masculine,N-GPM,ων
+Unit 11,3rd Decl Noun Dative Plural Masculine,N-DPM,σι|σιν
+Unit 11,3rd Decl Noun Accusative Plural Masculine,N-APM,ας
+Unit 11,3rd Decl Noun Vocative Plural Masculine,N-VPM,ες
+Unit 11,3rd Decl Noun Nominative Plural Feminine,N-NPF,ες
+Unit 11,3rd Decl Noun Genitive Plural Feminine,N-GPF,ων
+Unit 11,3rd Decl Noun Dative Plural Feminine,N-DPF,σι|σιν
+Unit 11,3rd Decl Noun Accusative Plural Feminine,N-APF,ας
+Unit 11,3rd Decl Noun Vocative Plural Feminine,N-VPF,ες
+Unit 11,3rd Decl Noun Nominative Plural Neuter,N-NPN,α
+Unit 11,3rd Decl Noun Genitive Plural Neuter,N-GPN,ων
+Unit 11,3rd Decl Noun Dative Plural Neuter,N-DPN,σι|σιν
+Unit 11,3rd Decl Noun Accusative Plural Neuter,N-APN,α
 Unit 14,3rd Decl Adj in -ης/-ες Nominative Singular Masculine/Feminine,A-NSF|A-NSM,ης
 Unit 14,3rd Decl Adj in -ης/-ες Genitive Singular Masculine/Feminine,A-GSF|A-GSM,ους
 Unit 14,3rd Decl Adj in -ης/-ες Dative Singular Masculine/Feminine,A-DSF|A-DSM,ει
