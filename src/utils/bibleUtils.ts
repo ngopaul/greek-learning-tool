@@ -437,7 +437,7 @@ export const bibleBookAbbreviations: Record<string, string>= {
   "the revelation": "Revelation"
 }
 
-const bibleBookToNumber : Record<string, number> = {
+export const bibleBookToNumber : Record<string, number> = {
   "Genesis": 1,
   "Exodus": 2,
   "Leviticus": 3,

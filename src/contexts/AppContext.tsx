@@ -8,8 +8,7 @@ import { useAtom } from 'jotai';
 import { startTestingAtom } from '../atoms/testingAtoms';
 import { defaultShowAnswerAtom, displayWordsAtom, openGNTDataAtom, readingModeAtom, selectedTestersAtom, showAnswerAtom, testWordIndicesAtom } from '../atoms/bibleDisplayAtoms';
 import { useNavigation } from '../components/useNavigation';
-import { settingsOpenAtom, infoOpenAtom, chartsOpenAtom } from '../atoms/headerAtoms';
-
+import { settingsOpenAtom, infoOpenAtom, chartsOpenAtom, searchOpenAtom } from '../atoms/headerAtoms';
 
 
 // Create the context with default values
@@ -21,11 +20,12 @@ interface AppProviderProps {
 
 // Create the provider component
 export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
-  const { currentChapter, currentIndex, goLeft, goRight, setCurrentIndexAndProcess} = useNavigation();
+  const { currentChapter, currentIndex, goLeft, goRight, setCurrentIndex } = useNavigation();
 
   const [_, setSettingsOpen] = useAtom(settingsOpenAtom);
   const [__, setInfoOpen] = useAtom(infoOpenAtom);
   const [___, setChartsOpen] = useAtom(chartsOpenAtom);
+  const [, setSearchOpen]   = useAtom(searchOpenAtom);
   // const [selectedTesters, setSelectedTesters] = useState<Tester[]>([]);
   const [selectedTesters, setSelectedTesters] = useAtom(selectedTestersAtom);
   const [gotNewData, setGotNewData] = useState(false);
@@ -55,6 +55,9 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
 
   const [startedTesting, setStartedTesting] = useAtom(startTestingAtom);
   const [displayWords, setDisplayWords] = useAtom(displayWordsAtom);
+
+  const { navigateTo } = useNavigation();
+  const [initialNavDone, setInitialNavDone] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -89,9 +92,16 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     }
   }, [selectedTesters, displayWords]);
 
-  
-
-  
+  useEffect(() => {
+    if (!loading && !initialNavDone) {
+      // Matthew = bookValue 40
+      const matthew: BookOption   = { value: 40, label: 'Matthew' };
+      const chap1:   ChapterOption = { value: 1,  label: '1'       };
+      const verse1:  VerseOption   = { value: 1,  label: '1'       };
+      navigateTo(matthew, chap1, verse1);
+      setInitialNavDone(true);
+    }
+  }, [loading, initialNavDone, navigateTo]);
 
   const previousTestWord = () => {
     // find the closest previous word that is in the testWordIndices
@@ -101,7 +111,7 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     for (let i = currentIndex - 1; i > 0; i--) {
       if (testWordIndices.has(i)) {
         const newIndex = Math.max(i, 0);
-        setCurrentIndexAndProcess(newIndex);
+        setCurrentIndex(newIndex);
         break;
       }
     }
@@ -115,7 +125,7 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     for (let i = currentIndex + 1; i < displayWords.length; i++) {
       if (testWordIndices.has(i)) {
         const newIndex = Math.min(i, displayWords.length - 1)
-        setCurrentIndexAndProcess(newIndex);
+        setCurrentIndex(newIndex);
         break;
       }
     }
@@ -147,11 +157,17 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
         setInfoOpen((prev) => !prev);
         setSettingsOpen(false);
         setChartsOpen(false);
+        setSearchOpen(false);
       } else if (e.key === '/') {
-        // open the settings modal
-        setSettingsOpen((prev) => !prev);
-        setInfoOpen(false);
-        setChartsOpen(false);
+        const tag = (e.target as HTMLElement).tagName;
+        // only toggle Search when NOT inside an <input> or <textarea>
+        if (tag !== 'INPUT' && tag !== 'TEXTAREA') {
+          e.preventDefault();
+          setSearchOpen(open => !open);
+          setSettingsOpen(false);
+          setInfoOpen(false);
+          setChartsOpen(false);
+        }
       } else if (e.key.toLowerCase() === 'e') {
         // toggle "Show English in Context"
         if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
@@ -163,6 +179,7 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
           setChartsOpen(prev => !prev);
           setInfoOpen(false);
           setSettingsOpen(false);
+          setSearchOpen(false);
         }
       } else if (e.key === 'ArrowUp') {
         e.preventDefault();
@@ -310,7 +327,8 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
     setDisplayWords(temporaryDisplayWords);
     const temporaryTestWordIndices = new Set(Array.from(Array(temporaryDisplayWords.length).keys()))
     setTestWordIndices(temporaryTestWordIndices);
-    setCurrentIndexAndProcess(0, temporaryDisplayWords, temporaryTestWordIndices);
+    setCurrentIndex(0);
+    setShowAnswer(temporaryTestWordIndices.has(0) ? false : defaultShowAnswer);
     setStartedTesting(true);
     // correctLog is a list of booleans the length of displayWords, initialized to null
     // it is used to keep track of whether the user got each word correct or not
@@ -385,17 +403,23 @@ export const AppProvider: React.FC<AppProviderProps>  = ({children}) => {
   };
 
   const handleChangeReadingMode = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = event.target.value;
+    const value = event.target.value as 'chapter' | 'unit';
     switch (value) {
-      case "chapter":
-        setReadingMode(value);
+      case 'chapter':
+        setReadingMode('chapter');
+        // whenever we go back into Chapter-mode, jump to Matthew 1:1
+        navigateTo(
+          { value: 40, label: 'Matthew' },
+          { value: 1,  label: '1'       },
+          { value: 1,  label: '1'       }
+        );
         break;
-      case "unit":
-        setReadingMode(value);
+      case 'unit':
+        setReadingMode('unit');
         restartLearning();
         break;
       default:
-        console.error("tried to set reading mode to something other than chapter or unit: ", value);
+        console.error('Unsupported reading mode:', value);
     }
   };
 
