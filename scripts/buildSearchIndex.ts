@@ -52,8 +52,8 @@ for (const row of rows) {
   if (!gb || !tb || !bc) continue;
 
   const parts = gb.slice(1,-1).split('｜');
+  const OGNTa = parts[2];
   const lexeme = parts[3];
-  const rmac   = parts[parts.length-2];
   const ctxEng = tb.slice(1,-1).split('｜')[0];
 
   const [b,c,v] = bc.slice(1,-1).split('｜').map(Number);
@@ -84,8 +84,8 @@ for (const row of rows) {
   }
 
   const acc = verseMap.get(id)!;
-  acc.greekWords.push( normalizeGreek(lexeme) );
-  acc.roots.push( normalizeGreek(rmac) );
+  acc.greekWords.push( normalizeGreek(OGNTa) );
+  acc.roots.push( normalizeGreek(lexeme) );
   acc.contextEnglishWords.push(ctxEng);
 }
 
