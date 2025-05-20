@@ -296,6 +296,10 @@ const chapter11_5 : SimpleTableData= [
   ['Acc.', 'εσα→η', 'γένη', 'ἔτη', 'ἔθνη', 'μέλη'],
 ]
 
+// TODO: Add tables for chapter 12. 
+// Use the two tables from the following link:
+// https://docs.google.com/spreadsheets/d/1MAWRoRWt0Zafy0pVEW12AggLszAyCcWOlZaWEUYDI5g/edit?gid=1884359243#gid=1884359243
+
 // Adjectives which don't follow the rules (Third Declension and Irregular Adjectives)
 const chapter14_1 : SimpleTableData= [
   {title: 'Third Decl Adjective in -ης, -ες', numColumns: 5},
