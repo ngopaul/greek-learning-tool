@@ -300,6 +300,35 @@ const chapter11_5 : SimpleTableData= [
 // Use the two tables from the following link:
 // https://docs.google.com/spreadsheets/d/1MAWRoRWt0Zafy0pVEW12AggLszAyCcWOlZaWEUYDI5g/edit?gid=1884359243#gid=1884359243
 
+const chapter12_1: SimpleTableData = [
+  { title: 'Greek Participle Summary Table', numColumns: 6 },
+  ['Participle', 'Principal Part', 'Participle Stem (M/F/N)', 'M/N Declension (Nom, Gen)', 'F Declension (Nom, Gen)'],
+  ['Present Active', 'I', 'οντ / ουσ / οντ', '3rd (ων, οντος)', '1st (ουσα, ουσης)'],
+  ['Present Middle/Passive', 'I', 'ομεν / ομεν / ομεν', '2nd (όμενος, ομένου)', '1st (ομένη, ομένης)'],
+  ['Future Active', 'II', 'σοντ / σουσ / σοντ', '3rd (σων, σοντος)', '1st (σουσα, σουσης)'],
+  ['Future Middle', 'II', 'σομεν / σομεν / σομεν', '2nd (σόμενος, σομένου)', '1st (σομένη, σομένης)'],
+  ['Future Passive', 'VI', 'θησομεν / θησομεν / θησομεν', '2nd (θησόμενος, θησομένου)', '1st (θησομένη, θησομένης)'],
+  ['Aorist Active (1st)', 'III', 'σαντ / σασ / σαντ', '3rd (σας, σαντος)', '1st (σασα, σασης)'],
+  ['Aorist Active (2nd)', 'III', 'οντ / ουσ / οντ', '3rd (ων, οντος)', '1st (ουσα, ουσης)'],
+  ['Aorist Middle', 'III', 'σαμεν / σαμεν / σαμεν', '2nd (σάμενος, σαμένου)', '1st (σαμένη, σαμένης)'],
+  ['Aorist Passive', 'VI', 'θεντ / θεισ / θεντ', '3rd (θείς, θέντος)', '1st (θεῖσα, θείσης)'],
+  ['Perfect Active', 'IV', 'κοτ / κυι / κοτ', '3rd (κώς, κότος)', '1st (κυῖα, κυίας)'],
+  ['Perfect Middle/Passive', 'V', 'μεν / μεν / μεν', '2nd (μένος, μένου)', '1st (μένη, μένης)'],
+]
+
+const chapter12_2: SimpleTableData = [
+  { title: 'Present Participle of εἰμί', numColumns: 4 },
+  ['Case', 'Masculine', 'Feminine', 'Neuter'],
+  ['Nom. Sing.', 'ὤν', 'οὖσα', 'ὄν'],
+  ['Gen. Sing.', 'ὄντος', 'οὔσης', 'ὄντος'],
+  ['Dat. Sing.', 'ὄντι', 'οὔσῃ', 'ὄντι'],
+  ['Acc. Sing.', 'ὄντα', 'οὖσαν', 'ὄν'],
+  ['Nom. Plur.', 'ὄντες', 'οὖσαι', 'ὄντα'],
+  ['Gen. Plur.', 'ὄντων', 'οὐσῶν', 'ὄντων'],
+  ['Dat. Plur.', 'οὖσι(ν)', 'οὔσαις', 'οὖσι(ν)'],
+  ['Acc. Plur.', 'ὄντας', 'οὔσας', 'ὄντα'],
+]
+
 // Adjectives which don't follow the rules (Third Declension and Irregular Adjectives)
 const chapter14_1 : SimpleTableData= [
   {title: 'Third Decl Adjective in -ης, -ες', numColumns: 5},
@@ -435,6 +464,12 @@ export const unitNameToTables: Record<string, ReactNode> = {
       <SimpleTable data={chapter11_3}/>
       <SimpleTable data={chapter11_4}/>
       <SimpleTable data={chapter11_5}/>
+    </div>
+  ),
+  "Unit 12": (
+    <div>
+      <SimpleTable data={chapter12_1}/>
+      <SimpleTable data={chapter12_2}/>
     </div>
   ),
   "Unit 14": (
