@@ -300,6 +300,19 @@ Unit 11,3rd Decl Noun Nominative Plural Neuter,N-NPN,α
 Unit 11,3rd Decl Noun Genitive Plural Neuter,N-GPN,ων
 Unit 11,3rd Decl Noun Dative Plural Neuter,N-DPN,σι|σιν
 Unit 11,3rd Decl Noun Accusative Plural Neuter,N-APN,α
+Unit 12,Participle Present Active,V-PAP,
+Unit 12,Participle Present Middle/Passive,V-PMP|V-PDP|V-PPP,
+Unit 12,Participle Future Active,V-FAP,
+Unit 12,Participle Future Middle,V-FMP|V-FDP,
+Unit 12,Participle Future Passive,V-FPP,
+Unit 12,Participle First Aorist Active,V-AAP,
+Unit 12,Participle First Aorist Middle,V-AMP|V-ADP,
+Unit 12,Participle First Aorist Passive,V-APP,
+Unit 12,Participle Second Aorist Active,V-2AAP,
+Unit 12,Participle Second Aorist Middle,V-2AMP|V-2ADP,
+Unit 12,Participle Second Aorist Passive,V-2APP,
+Unit 12,Participle Perfect Active,V-RAP,
+Unit 12,Participle Perfect Middle/Passive,V-RMP|V-RDP|V-RPP,
 Unit 14,3rd Decl Adj in -ης/-ες Nominative Singular Masculine/Feminine,A-NSF|A-NSM,ης
 Unit 14,3rd Decl Adj in -ης/-ες Genitive Singular Masculine/Feminine,A-GSF|A-GSM,ους
 Unit 14,3rd Decl Adj in -ης/-ες Dative Singular Masculine/Feminine,A-DSF|A-DSM,ει
