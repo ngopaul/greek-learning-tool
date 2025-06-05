@@ -313,6 +313,16 @@ Unit 12,Participle Second Aorist Middle,V-2AMP|V-2ADP,
 Unit 12,Participle Second Aorist Passive,V-2APP,
 Unit 12,Participle Perfect Active,V-RAP,
 Unit 12,Participle Perfect Middle/Passive,V-RMP|V-RDP|V-RPP,
+Unit 13,Subjunctive Present Active,V-PAS,
+Unit 13,Subjunctive Present Middle/Passive,V-PMS|V-PDS|V-PPS,
+Unit 13,Subjunctive Future Passive,V-FPS,
+Unit 13,Subjunctive First Aorist Active,V-AAS,
+Unit 13,Subjunctive First Aorist Middle,V-AMS|V-ADS,
+Unit 13,Subjunctive First Aorist Passive,V-APS,
+Unit 13,Subjunctive Second Aorist Active,V-2AAS,
+Unit 13,Subjunctive Second Aorist Middle,V-2AMS|V-2ADS,
+Unit 13,Subjunctive Second Aorist Passive,V-2APS,
+Unit 13,Subjunctive Perfect Active,V-RAS,
 Unit 14,3rd Decl Adj in -ης/-ες Nominative Singular Masculine/Feminine,A-NSF|A-NSM,ης
 Unit 14,3rd Decl Adj in -ης/-ες Genitive Singular Masculine/Feminine,A-GSF|A-GSM,ους
 Unit 14,3rd Decl Adj in -ης/-ες Dative Singular Masculine/Feminine,A-DSF|A-DSM,ει
