@@ -346,14 +346,6 @@ const chapter13_2: SimpleTableData = [
 ]
 
 const chapter13_3: SimpleTableData = [
-  { title: 'Subjunctive Mood -ω verbs: Future Passive', numColumns: 3 },
-  ['Person', 'Singular', 'Plural'],
-  ['1st', '(no standard form)', '(no standard form)'],
-  ['2nd', '(no standard form)', '(no standard form)'],
-  ['3rd', '(no standard form)', '(no standard form)'],
-]
-
-const chapter13_4: SimpleTableData = [
   { title: 'Subjunctive Mood -ω verbs: First Aorist Active', numColumns: 3 },
   ['Person', 'Singular', 'Plural'],
   ['1st', '-σω', '-σωμεν'],
@@ -361,7 +353,7 @@ const chapter13_4: SimpleTableData = [
   ['3rd', '-σῃ', '-σωσι(ν)'],
 ]
 
-const chapter13_5: SimpleTableData = [
+const chapter13_4: SimpleTableData = [
   { title: 'Subjunctive Mood -ω verbs: First Aorist Middle', numColumns: 3 },
   ['Person', 'Singular', 'Plural'],
   ['1st', '-σωμαι', '-σώμεθα'],
@@ -369,7 +361,7 @@ const chapter13_5: SimpleTableData = [
   ['3rd', '-σηται', '-σωνται'],
 ]
 
-const chapter13_6: SimpleTableData = [
+const chapter13_5: SimpleTableData = [
   { title: 'Subjunctive Mood -ω verbs: First Aorist Passive', numColumns: 3 },
   ['Person', 'Singular', 'Plural'],
   ['1st', '-θῶ', '-θῶμεν'],
@@ -377,7 +369,7 @@ const chapter13_6: SimpleTableData = [
   ['3rd', '-θῇ', '-θῶσι(ν)'],
 ]
 
-const chapter13_7: SimpleTableData = [
+const chapter13_6: SimpleTableData = [
   { title: 'Subjunctive Mood -ω verbs: Second Aorist Active', numColumns: 3 },
   ['Person', 'Singular', 'Plural'],
   ['1st', '-ω', '-ωμεν'],
@@ -385,7 +377,7 @@ const chapter13_7: SimpleTableData = [
   ['3rd', '-ῃ', '-ωσι(ν)'],
 ]
 
-const chapter13_8: SimpleTableData = [
+const chapter13_7: SimpleTableData = [
   { title: 'Subjunctive Mood -ω verbs: Second Aorist Middle', numColumns: 3 },
   ['Person', 'Singular', 'Plural'],
   ['1st', '-ωμαι', '-ώμεθα'],
@@ -393,7 +385,7 @@ const chapter13_8: SimpleTableData = [
   ['3rd', '-ηται', '-ωνται'],
 ]
 
-const chapter13_9: SimpleTableData = [
+const chapter13_8: SimpleTableData = [
   { title: 'Subjunctive Mood -ω verbs: Second Aorist Passive', numColumns: 3 },
   ['Person', 'Singular', 'Plural'],
   ['1st', '-ῶ', '-ῶμεν'],
@@ -401,7 +393,7 @@ const chapter13_9: SimpleTableData = [
   ['3rd', '-ῇ', '-ῶσι(ν)'],
 ]
 
-const chapter13_10: SimpleTableData = [
+const chapter13_9: SimpleTableData = [
   { title: 'Subjunctive Mood -ω verbs: Perfect Active', numColumns: 3 },
   ['Person', 'Singular', 'Plural'],
   ['1st', '-κω', '-κωμεν'],
@@ -563,7 +555,6 @@ export const unitNameToTables: Record<string, ReactNode> = {
       <SimpleTable data={chapter13_7}/>
       <SimpleTable data={chapter13_8}/>
       <SimpleTable data={chapter13_9}/>
-      <SimpleTable data={chapter13_10}/>
     </div>
   ),
   "Unit 14": (
