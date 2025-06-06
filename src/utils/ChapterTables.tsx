@@ -341,7 +341,7 @@ const chapter13_2: SimpleTableData = [
   { title: 'Subjunctive Mood -ω verbs: Present Middle/Passive', numColumns: 3 },
   ['Person', 'Singular', 'Plural'],
   ['1st', '-ωμαι', '-ώμεθα'],
-  ['2nd', '-ῃ/-ῃς', '-ησθε'],
+  ['2nd', '-ῃ', '-ησθε'],
   ['3rd', '-ηται', '-ωνται'],
 ]
 
